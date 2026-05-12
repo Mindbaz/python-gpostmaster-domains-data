@@ -17,25 +17,23 @@ run:
 test: tests coverage
 
 coverage:
-	nosetests --with-coverage --cover-package="${PY_PACKAGE}" --cover-html --cover-html-dir="reports" --tests "${TEST_FILES}"
+	nosetests --capture-output --with-coverage --cover-package="${PY_PACKAGE}" --cover-html --cover-html-dir="reports" --tests "${TEST_FILES}"
 
 tests:
-	nosetests --with-xunit --xunit-file="nosetests.xml" --tests "${TEST_FILES}"
+	nosetests --capture-output --with-xunit --xunit-file="nosetests.xml" --tests "${TEST_FILES}"
 
 syntax-check-python:
 	@python -m py_compile $(shell find ./ -not \( -path ./tests -prune \) -iname "*.py" ! -iname "__init__.py" -type f)
 
 syntax-check: syntax-check-python
 
-valid-full-coverage: ; $(eval PERCENT_COVERAGE=$(shell nosetests --with-coverage --cover-package="${PY_PACKAGE}" --cover-html --cover-html-dir="reports" --tests "${TEST_FILES}" 2>&1 | grep -E "^TOTAL" | awk '{ print $$4 }'))
+valid-full-coverage: ; $(eval PERCENT_COVERAGE=$(shell nosetests --capture-output --with-coverage --cover-package="${PY_PACKAGE}" --cover-html --cover-html-dir="reports" --tests "${TEST_FILES}" 2>&1 | grep -E "^TOTAL" | awk '{ print $$4 }'))
 	@if [ "$(PERCENT_COVERAGE)" != "100%" ]; then false; fi
 
 compile:
 	## To use it : make target=<TARGET> deploy
-	$(PYTHON) setup.py sdist
-	$(PYTHON) setup.py bdist_wheel
-	$(TWINE) check dist/*
-	$(TWINE) upload -r $(target) dist/*
+	python -m build --sdist
+	twine upload -r $(target) dist/*
 
 .PHONY: docs
 docs:
