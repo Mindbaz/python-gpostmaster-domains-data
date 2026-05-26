@@ -20,6 +20,12 @@ dependencies = [
 gpt_dl_all_datas = "entry_points_googlepostmasterapi.gpt_dl_all_datas:run"
 gpt_dl_domain_datas = "entry_points_googlepostmasterapi.gpt_dl_domain_datas:run"
 
+[project.optional-dependencies]
+dev = [
+    "pynose",
+    "coverage",
+]
+
 [tool.setuptools.dynamic]
 version = { attr = "googlepostmasterapi.__version__" }
 
