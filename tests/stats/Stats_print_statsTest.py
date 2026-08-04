@@ -2,11 +2,10 @@
 # -*- coding: utf-8 -*-
 import os;
 import unittest;
-from shutil import copyfile;
-from unittest.mock import patch, Mock;
-from datetime import datetime;
 
-from pprint import pprint ;
+from pprint import pprint;
+from unittest.mock import patch, Mock;
+
 
 from googlepostmasterapi.stats import Stats;
 
@@ -15,7 +14,7 @@ class Stats__print_statsTest ( unittest.TestCase ):
     def test_calls ( self ):
         with patch ( 'googlepostmasterapi.stats.write_std' ) as write_std:
             s = Stats ();
-            s.datas = {
+            s.data = {
                 'total': 202,
                 'ok': 20,
                 'err': 50,
@@ -26,7 +25,7 @@ class Stats__print_statsTest ( unittest.TestCase ):
             };
             
             ret = s.print_stats ();
-            self.assertTrue ( ret );
+            self.assertEqual ( ret, True );
             self.assertEqual ( write_std.call_count, 3 );
             
             for call in write_std.call_args_list:
@@ -54,7 +53,7 @@ class Stats__print_statsTest ( unittest.TestCase ):
     def test_no_http_error ( self ):
         with patch ( 'googlepostmasterapi.stats.write_std' ) as write_std:
             s = Stats ();
-            s.datas = {
+            s.data = {
                 'total': 202,
                 'ok': 20,
                 'err': 50,
@@ -62,10 +61,8 @@ class Stats__print_statsTest ( unittest.TestCase ):
             };
             
             ret = s.print_stats ();
-            self.assertTrue ( ret );
-            self.assertEqual ( write_std.call_count, 1 );
-            
-            write_std.assert_any_call ( [
+            self.assertEqual ( ret, True );
+            write_std.assert_called_once_with ( [
                 'Total calls : 202',
                 'Total calls success : 20 (9.9%)',
                 'Total calls error : 50 (24.8%)'
@@ -75,18 +72,14 @@ class Stats__print_statsTest ( unittest.TestCase ):
     def test_nothing_to_print ( self ):
         with patch ( 'googlepostmasterapi.stats.write_std' ) as write_std:
             s = Stats ();
-            s.datas = {
+            s.data = {
                 'total': 0
             };
             
             ret = s.print_stats ();
-            self.assertFalse ( ret );
+            self.assertEqual ( ret, False );
             write_std.assert_not_called ();
 
-                    
-
-                        
-            
             
 if __name__ == '__main__':
     unittest.main ();

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# Flattens GPT datas
+# Flattens GPT data
 # Copyright (C) 2021 Mindbaz
 # 
 # This program is free software: you can redistribute it and/or modify
@@ -17,19 +17,19 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import copy;
 
-class FlatDatas ( object ):
-    """Clean datas traffic stats from Google Postmaster Tools
+class FlatData ( object ):
+    """Clean data traffic stats from Google Postmaster Tools
     
     Attributes:
-        datas (dict): Datas cleaned
-        _datas_tpl (dict): Template to clean datas
+        data (dict): Data cleaned
+        _data_tpl (dict): Template to clean data
         dict_reputation (dict): Assoc to translate EN reputation to int
     """
     def __init__ ( self ):
         """Default constructor
         """
-        """Template to clean datas"""
-        self._datas_tpl = {
+        """Template to clean data"""
+        self._data_tpl = {
             'user_report_spam_percent': None,
             'ips_reputations': [],
             'domain_reputation': None,
@@ -41,8 +41,8 @@ class FlatDatas ( object ):
             'delivery_errors': []
         };
         
-        """Datas cleaned"""
-        self.datas = {};
+        """Data cleaned"""
+        self.data = {};
         
         ## Assoc to translate EN reputation to int
         self.dict_reputation = {
@@ -58,7 +58,7 @@ class FlatDatas ( object ):
         """Clean part of key : userReportedSpamRatio
         
         Arguments:
-            key (string): Key to identify datas
+            key (string): Key to identify data
             value (float): Report ratio to convrt to percent
         
         Returns:
@@ -67,7 +67,7 @@ class FlatDatas ( object ):
         if ( value == None ):
             return False;
         
-        self.datas [ key ] [ 'user_report_spam_percent' ] = round ( float ( value ) * 100.0, 1 );
+        self.data [ key ] [ 'user_report_spam_percent' ] = round ( float ( value ) * 100.0, 1 );
         return True;
     
     
@@ -75,7 +75,7 @@ class FlatDatas ( object ):
         """Clean part of key : ipReputations
         
         Arguments:
-            key (string): Key to identify datas
+            key (string): Key to identify data
             value (dict[]): Array with all four reputations : bad/low/medium/high
         
         Returns:
@@ -91,7 +91,7 @@ class FlatDatas ( object ):
             if ( ( 'ipCount' in level ) == False ):
                 ## No ip for this reputation
                 continue;
-            self.datas [ key ] [ 'ips_reputations' ].append ( {
+            self.data [ key ] [ 'ips_reputations' ].append ( {
                 'level': self.dict_reputation [ level [ 'reputation' ].lower () ],
                 'value': round ( float ( level [ 'ipCount' ] ) * 100.0 / nb_ip, 1 ),
                 'ips': ';'.join ( level [ 'sampleIps' ] )
@@ -104,7 +104,7 @@ class FlatDatas ( object ):
         """Clean part of key : domainReputation
         
         Arguments:
-            key (string): Key to identify datas
+            key (string): Key to identify data
             value (string): Domain reputation
         
         Returns:
@@ -112,7 +112,7 @@ class FlatDatas ( object ):
         """
         if ( value == None ):
             return False;
-        self.datas [ key ] [ 'domain_reputation' ] = self.dict_reputation.get ( value.lower (), 0 );
+        self.data [ key ] [ 'domain_reputation' ] = self.dict_reputation.get ( value.lower (), 0 );
         return True;
     
     
@@ -120,7 +120,7 @@ class FlatDatas ( object ):
         """Clean part of key : spammyFeedbackLoops
         
         Arguments:
-            key (string): Key to identify datas
+            key (string): Key to identify data
             value (dict[]): Array with all feedback loop splitted by uid 
         
         Returns:
@@ -131,11 +131,11 @@ class FlatDatas ( object ):
         
         for fbl in value:
             if ( 'spamRatio' not in fbl ):
-                ## Missing datas from gpostmasters
+                ## Missing data from gpostmasters
                 continue;
             
-            self.datas [ key ] [ 'feedback_loop' ] [ 'nb_row' ] += 1;
-            self.datas [ key ] [ 'feedback_loop' ] [ 'percent_per_uid' ].append ( {
+            self.data [ key ] [ 'feedback_loop' ] [ 'nb_row' ] += 1;
+            self.data [ key ] [ 'feedback_loop' ] [ 'percent_per_uid' ].append ( {
                 'uid': int ( fbl [ 'id' ] ),
                 'spam_percent': round ( fbl [ 'spamRatio' ] * 100.0, 1 )
             } );
@@ -147,7 +147,7 @@ class FlatDatas ( object ):
         """Clean part of keys : dkimSuccessRatio / spfSuccessRatio / dmarcSuccessRatio
         
         Arguments:
-            key (string): Key to identify datas
+            key (string): Key to identify data
             dkim (float): DKIM ratio to convert to percent. Optional
             spf (float): SPF ratio to convert to percent. Optional
             dmarc (float): DMARC ratio to convert to percent. Optional
@@ -166,7 +166,7 @@ class FlatDatas ( object ):
                 ## Value None
                 continue;
             ret = True;
-            self.datas [ key ] [ 'auth_use_{}_percent'.format ( karg ) ] = round ( float ( kargs [ karg ] ) * 100.0, 1 );
+            self.data [ key ] [ 'auth_use_{}_percent'.format ( karg ) ] = round ( float ( kargs [ karg ] ) * 100.0, 1 );
         
         return ret;
     
@@ -175,7 +175,7 @@ class FlatDatas ( object ):
         """Clean part of key : inboundEncryptionRatio
         
         Arguments:
-            key (string): Key to identify datas
+            key (string): Key to identify data
             value (float): Inbound encrypted ratio to convert to percent
         
         Returns:
@@ -183,7 +183,7 @@ class FlatDatas ( object ):
         """
         if ( value == None ):
             return False;
-        self.datas [ key ] [ 'tls_inbound_percent' ] = round ( float ( value ) * 100.0, 1 );
+        self.data [ key ] [ 'tls_inbound_percent' ] = round ( float ( value ) * 100.0, 1 );
         return True;
     
     
@@ -191,7 +191,7 @@ class FlatDatas ( object ):
         """Clean part of key : deliveryErrors
         
         Arguments:
-            key (string): Key to identify datas
+            key (string): Key to identify data
             value (dict[]): Array with all delivery error ratio to convert to percent
         
         Returns:
@@ -204,7 +204,7 @@ class FlatDatas ( object ):
             if ( 'errorRatio' not in error ):
                 ## No ratio to store
                 continue;
-            self.datas [ key ] [ 'delivery_errors' ].append ( {
+            self.data [ key ] [ 'delivery_errors' ].append ( {
                 'class': error [ 'errorClass' ].lower (),
                 'type': error [ 'errorType' ].lower (),
                 'percent': round ( error [ 'errorRatio' ] * 100.0, 1 )
@@ -213,44 +213,44 @@ class FlatDatas ( object ):
         return True;
     
     
-    def parse ( self, key, datas ):
-        """Parse datas from GPT to a flatern version with all values
+    def parse ( self, key, data ):
+        """Parse data from GPT to a flatern version with all values
         
         Arguments:
-            key (string): Key to identify datas
-            datas (dict): Datas from GPT to clean
+            key (string): Key to identify data
+            data (dict): Data from GPT to clean
         
         Returns:
-            dict: Cleaned datas from GPT
+            dict: Cleaned data from GPT
         """
         
-        """Current key datas"""
-        self.datas [ key ] = copy.deepcopy ( self._datas_tpl );
+        """Current key data"""
+        self.data [ key ] = copy.deepcopy ( self._data_tpl );
         
         ## Clean : userReportedSpamRatio
-        self._parse_user_report_spam ( key = key, value = datas.get ( 'userReportedSpamRatio' ) );
+        self._parse_user_report_spam ( key = key, value = data.get ( 'userReportedSpamRatio' ) );
         ## Clean : ipReputations
-        self._parse_ips_reputations ( key = key, value = datas.get ( 'ipReputations' ) );
+        self._parse_ips_reputations ( key = key, value = data.get ( 'ipReputations' ) );
         ## Clean : domainReputation
-        self._parse_domain_reputations ( key = key, value = datas.get ( 'domainReputation' ) );
+        self._parse_domain_reputations ( key = key, value = data.get ( 'domainReputation' ) );
         ## Clean : spammyFeedbackLoops
-        self._parse_feed_back_loop ( key = key, value = datas.get ( 'spammyFeedbackLoops' ) );
+        self._parse_feed_back_loop ( key = key, value = data.get ( 'spammyFeedbackLoops' ) );
         ## Clean : dkimSuccessRatio / spfSuccessRatio / dmarcSuccessRatio
         self._parse_use_auth (
             key = key,
-            dkim = datas.get ( 'dkimSuccessRatio' ),
-            spf = datas.get ( 'spfSuccessRatio' ),
-            dmarc = datas.get ( 'dmarcSuccessRatio' )
+            dkim = data.get ( 'dkimSuccessRatio' ),
+            spf = data.get ( 'spfSuccessRatio' ),
+            dmarc = data.get ( 'dmarcSuccessRatio' )
         );
         ## Clean : inboundEncryptionRatio
-        self._parse_crypted_inbound ( key = key, value = datas.get ( 'inboundEncryptionRatio' ) );
+        self._parse_crypted_inbound ( key = key, value = data.get ( 'inboundEncryptionRatio' ) );
         ## Clean : deliveryErrors
-        self._parse_delivery_err ( key = key, value = datas.get ( 'deliveryErrors' ) );
+        self._parse_delivery_err ( key = key, value = data.get ( 'deliveryErrors' ) );
         
-        """Cleaned datas from GPT"""
-        ret = copy.deepcopy ( self.datas [ key ] );
+        """Cleaned data from GPT"""
+        ret = copy.deepcopy ( self.data [ key ] );
         
-        ## Clean datas
-        del ( self.datas [ key ] );
+        ## Clean data
+        del ( self.data [ key ] );
         
         return ret;

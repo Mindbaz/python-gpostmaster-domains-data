@@ -2,18 +2,16 @@
 # -*- coding: utf-8 -*-
 import os;
 import unittest;
-from shutil import copyfile;
+
+from pprint import pprint;
 from unittest.mock import patch, Mock;
-from datetime import datetime;
 
-from pprint import pprint ;
+from googlepostmasterapi.data import FlatData;
 
-from googlepostmasterapi.datas import FlatDatas;
-
-class FlatDatas__parse_delivery_errTest ( unittest.TestCase ):
+class FlatData__parse_delivery_errTest ( unittest.TestCase ):
     def test_calls ( self ):
-        p = FlatDatas ();
-        p.datas [ 'random-key' ] = p._datas_tpl.copy ();
+        p = FlatData ();
+        p.data [ 'random-key' ] = p._data_tpl.copy ();
                 
         ret = p._parse_delivery_err (
             key = 'random-key',
@@ -25,8 +23,8 @@ class FlatDatas__parse_delivery_errTest ( unittest.TestCase ):
             ]
         );
         
-        self.assertTrue ( ret );
-        self.assertEqual ( p.datas [ 'random-key' ] [ 'delivery_errors' ], [
+        self.assertEqual ( ret, True );
+        self.assertEqual ( p.data [ 'random-key' ] [ 'delivery_errors' ], [
             { 'type': 'random-type-1', 'class': 'random-class-1', 'percent': 12.3 },
             { 'type': 'random-type-2', 'class': 'random-class-1', 'percent': 45.7 },
             { 'type': 'random-type-1', 'class': 'random-class-2', 'percent': 78.9 }
@@ -34,16 +32,16 @@ class FlatDatas__parse_delivery_errTest ( unittest.TestCase ):
 
         
     def test_no_value ( self ):
-        p = FlatDatas ();
-        p.datas [ 'random-key' ] = p._datas_tpl.copy ();
+        p = FlatData ();
+        p.data [ 'random-key' ] = p._data_tpl.copy ();
         
         ret = p._parse_delivery_err (
             key = 'random-key',
             value = None
         );
         
-        self.assertFalse ( ret );
-        self.assertEqual ( p.datas [ 'random-key' ] [ 'delivery_errors' ], [] );
+        self.assertEqual ( ret, False );
+        self.assertEqual ( p.data [ 'random-key' ] [ 'delivery_errors' ], [] );
 
         
         

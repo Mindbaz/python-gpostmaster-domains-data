@@ -25,13 +25,13 @@ class Stats ( object ):
     """Process stats of GPostmaster
     
     Attributes:
-        datas (dict): Statistics from domains infos download
+        data (dict): Statistics from domains infos download
     """
     def __init__ ( self ):
         """Default constructor
         """
         """Statistics from domains infos download"""
-        self.datas = {
+        self.data = {
             'total': 0,
             'ok': 0,
             'err': 0,
@@ -42,25 +42,25 @@ class Stats ( object ):
     def add_total ( self ):
         """Increment counter : total
         """
-        self.datas [ 'total' ] += 1;
+        self.data [ 'total' ] += 1;
     
     
     def add_ok ( self ):
         """Increment counters : total + ok
         """
         self.add_total ();
-        self.datas [ 'ok' ] += 1;
+        self.data [ 'ok' ] += 1;
     
     
     def add_err ( self ):
         """Increment counters : total + err
         """
         self.add_total ();
-        self.datas [ 'err' ] += 1;
+        self.data [ 'err' ] += 1;
     
     
     def add_err_http ( self, code, err, domain ):
-        """Increment counters : total + err & add domain to http error datas
+        """Increment counters : total + err & add domain to http error data
         
         Arguments:
             code (int): Http code
@@ -68,10 +68,10 @@ class Stats ( object ):
             domain (string): Domain to add to http error
         """
         self.add_err ();
-        if ( code not in self.datas [ 'err_http' ] ):
-            self.datas [ 'err_http' ] [ code ] = { 'count': 0, 'domains': [], 'message': err };
-        self.datas [ 'err_http' ] [ code ] [ 'count' ] += 1;
-        self.datas [ 'err_http' ] [ code ] [ 'domains' ].append ( domain );
+        if ( code not in self.data [ 'err_http' ] ):
+            self.data [ 'err_http' ] [ code ] = { 'count': 0, 'domains': [], 'message': err };
+        self.data [ 'err_http' ] [ code ] [ 'count' ] += 1;
+        self.data [ 'err_http' ] [ code ] [ 'domains' ].append ( domain );
     
     
     def print_stats ( self ):
@@ -80,25 +80,25 @@ class Stats ( object ):
         Returns:
             bool: False if nothing to display. True otherwise
         """
-        if ( self.datas [ 'total' ] == 0 ):
+        if ( self.data [ 'total' ] == 0 ):
             return False;
         
         write_std ( [
-            'Total calls : {total}'.format ( total = self.datas [ 'total' ] ),
+            'Total calls : {total}'.format ( total = self.data [ 'total' ] ),
             'Total calls success : {ok} ({ok_percent}%)'.format (
-                ok = self.datas [ 'ok' ],
-                ok_percent = round ( float ( self.datas [ 'ok' ] ) * 100.0 / float ( self.datas [ 'total' ] ), 1 )
+                ok = self.data [ 'ok' ],
+                ok_percent = round ( float ( self.data [ 'ok' ] ) * 100.0 / float ( self.data [ 'total' ] ), 1 )
             ),
             'Total calls error : {err} ({err_percent}%)'.format (
-                err = self.datas [ 'err' ],
-                err_percent = round ( float ( self.datas [ 'err' ] ) * 100.0 / float ( self.datas [ 'total' ] ), 1 )
+                err = self.data [ 'err' ],
+                err_percent = round ( float ( self.data [ 'err' ] ) * 100.0 / float ( self.data [ 'total' ] ), 1 )
             ) ] );
         
-        for http_code in self.datas [ 'err_http' ]:
+        for http_code in self.data [ 'err_http' ]:
             """Number of call errors to current http code"""
-            nb_err = self.datas [ 'err_http' ] [ http_code ] [ 'count' ];
+            nb_err = self.data [ 'err_http' ] [ http_code ] [ 'count' ];
             """Percent of call errors to current http code"""
-            nb_err_percent = round ( float ( nb_err ) * 100.0 / float ( self.datas [ 'total' ] ), 1 )
+            nb_err_percent = round ( float ( nb_err ) * 100.0 / float ( self.data [ 'total' ] ), 1 )
             
             write_std ( [
                 'Total calls error http {http_code} : {err} ({err_percent}%)'.format (
@@ -107,7 +107,7 @@ class Stats ( object ):
                     err_percent = nb_err_percent
                 ),
                 'Domains : {domains}'.format (
-                    domains = ' / '.join ( self.datas [ 'err_http' ] [ http_code ] [ 'domains' ] )
+                    domains = ' / '.join ( self.data [ 'err_http' ] [ http_code ] [ 'domains' ] )
                 ) ] );
         
         return True;

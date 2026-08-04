@@ -2,18 +2,18 @@
 # -*- coding: utf-8 -*-
 import os;
 import unittest;
-from shutil import copyfile;
+
+from pprint import pprint;
 from unittest.mock import patch, Mock;
-from datetime import datetime;
 
-from pprint import pprint ;
 
-from googlepostmasterapi.datas import FlatDatas;
+from googlepostmasterapi.data import FlatData;
 
-class FlatDatas__parse_domain_reputationsTest ( unittest.TestCase ):
+
+class FlatData__parse_domain_reputationsTest ( unittest.TestCase ):
     def test_calls ( self ):
-        p = FlatDatas ();
-        p.datas [ 'random-key' ] = p._datas_tpl.copy ();
+        p = FlatData ();
+        p.data [ 'random-key' ] = p._data_tpl.copy ();
 
         p.dict_reputation = {
             'random-value-1': 'random-assoc-1',
@@ -25,13 +25,13 @@ class FlatDatas__parse_domain_reputationsTest ( unittest.TestCase ):
             key = 'random-key',
             value = 'RANDOM-VALUE-1'
         );
-        self.assertTrue ( ret );
-        self.assertEqual ( p.datas [ 'random-key' ] [ 'domain_reputation' ], 'random-assoc-1' );
+        self.assertEqual ( ret, True );
+        self.assertEqual ( p.data [ 'random-key' ] [ 'domain_reputation' ], 'random-assoc-1' );
 
         
     def test_no_value ( self ):
-        p = FlatDatas ();
-        p.datas [ 'random-key' ] = p._datas_tpl.copy ();
+        p = FlatData ();
+        p.data [ 'random-key' ] = p._data_tpl.copy ();
 
         p.dict_reputation = {
             'random-value-1': 'random-assoc-1',
@@ -43,13 +43,13 @@ class FlatDatas__parse_domain_reputationsTest ( unittest.TestCase ):
             key = 'random-key',
             value = None
         );
-        self.assertFalse ( ret );
-        self.assertEqual ( p.datas [ 'random-key' ] [ 'domain_reputation' ], None );
+        self.assertEqual ( ret, False );
+        self.assertEqual ( p.data [ 'random-key' ] [ 'domain_reputation' ], None );
 
         
     def test_unknow_value ( self ):
-        p = FlatDatas ();
-        p.datas [ 'random-key' ] = p._datas_tpl.copy ();
+        p = FlatData ();
+        p.data [ 'random-key' ] = p._data_tpl.copy ();
 
         p.dict_reputation = {
             'random-value-1': 'random-assoc-1',
@@ -61,12 +61,9 @@ class FlatDatas__parse_domain_reputationsTest ( unittest.TestCase ):
             key = 'random-key',
             value = 'RANDOM-VALUE-4'
         );
-        self.assertTrue ( ret );
-        self.assertEqual ( p.datas [ 'random-key' ] [ 'domain_reputation' ], 0 );
+        self.assertEqual ( ret, True );
+        self.assertEqual ( p.data [ 'random-key' ] [ 'domain_reputation' ], 0 );
 
-
-
-        
         
 if __name__ == '__main__':
     unittest.main ();

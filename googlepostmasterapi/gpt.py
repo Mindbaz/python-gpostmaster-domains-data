@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# Downloads and flattens datas from GPT
+# Downloads and flattens data from GPT
 # Copyright (C) 2021 Mindbaz
 # 
 # This program is free software: you can redistribute it and/or modify
@@ -24,20 +24,24 @@ from googleapiclient.errors import HttpError;
 from multiprocessing import Pool;
 from multiprocessing.managers import BaseManager;
 
-sys.path.insert ( 0, os.path.dirname ( os.path.dirname ( os.path.abspath ( __file__ ) ) ) );
-from googlepostmasterapi.datas import FlatDatas;
+
+#: Current module path
+MODULE_PATH = os.path.dirname ( os.path.dirname ( os.path.abspath ( __file__ ) ) );
+sys.path.insert ( 0, MODULE_PATH );
+from googlepostmasterapi.data import FlatData;
 from googlepostmasterapi.stats import Stats;
 from googlepostmasterapi.utils import recursive_call, write_std;
 
+
 class GPostmaster ( object ):
-    """Download datas from Google postmaster tools
+    """Download data from Google postmaster tools
     
     Attributes:
         _uri_tpl (string): Template to create an uri to get domain infos
         _domains (string[]): All domains download from server
         _service (googleapiclient.discovery.build): Connector to GPT
-        _parser (FlatDatas): Connector to datas cleaner
-        _stats (Stats): Connector to statistiques datas
+        _parser (FlatData): Connector to data cleaner
+        _stats (Stats): Connector to statistiques data
         _pool_size (int): Pool size to calls
     """
     def __init__ ( self, token, pool_size = 2, verbose = False ):
@@ -149,10 +153,10 @@ class GPostmaster ( object ):
         """All domains infos from GPT"""
         domains = self._gpt_get_domains ();
         
-        for domain_datas in domains [ 'domains' ]:
-            if ( domain_datas [ 'permission' ].lower () == 'none' ):
+        for domain_data in domains [ 'domains' ]:
+            if ( domain_data [ 'permission' ].lower () == 'none' ):
                 continue;
-            self._domains.append ( domain_datas [ 'name' ].split ( '/' ).pop () );
+            self._domains.append ( domain_data [ 'name' ].split ( '/' ).pop () );
         
         write_std ( [
             'Download {} domain(s) from GPT'.format ( len ( self._domains ) )
@@ -215,24 +219,24 @@ class GPostmaster ( object ):
     
     
     def _init_parser_con ( self ):
-        """Init datas parser/cleaner con
+        """Init data parser/cleaner con
         """
-        self._parser = FlatDatas ();
+        self._parser = FlatData ();
     
     
-    def _clean_domain_infos ( self, key, datas ):
+    def _clean_domain_infos ( self, key, data ):
         """Clean domain infos
         
         Arguments:
-            key (string): Key to identify datas on cleaner
-            datas (dict): Domain infos to clean
+            key (string): Key to identify data on cleaner
+            data (dict): Domain infos to clean
         
         Returns:
-            dict: Cleaned datas
+            dict: Cleaned data
         """
         return self._parser.parse (
             key = key,
-            datas = datas
+            data = data
         );
     
     
@@ -268,7 +272,7 @@ class GPostmaster ( object ):
                 domain = domain,
                 date = input_date
             ),
-            datas = ret [ 'result' ]
+            data = ret [ 'result' ]
         );
         
         ret [ 'result' ] [ 'domain' ] = domain;
@@ -283,8 +287,8 @@ class GPostmaster ( object ):
         self._stats.print_stats ();
     
     
-    def _create_pool_datas ( self, input_date ):
-        """Create datas to map call on pool with all domains
+    def _create_pool_data ( self, input_date ):
+        """Create data to map call on pool with all domains
         
         Arguments:
             input_date (string): Date to query
@@ -295,32 +299,32 @@ class GPostmaster ( object ):
         return [ { 'domain': x, 'input_date': input_date } for x in self._domains ];
     
     
-    def _get_domain_infos_pool ( self, datas ):
-        """Abstract call to get_domain_infos from pool with datas as dict
+    def _get_domain_infos_pool ( self, data ):
+        """Abstract call to get_domain_infos from pool with data as dict
         
         Arguments:
-            datas (dict): Values domain/input_date to send to get_domain_infos
+            data (dict): Values domain/input_date to send to get_domain_infos
         
         Returns:
             dict: Result from get_domain_infos calls
         """
         return self.get_domain_infos (
-            domain = datas [ 'domain' ],
-            input_date = datas [ 'input_date' ],
+            domain = data [ 'domain' ],
+            input_date = data [ 'input_date' ],
             print_stats = False
         );
     
     
-    def _clean_pool_returns ( self, datas ):
+    def _clean_pool_returns ( self, data ):
         """Clean result from pool map returns : remove all state==false
         
         Arguments:
-            datas (dict[]): List of dict from pool map
+            data (dict[]): List of dict from pool map
         
         Returns:
             dict[]: List of dict from pool map with only state==true
         """
-        return [ x for x in datas if x [ 'state' ] == True ];
+        return [ x for x in data if x [ 'state' ] == True ];
     
     
     def get_all_domains_infos ( self, input_date ):
@@ -338,24 +342,24 @@ class GPostmaster ( object ):
         ## Get all domains
         self.get_domains ();
         
-        """Datas as dict to method args"""
-        datas = self._create_pool_datas (
+        """Data as dict to method args"""
+        data = self._create_pool_data (
             input_date = input_date
         );
         
-        if ( len ( datas ) == 0 ):
+        if ( len ( data ) == 0 ):
             write_std ( [ 'Nothing to download' ] );
             return [];
         
         with Pool ( processes = self._pool_size ) as pool:
             ret = pool.map (
                 self._get_domain_infos_pool,
-                datas
+                data
             );
         
         ## Clean result
         ret = self._clean_pool_returns (
-            datas = ret
+            data = ret
         );
         
         self._print_stats ();

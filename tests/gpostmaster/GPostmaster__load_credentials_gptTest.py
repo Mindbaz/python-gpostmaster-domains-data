@@ -2,11 +2,9 @@
 # -*- coding: utf-8 -*-
 import os;
 import unittest;
-from shutil import copyfile;
-from unittest.mock import patch, Mock;
-from datetime import datetime;
 
-from pprint import pprint ;
+from pprint import pprint;
+from unittest.mock import patch, Mock;
 
 from googlepostmasterapi.gpt import GPostmaster;
 
@@ -44,31 +42,31 @@ class PickleMock ( object ):
         print ( 'OpenMock : load' );
         pass;
 
+
 @patch ( 'googlepostmasterapi.gpt.pickle', PickleMock )
+@patch ( 'googlepostmasterapi.gpt.GPostmaster._init_resources', Mock ( return_value = None ) )
 class GPostmaster__load_tokenTest ( unittest.TestCase ):
     def test_calls ( self ):
-        with patch ( 'googlepostmasterapi.gpt.GPostmaster._init_resources' ) as init_ressources:
-            with patch ( 'googlepostmasterapi.gpt.open', side_effect = OpenMock ) as open_call:
-                with patch ( 'googlepostmasterapi.gpt.pickle.load', return_value = 'random-returns' ) as p_load:
-                    w = GPostmaster (
-                        token = 'random-token'
-                    );
+        with patch ( 'googlepostmasterapi.gpt.open' ) as open_:
+            with patch ( 'googlepostmasterapi.gpt.pickle.load' ) as load_:
+                open_.side_effect = OpenMock;
+                load_.return_value = 'random-returns';
+                
+                g = GPostmaster (
+                    token = 'random-token'
+                );
+                
+                ret = g._load_token (
+                    token = 'another-credentials'
+                );
+                
+                self.assertEqual ( ret, 'random-returns' );
+                open_.asser_called_with (
+                    'another-credentials',
+                    'rb'
+                );
+                load_.assert_called_once_with ( HandleMock );
 
-                    ret = w._load_token (
-                        token = 'another-credentials'
-                    );
-
-                    self.assertEqual ( ret, 'random-returns' );
-                    open_call.asser_called_with (
-                        'another-credentials',
-                        'rb'
-                    );
-                    self.assertEqual ( p_load.call_count, 1 );
-                    for call in p_load.call_args_list:
-                        args, kwargs = call;
-                        self.assertEqual ( args [ 0 ], HandleMock );
-                        
-            
             
 if __name__ == '__main__':
     unittest.main ();

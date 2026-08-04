@@ -2,14 +2,13 @@
 # -*- coding: utf-8 -*-
 import os;
 import unittest;
-from shutil import copyfile;
+
+from pprint import pprint;
 from unittest.mock import patch, Mock;
-from datetime import datetime;
 
-from pprint import pprint ;
 
-from googleapiclient.errors import HttpError;
 from googlepostmasterapi.gpt import GPostmaster;
+from googleapiclient.errors import HttpError;
 
 
 class StatsMock ( object ):
@@ -22,19 +21,18 @@ class StatsMock ( object ):
         pass;
     
 
+@patch ( 'googlepostmasterapi.gpt.GPostmaster._init_resources', Mock ( return_value = None ) )
 class GPostmaster__print_statsTest ( unittest.TestCase ):
     def test_calls ( self ):
-        with patch ( 'googlepostmasterapi.gpt.GPostmaster._init_resources' ) as init_ressources:
-            with patch ( 'tests.gpostmaster.GPostmaster__print_statsTest.StatsMock.print_stats' ) as print_stats:
-                w = GPostmaster (
-                    token = 'random-token'
-                );
-                w._stats = StatsMock ();
+        with patch ( 'tests.gpostmaster.GPostmaster__print_statsTest.StatsMock.print_stats' ) as print_stats:
+            g = GPostmaster (
+                token = 'random-token'
+            );
+            g._stats = StatsMock ();
+            
+            g._print_stats ();
+            print_stats.assert_called_once_with ();
 
-                w._print_stats ();
-                self.assertEqual ( print_stats.call_count, 1 );
-                
-            
-            
+
 if __name__ == '__main__':
     unittest.main ();
