@@ -17,6 +17,11 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import copy;
 
+from pprint import pprint;
+from pydantic import validate_call;
+from typing import List, Optional, Any;
+
+
 class FlatData ( object ):
     """Clean data traffic stats from Google Postmaster Tools
     
@@ -25,7 +30,8 @@ class FlatData ( object ):
         _data_tpl (dict): Template to clean data
         dict_reputation (dict): Assoc to translate EN reputation to int
     """
-    def __init__ ( self ):
+    @validate_call
+    def __init__ ( self ) -> None:
         """Default constructor
         """
         """Template to clean data"""
@@ -54,29 +60,28 @@ class FlatData ( object ):
         };
     
     
-    def _parse_user_report_spam ( self, key, value ):
+    def _parse_user_report_spam ( self, key: str, value: Optional [ float ] = None ) -> bool:
         """Clean part of key : userReportedSpamRatio
         
         Arguments:
             key (string): Key to identify data
-            value (float): Report ratio to convrt to percent
+            value (float): Optional. Report ratio to convrt to percent. Default : None
         
         Returns:
             bool: False if no value to convert. True otherwise
         """
         if ( value == None ):
             return False;
-        
         self.data [ key ] [ 'user_report_spam_percent' ] = round ( float ( value ) * 100.0, 1 );
         return True;
     
     
-    def _parse_ips_reputations ( self, key, value ):
+    def _parse_ips_reputations ( self, key: str, value: Optional [ List [ dict ] ] = None ) -> bool:
         """Clean part of key : ipReputations
         
         Arguments:
             key (string): Key to identify data
-            value (dict[]): Array with all four reputations : bad/low/medium/high
+            value (dict[]): Optional. Array with all four reputations : bad/low/medium/high. Default : None
         
         Returns:
             bool: False if no value to convert. True otherwise
@@ -100,7 +105,7 @@ class FlatData ( object ):
         return True;
     
     
-    def _parse_domain_reputations ( self, key, value ):
+    def _parse_domain_reputations ( self, key: str, value: Optional [ str ] = None ) -> bool:
         """Clean part of key : domainReputation
         
         Arguments:
@@ -108,7 +113,7 @@ class FlatData ( object ):
             value (string): Domain reputation
         
         Returns:
-            bool: False if no value to convert. True otherwise
+            bool: Optional. False if no value to convert. True otherwise. Default : None
         """
         if ( value == None ):
             return False;
@@ -116,12 +121,12 @@ class FlatData ( object ):
         return True;
     
     
-    def _parse_feed_back_loop ( self, key, value ):
+    def _parse_feed_back_loop ( self, key: str, value: Optional [ List [ dict ] ] = None ) -> bool:
         """Clean part of key : spammyFeedbackLoops
         
         Arguments:
             key (string): Key to identify data
-            value (dict[]): Array with all feedback loop splitted by uid 
+            value (dict[]): Optional. Array with all feedback loop splitted by uid. Default : None
         
         Returns:
             bool: False if no value to convert. True otherwise
@@ -143,18 +148,25 @@ class FlatData ( object ):
         return True;
     
     
-    def _parse_use_auth ( self, key, **kargs ):
+    def _parse_use_auth ( self, key: str, **kargs: Any ) -> bool:
         """Clean part of keys : dkimSuccessRatio / spfSuccessRatio / dmarcSuccessRatio
         
         Arguments:
             key (string): Key to identify data
-            dkim (float): DKIM ratio to convert to percent. Optional
-            spf (float): SPF ratio to convert to percent. Optional
-            dmarc (float): DMARC ratio to convert to percent. Optional
+            dkim (float): Optional. DKIM ratio to convert to percent
+            spf (float): Optional. SPF ratio to convert to percent
+            dmarc (float): Optional. DMARC ratio to convert to percent
         
         Returns:
             bool: True if at leat one the three key exists. False otherwise
         """
+        print ( 'v v v v v v v v v v v v v v v v v v v v v' );
+        print ( 'AMAR : 1' );
+        print ( type ( kargs ) );
+        print ( kargs );
+        pprint ( kargs );
+        print ( '^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^' );
+        
         """Flag to valid at least one value"""
         ret = False;
         
@@ -171,12 +183,12 @@ class FlatData ( object ):
         return ret;
     
     
-    def _parse_crypted_inbound ( self, key, value ):
+    def _parse_crypted_inbound ( self, key: str, value: Optional [ float ] = None ) -> bool:
         """Clean part of key : inboundEncryptionRatio
         
         Arguments:
             key (string): Key to identify data
-            value (float): Inbound encrypted ratio to convert to percent
+            value (float): Optional. Inbound encrypted ratio to convert to percent. Default : None
         
         Returns:
             bool: False if no value to convert. True otherwise
@@ -187,12 +199,12 @@ class FlatData ( object ):
         return True;
     
     
-    def _parse_delivery_err ( self, key, value ):
+    def _parse_delivery_err ( self, key: str, value: Optional [ List [ dict ] ] = None ) -> bool:
         """Clean part of key : deliveryErrors
         
         Arguments:
             key (string): Key to identify data
-            value (dict[]): Array with all delivery error ratio to convert to percent
+            value (dict[]): Optional. Array with all delivery error ratio to convert to percent. Default : None
         
         Returns:
             bool: False if no value to convert. True otherwise
@@ -213,7 +225,8 @@ class FlatData ( object ):
         return True;
     
     
-    def parse ( self, key, data ):
+    @validate_call
+    def parse ( self, key: str, data: dict ) -> dict:
         """Parse data from GPT to a flatern version with all values
         
         Arguments:

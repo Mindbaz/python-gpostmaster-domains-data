@@ -18,8 +18,15 @@
 import os;
 import sys;
 
-sys.path.insert ( 0, os.path.dirname ( os.path.dirname ( os.path.abspath ( __file__ ) ) ) );
+from pprint import pprint;
+from pydantic import validate_call;
+
+
+#: Current module path
+MODULE_PATH = os.path.dirname ( os.path.dirname ( os.path.abspath ( __file__ ) ) );
+sys.path.insert ( 0, MODULE_PATH )
 from googlepostmasterapi.utils import write_std;
+
 
 class Stats ( object ):
     """Process stats of GPostmaster
@@ -27,7 +34,8 @@ class Stats ( object ):
     Attributes:
         data (dict): Statistics from domains infos download
     """
-    def __init__ ( self ):
+    @validate_call
+    def __init__ ( self ) -> None:
         """Default constructor
         """
         """Statistics from domains infos download"""
@@ -39,27 +47,31 @@ class Stats ( object ):
         };
     
     
-    def add_total ( self ):
+    @validate_call
+    def add_total ( self ) -> None:
         """Increment counter : total
         """
         self.data [ 'total' ] += 1;
     
     
-    def add_ok ( self ):
+    @validate_call
+    def add_ok ( self ) -> None:
         """Increment counters : total + ok
         """
         self.add_total ();
         self.data [ 'ok' ] += 1;
     
     
-    def add_err ( self ):
+    @validate_call
+    def add_err ( self ) -> None:
         """Increment counters : total + err
         """
         self.add_total ();
         self.data [ 'err' ] += 1;
     
     
-    def add_err_http ( self, code, err, domain ):
+    @validate_call
+    def add_err_http ( self, code: int, err: str, domain: str ) -> None:
         """Increment counters : total + err & add domain to http error data
         
         Arguments:
@@ -74,7 +86,8 @@ class Stats ( object ):
         self.data [ 'err_http' ] [ code ] [ 'domains' ].append ( domain );
     
     
-    def print_stats ( self ):
+    @validate_call
+    def print_stats ( self ) -> bool:
         """Display calls statistics
         
         Returns:
