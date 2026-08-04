@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# Copyright (C) 2021 Mindbaz
+# Copyright (C) 2026 Mindbaz
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,19 +14,24 @@
 # 
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-"""Downloads domain data from GPT
 """
-
+Downloads domain data from GPT
+"""
 import os;
 import sys;
 import argparse;
+import json;
+
 from datetime import datetime, timedelta;
 from pprint import pprint;
 
-sys.path.insert ( 0, os.path.dirname ( os.path.dirname ( os.path.abspath ( __file__ ) ) ) );
-from googlepostmasterapi.gpt import GPostmaster;
+
+#: Current module path
+MODULE_PATH = os.path.dirname ( os.path.dirname ( os.path.abspath ( __file__ ) ) );
+sys.path.insert ( 0, MODULE_PATH );
 from googlepostmasterapi import __version__;
+from googlepostmasterapi.gpt import GPostmaster;
+
 
 def run ():
     parser = argparse.ArgumentParser ( prog = 'gpt_dl_domain_data' );
@@ -84,6 +89,7 @@ def run ():
     # Init tool
     #
     
+    """Parser"""
     g = GPostmaster (
         token = args.token,
         verbose = args.verbose,
@@ -100,9 +106,10 @@ def run ():
             domain = args.domain,
             input_date = args.date
         );
-        
-        print ( 'Data : ' );
-        print ( ret );
+
+        print ( '\nDomain data : ' );
+        print ( json.dumps ( ret, indent = 4, sort_keys = True ) );
+        print ( '' );
     except Exception as e:
         exit_code = 1;
         error_msg = str ( e );

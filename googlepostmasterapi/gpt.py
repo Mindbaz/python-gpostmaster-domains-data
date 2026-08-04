@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 # Downloads and flattens data from GPT
-# Copyright (C) 2021 Mindbaz
+# Copyright (C) 2026 Mindbaz
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -19,6 +19,7 @@ import os;
 import sys;
 import pickle;
 
+from google.oauth2.credentials import Credentials;
 from googleapiclient.discovery import build;
 from googleapiclient.errors import HttpError;
 from multiprocessing import Pool;
@@ -95,30 +96,24 @@ class GPostmaster ( object ):
         """Init stats con. Should be manager by multiprocessing to work with pool
         """
         BaseManager.register ( 'Stats', Stats );
+        """Multiprocessing manager to share Stats between all threads"""
         manager = BaseManager ();
         manager.start ();
         """Connector to statistiques data"""
         self._stats = manager.Stats ();
     
     
-    def _load_token ( self, token: str ) -> Any:
+    def _load_token ( self, token: str ) -> Credentials:
         """Load GPT token
         
         Arguments:
             token (str): Absolute file path to GPT token
 
         Returns:
-            todo
+            Credentials: GPT creds
         """
         with open ( token, 'rb' ) as token:
-            ret = pickle.load ( token );
-            print ( 'v v v v v v v v v v v v v v v v v v v v v' );
-            print ( 'AMAR : 2' );
-            print ( type ( ret ) );
-            print ( ret );
-            pprint ( ret );
-            print ( '^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^' );
-            return ret;
+            return pickle.load ( token );
     
     
     def _init_service ( self, token: str ) -> None:
@@ -175,7 +170,7 @@ class GPostmaster ( object ):
             self._domains.append ( domain_data [ 'name' ].split ( '/' ).pop () );
         
         write_std ( [
-            'Download {} domain(s) from GPT'.format ( len ( self._domains ) )
+            'Downloaded {} domain(s) from GPT'.format ( len ( self._domains ) )
         ] );
     
     
@@ -250,19 +245,10 @@ class GPostmaster ( object ):
         Returns:
             dict: Cleaned data
         """
-        ret = self._parser.parse (
+        return self._parser.parse (
             key = key,
             data = data
         );
-
-        print ( 'v v v v v v v v v v v v v v v v v v v v v' );
-        print ( 'AMAR : 3' );
-        print ( type ( ret ) );
-        print ( ret );
-        pprint ( ret );
-        print ( '^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^' );
-        
-        return ret;
     
     
     @validate_call

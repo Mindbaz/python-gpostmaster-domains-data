@@ -30,7 +30,7 @@ class GPostmaster_get_domainsTest ( unittest.TestCase ):
                 self.assertEqual ( g._domains, [ 'random-domain-1', 'random-domain-3' ] );
                 gpt_get_domains.assert_called_once_with ();
                 write_std.assert_called_with ( [
-                    'Download 2 domain(s) from GPT'
+                    'Downloaded 2 domain(s) from GPT'
                 ] );
 
                     
@@ -50,7 +50,7 @@ class GPostmaster_get_domainsTest ( unittest.TestCase ):
                 self.assertEqual ( g._domains, [] );
                 gpt_get_domains.assert_called_once_with ();
                 write_std.assert_called_with ( [
-                    'Download 0 domain(s) from GPT'
+                    'Downloaded 0 domain(s) from GPT'
                 ] );
                 
             
