@@ -8,3 +8,6 @@ dist/
 nosetests.xml
 reports/
 .coverage
+
+## Others
+*.pk
