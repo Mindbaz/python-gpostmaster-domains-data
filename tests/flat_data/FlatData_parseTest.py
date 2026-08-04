@@ -2,30 +2,32 @@
 # -*- coding: utf-8 -*-
 import os;
 import unittest;
-from shutil import copyfile;
+
+from pprint import pprint;
 from unittest.mock import patch, Mock;
-from datetime import datetime;
 
-from pprint import pprint ;
 
-from googlepostmasterapi.datas import FlatDatas;
+from googlepostmasterapi.data import FlatData;
 
-class FlatDatas_parseTest ( unittest.TestCase ):
+
+class FlatData_parseTest ( unittest.TestCase ):
     def test_calls ( self ):
-        with patch ( 'googlepostmasterapi.datas.copy.deepcopy', return_value = 'random-dict' ) as deep_copy:
-            with patch ( 'googlepostmasterapi.datas.FlatDatas._parse_user_report_spam' ) as parse_user_report_spam:
-                with patch ( 'googlepostmasterapi.datas.FlatDatas._parse_ips_reputations' ) as parse_ips_reputations:
-                    with patch ( 'googlepostmasterapi.datas.FlatDatas._parse_domain_reputations' ) as parse_domain_reputations:
-                        with patch ( 'googlepostmasterapi.datas.FlatDatas._parse_feed_back_loop' ) as parse_feed_back_loop:
-                            with patch ( 'googlepostmasterapi.datas.FlatDatas._parse_use_auth' ) as parse_use_auth:
-                                with patch ( 'googlepostmasterapi.datas.FlatDatas._parse_crypted_inbound' ) as parse_crypted_inbound:
-                                    with patch ( 'googlepostmasterapi.datas.FlatDatas._parse_delivery_err' ) as parse_delivery_err:        
-                                        p = FlatDatas ();
-                                        p._datas_tpl = { 'random-key': 'random-value' };
+        with patch ( 'googlepostmasterapi.data.copy.deepcopy' ) as deep_copy:
+            with patch ( 'googlepostmasterapi.data.FlatData._parse_user_report_spam' ) as parse_user_report_spam:
+                with patch ( 'googlepostmasterapi.data.FlatData._parse_ips_reputations' ) as parse_ips_reputations:
+                    with patch ( 'googlepostmasterapi.data.FlatData._parse_domain_reputations' ) as parse_domain_reputations:
+                        with patch ( 'googlepostmasterapi.data.FlatData._parse_feed_back_loop' ) as parse_feed_back_loop:
+                            with patch ( 'googlepostmasterapi.data.FlatData._parse_use_auth' ) as parse_use_auth:
+                                with patch ( 'googlepostmasterapi.data.FlatData._parse_crypted_inbound' ) as parse_crypted_inbound:
+                                    with patch ( 'googlepostmasterapi.data.FlatData._parse_delivery_err' ) as parse_delivery_err:
+                                        deep_copy.return_value = 'random-dict';
+                                        
+                                        p = FlatData ();
+                                        p._data_tpl = { 'random-key': 'random-value' };
                                         
                                         ret = p.parse (
                                             key = 'random-key',
-                                            datas = {
+                                            data = {
                                                 'userReportedSpamRatio': 'random-user-reported-spam-ratio',
                                                 'ipReputations': 'random-ip-reputations',
                                                 'domainReputation': 'random-domain-reputation',
@@ -37,9 +39,9 @@ class FlatDatas_parseTest ( unittest.TestCase ):
                                                 'deliveryErrors': 'random-delivery-errors',
                                             }
                                         );
-                                        self.assertEqual ( ret, 'random-dict' );
                                         
-                                        self.assertTrue ( 'random-key' not in p.datas );
+                                        self.assertEqual ( ret, 'random-dict' );
+                                        self.assertEqual ( 'random-key' not in p.data, True );
                                         
                                         self.assertEqual ( deep_copy.call_count, 2 );
                                         deep_copy.assert_any_call ( { 'random-key': 'random-value' } );

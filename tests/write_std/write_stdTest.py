@@ -2,24 +2,24 @@
 # -*- coding: utf-8 -*-
 import os;
 import unittest;
-from shutil import copyfile;
-from unittest.mock import patch, Mock;
-from datetime import datetime;
 
-from pprint import pprint ;
+from pprint import pprint;
+from unittest.mock import patch, Mock;
+
 
 from googlepostmasterapi.utils import write_std;
 
+
 class write_stdTest ( unittest.TestCase ):
     def test_calls ( self ):
-        with patch ( 'googlepostmasterapi.utils.sys.stdout.write' ) as w_stdout:
+        with patch ( 'googlepostmasterapi.utils.sys.stdout.write' ) as write:
             write_std ( [
                 'random-line-1',
                 'random-line-2',
                 'random-line-3'
             ] );
 
-            self.assertEqual ( w_stdout.call_count, 3 );
-            w_stdout.assert_any_call ( "random-line-1\n" );
-            w_stdout.assert_any_call ( "random-line-2\n" );
-            w_stdout.assert_any_call ( "random-line-3\n" );
+            self.assertEqual ( write.call_count, 3 );
+            write.assert_any_call ( "random-line-1\n" );
+            write.assert_any_call ( "random-line-2\n" );
+            write.assert_any_call ( "random-line-3\n" );

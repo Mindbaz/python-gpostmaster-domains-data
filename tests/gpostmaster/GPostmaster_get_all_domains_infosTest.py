@@ -2,11 +2,10 @@
 # -*- coding: utf-8 -*-
 import os;
 import unittest;
-from shutil import copyfile;
-from unittest.mock import patch, Mock;
-from datetime import datetime;
 
-from pprint import pprint ;
+from pprint import pprint;
+from unittest.mock import patch, Mock;
+
 
 from googlepostmasterapi.gpt import GPostmaster;
 
@@ -35,73 +34,83 @@ class RMock ( object ):
         pass;
 
         
+@patch ( 'googlepostmasterapi.gpt.GPostmaster._init_resources', Mock ( return_value = None ) )
 class GPostmaster_get_all_domains_infosTest ( unittest.TestCase ):
     def test_calls ( self ):
-        with patch ( 'googlepostmasterapi.gpt.GPostmaster._init_resources' ) as init_ressources:
-            with patch ( 'googlepostmasterapi.gpt.write_std' ) as write_std:
-                with patch ( 'googlepostmasterapi.gpt.GPostmaster.get_domains' ) as get_domains:
-                    with patch ( 'googlepostmasterapi.gpt.GPostmaster._create_pool_datas', return_value = [ 'random-pool-datas' ] ) as create_pool_datas:
-                        with patch ( 'googlepostmasterapi.gpt.Pool', side_effect = PoolMock ) as init_pool:
-                            with patch ( 'tests.gpostmaster.GPostmaster_get_all_domains_infosTest.RMock.map', return_value = 'random-map-returns' ) as map_call:
-                                with patch ( 'googlepostmasterapi.gpt.GPostmaster._clean_pool_returns', return_value = 'random-cleaned-datas' ) as clean_pool_returns:
-                                    with patch ( 'googlepostmasterapi.gpt.GPostmaster._print_stats' ) as print_stats:
-                                        w = GPostmaster (
-                                            token = 'random-token'
-                                        );
-                                        w._pool_size = 52;
-                                        
-                                        ret = w.get_all_domains_infos (
-                                            input_date = 'random-input-date'
-                                        );
-                                        
-                                        self.assertEqual ( ret, 'random-cleaned-datas' );
-                                        self.assertEqual ( get_domains.call_count, 1 );
-                                        create_pool_datas.assert_called_with (
-                                            input_date = 'random-input-date'
-                                        );
-                                        init_pool.assert_called_with (
-                                            processes = 52
-                                        );
-                                        self.assertEqual ( map_call.call_count, 1 );
-                                        for call in map_call.call_args_list:
-                                            args, kwargs = call;
-                                            self.assertEqual ( args [ 0 ], w._get_domain_infos_pool );
-                                            self.assertEqual ( args [ 1 ], [ 'random-pool-datas' ] );
-                                        clean_pool_returns.assert_called_with (
-                                            datas = 'random-map-returns'
-                                        );
-                                        self.assertEqual ( print_stats.call_count, 1 );
-                                        write_std.assert_not_called ();
+        with patch ( 'googlepostmasterapi.gpt.write_std' ) as write_std:
+            with patch ( 'googlepostmasterapi.gpt.GPostmaster.get_domains' ) as get_domains:
+                with patch ( 'googlepostmasterapi.gpt.GPostmaster._create_pool_data' ) as create_pool_data:
+                    with patch ( 'googlepostmasterapi.gpt.Pool' ) as r_init:
+                        with patch ( 'tests.gpostmaster.GPostmaster_get_all_domains_infosTest.RMock.map' ) as map_:
+                            with patch ( 'googlepostmasterapi.gpt.GPostmaster._clean_pool_returns' ) as clean_pool_returns:
+                                with patch ( 'googlepostmasterapi.gpt.GPostmaster._print_stats' ) as print_stats:
+                                    create_pool_data.return_value = [
+                                        'random-pool-data'
+                                    ];
+                                    r_init.side_effect = PoolMock;
+                                    map_.return_value = 'random-map-returns';
+                                    clean_pool_returns.return_value = 'random-cleaned-data';
+                                    
+                                    g = GPostmaster (
+                                        token = 'random-token'
+                                    );
+                                    g._pool_size = 52;
+                                    
+                                    ret = g.get_all_domains_infos (
+                                        input_date = 'random-input-date'
+                                    );
+                                    
+                                    self.assertEqual ( ret, 'random-cleaned-data' );
+                                    get_domains.assert_called_once_with ();
+                                    create_pool_data.assert_called_with (
+                                        input_date = 'random-input-date'
+                                    );
+                                    r_init.assert_called_with (
+                                        processes = 52
+                                    );
+                                    map_.assert_called_once_with (
+                                        g._get_domain_infos_pool,
+                                        [ 'random-pool-data' ]
+                                    );
+                                    clean_pool_returns.assert_called_with (
+                                        data = 'random-map-returns'
+                                    );
+                                    print_stats.assert_called_once_with ();
+                                    write_std.assert_not_called ();
 
                                         
     def test_nothing_to_fecth ( self ):
-        with patch ( 'googlepostmasterapi.gpt.GPostmaster._init_resources' ) as init_ressources:
-            with patch ( 'googlepostmasterapi.gpt.write_std' ) as write_std:
-                with patch ( 'googlepostmasterapi.gpt.GPostmaster.get_domains' ) as get_domains:
-                    with patch ( 'googlepostmasterapi.gpt.GPostmaster._create_pool_datas', return_value = [] ) as create_pool_datas:
-                        with patch ( 'googlepostmasterapi.gpt.Pool', side_effect = PoolMock ) as init_pool:
-                            with patch ( 'tests.gpostmaster.GPostmaster_get_all_domains_infosTest.RMock.map', return_value = 'random-map-returns' ) as map_call:
-                                with patch ( 'googlepostmasterapi.gpt.GPostmaster._clean_pool_returns', return_value = 'random-cleaned-datas' ) as clean_pool_returns:
-                                    with patch ( 'googlepostmasterapi.gpt.GPostmaster._print_stats' ) as print_stats:
-                                        w = GPostmaster (
-                                            token = 'random-token'
-                                        );
-                                        w._pool_size = 52;
-                                        
-                                        ret = w.get_all_domains_infos (
-                                            input_date = 'random-input-date'
-                                        );
-                                        
-                                        self.assertEqual ( ret, [] );
-                                        self.assertEqual ( get_domains.call_count, 1 );
-                                        create_pool_datas.assert_called_with (
-                                            input_date = 'random-input-date'
-                                        );
-                                        init_pool.assert_not_called ();
-                                        map_call.assert_not_called ();
-                                        clean_pool_returns.assert_not_called ();
-                                        print_stats.assert_not_called ();
-                                        write_std.assert_called_with ( [ 'Nothing to download' ] );
+        with patch ( 'googlepostmasterapi.gpt.write_std' ) as write_std:
+            with patch ( 'googlepostmasterapi.gpt.GPostmaster.get_domains' ) as get_domains:
+                with patch ( 'googlepostmasterapi.gpt.GPostmaster._create_pool_data' ) as create_pool_data:
+                    with patch ( 'googlepostmasterapi.gpt.Pool' ) as r_init:
+                        with patch ( 'tests.gpostmaster.GPostmaster_get_all_domains_infosTest.RMock.map' ) as map_:
+                            with patch ( 'googlepostmasterapi.gpt.GPostmaster._clean_pool_returns' ) as clean_pool_returns:
+                                with patch ( 'googlepostmasterapi.gpt.GPostmaster._print_stats' ) as print_stats:
+                                    create_pool_data.return_value = [];
+                                    r_init.side_effect = PoolMock;
+                                    map_.return_value = 'random-map-returns';
+                                    clean_pool_returns.return_value = 'random-cleaned-data';
+                                    
+                                    g = GPostmaster (
+                                        token = 'random-token'
+                                    );
+                                    g._pool_size = 52;
+                                    
+                                    ret = g.get_all_domains_infos (
+                                        input_date = 'random-input-date'
+                                    );
+                                    
+                                    self.assertEqual ( ret, [] );
+                                    get_domains.assert_called_once_with ();
+                                    create_pool_data.assert_called_with (
+                                        input_date = 'random-input-date'
+                                    );
+                                    r_init.assert_not_called ();
+                                    map_.assert_not_called ();
+                                    clean_pool_returns.assert_not_called ();
+                                    print_stats.assert_not_called ();
+                                    write_std.assert_called_with ( [ 'Nothing to download' ] );
             
             
 if __name__ == '__main__':

@@ -2,32 +2,26 @@
 # -*- coding: utf-8 -*-
 import os;
 import unittest;
-from shutil import copyfile;
-from unittest.mock import patch, Mock;
-from datetime import datetime;
 
-from pprint import pprint ;
+from pprint import pprint;
+from unittest.mock import patch, Mock;
+
 
 from googlepostmasterapi.gpt import GPostmaster;
 
 
-class RMock ( object ):
-    def __init__ ( self, *args, **kargs ):
-        print ( 'RMock : __init__' );
-        pass;
-
-
+@patch ( 'googlepostmasterapi.gpt.GPostmaster._init_resources', Mock ( return_value = None ) )
 class GPostmaster__init_parser_conTest ( unittest.TestCase ):
     def test_calls ( self ):
-        with patch ( 'googlepostmasterapi.gpt.GPostmaster._init_resources' ) as init_ressources:
-            with patch ( 'googlepostmasterapi.gpt.FlatDatas', side_effect= RMock ) as parser_call:
-                w = GPostmaster (
-                    token = 'random-token'
-                );
+        with patch ( 'googlepostmasterapi.gpt.FlatData' ) as r_init:
+            g = GPostmaster (
+                token = 'random-token'
+            );
+            
+            g._init_parser_con ();
+            self.assertEqual ( isinstance ( g._parser, Mock ), True );
+            r_init.assert_called_once_with ();
 
-                w._init_parser_con ();
-                self.assertTrue ( isinstance ( w._parser, RMock ) );
-            
-            
+
 if __name__ == '__main__':
     unittest.main ();

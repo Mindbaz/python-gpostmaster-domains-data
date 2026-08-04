@@ -2,11 +2,10 @@
 # -*- coding: utf-8 -*-
 import os;
 import unittest;
-from shutil import copyfile;
-from unittest.mock import patch, Mock;
-from datetime import datetime;
 
-from pprint import pprint ;
+from pprint import pprint;
+from unittest.mock import patch, Mock;
+
 
 from googlepostmasterapi.gpt import GPostmaster;
 
@@ -21,29 +20,27 @@ class RMock ( object ):
         pass;
 
 
+@patch ( 'googlepostmasterapi.gpt.GPostmaster._init_resources', Mock ( return_value = None ) )
 class GPostmaster__clean_domain_infosTest ( unittest.TestCase ):
     def test_calls ( self ):
-        with patch ( 'googlepostmasterapi.gpt.GPostmaster._init_resources' ) as init_ressources:
-            with patch ( 'tests.gpostmaster.GPostmaster__clean_domain_infosTest.RMock.parse', return_value = 'random-returns' ) as parse_call:
-                w = GPostmaster (
-                    token = 'random-token'
-                );
-                w._parser = RMock ();
-                
-                ret = w._clean_domain_infos (
-                    key = 'random-key',
-                    datas = 'random-datas'
-                );
-                
-                self.assertEqual ( ret, 'random-returns' );
-                parse_call.assert_called_with (
-                    key = 'random-key',
-                    datas = 'random-datas'
-                );
-
-                    
-
-                        
+        with patch ( 'tests.gpostmaster.GPostmaster__clean_domain_infosTest.RMock.parse' ) as parse:
+            parse.return_value = 'random-returns';
+            
+            g = GPostmaster (
+                token = 'random-token'
+            );
+            g._parser = RMock ();
+            
+            ret = g._clean_domain_infos (
+                key = 'random-key',
+                data = 'random-data'
+            );
+            
+            self.assertEqual ( ret, 'random-returns' );
+            parse.assert_called_with (
+                key = 'random-key',
+                data = 'random-data'
+            );
             
             
 if __name__ == '__main__':

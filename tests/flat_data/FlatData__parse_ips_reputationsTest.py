@@ -2,18 +2,18 @@
 # -*- coding: utf-8 -*-
 import os;
 import unittest;
-from shutil import copyfile;
+
+from pprint import pprint;
 from unittest.mock import patch, Mock;
-from datetime import datetime;
 
-from pprint import pprint ;
 
-from googlepostmasterapi.datas import FlatDatas;
+from googlepostmasterapi.data import FlatData;
 
-class FlatDatas__parse_ips_reputationsTest ( unittest.TestCase ):
+
+class FlatData__parse_ips_reputationsTest ( unittest.TestCase ):
     def test_calls ( self ):
-        p = FlatDatas ();
-        p.datas [ 'random-key' ] = p._datas_tpl.copy ();
+        p = FlatData ();
+        p.data [ 'random-key' ] = p._data_tpl.copy ();
         
         ret = p._parse_ips_reputations (
             key = 'random-key',
@@ -24,28 +24,25 @@ class FlatDatas__parse_ips_reputationsTest ( unittest.TestCase ):
                 { 'reputation': 'BAD', 'ipCount': 12, 'sampleIps': [ 'random-ip-bad-1', 'random-ip-bad-2', 'random-ip-bad-3' ] }
             ]
         );
-        self.assertTrue ( ret );
+        self.assertEqual ( ret, True );
         
-        self.assertEqual ( p.datas [ 'random-key' ] [ 'ips_reputations' ], [
+        self.assertEqual ( p.data [ 'random-key' ] [ 'ips_reputations' ], [
             { 'level': 4, 'value': 9.3, 'ips': 'random-ip-high-1;random-ip-high-2' },
             { 'level': 2, 'value': 68.5, 'ips': 'random-ip-low-1' },
             { 'level': 1, 'value': 22.2, 'ips': 'random-ip-bad-1;random-ip-bad-2;random-ip-bad-3' }
         ] );
 
         
-    def test_no_datas ( self ):
-        p = FlatDatas ();
-        p.datas [ 'random-key' ] = p._datas_tpl.copy ();
+    def test_no_data ( self ):
+        p = FlatData ();
+        p.data [ 'random-key' ] = p._data_tpl.copy ();
         
         ret = p._parse_ips_reputations (
             key = 'random-key',
             value = None
         );
-        self.assertFalse ( ret );
-        self.assertEqual ( p.datas [ 'random-key' ] [ 'ips_reputations' ], [] );
-        
-
-        
+        self.assertEqual ( ret, False );
+        self.assertEqual ( p.data [ 'random-key' ] [ 'ips_reputations' ], [] );
         
         
 if __name__ == '__main__':

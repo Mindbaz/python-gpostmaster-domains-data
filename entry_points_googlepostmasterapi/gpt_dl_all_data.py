@@ -29,12 +29,12 @@ from googlepostmasterapi.gpt import GPostmaster;
 from googlepostmasterapi import __version__;
 
 def run ():
-    parser = argparse.ArgumentParser ( prog = 'gpt_dl_all_datas' );
+    parser = argparse.ArgumentParser ( prog = 'gpt_dl_all_data' );
     
     ## All arguments
     parser.add_argument ( '--token', type = str, nargs = '?', help = 'GPT token' );
     parser.add_argument ( '--pool-size', type = int, nargs = '?', help = 'Number of parallel calls to GPT. Default : 2', default = 2 );
-    parser.add_argument ( '--date', type = str, nargs = '?', help = 'Date to fetch datas from GPT. Format : YYYY-MM-DD. Default : D-2' );
+    parser.add_argument ( '--date', type = str, nargs = '?', help = 'Date to fetch data from GPT. Format : YYYY-MM-DD. Default : D-2' );
     parser.add_argument ( '--verbose', action = 'store_true', help = 'Verbose mode' );
     parser.add_argument ( '--version', action = 'store_true', help = 'Display version' );
     args = parser.parse_args ();
@@ -98,12 +98,12 @@ def run ():
     error_msg = '';
     
     try:
-        """Download all GPT datas"""
+        """Download all GPT data"""
         ret = g.get_all_domains_infos (
             input_date = args.date
         );
         
-        print ( 'Datas : ' );
+        print ( 'Data : ' );
         print ( ret );
     except Exception as e:
         exit_code = 1;

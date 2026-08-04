@@ -41,13 +41,13 @@ Translates string level from GTP to int
 # How to use it
 
 ```sh
-python entry_points_googlepostmasterapi/gpt_dl_all_datas.py -h
-> usage: gpt_dl_all_datas [-h] [--token [TOKEN]] [--pool-size [POOL_SIZE]] [--date [DATE]] [--verbose] [--version]
+python entry_points_googlepostmasterapi/gpt_dl_all_data.py -h
+> usage: gpt_dl_all_data [-h] [--token [TOKEN]] [--pool-size [POOL_SIZE]] [--date [DATE]] [--verbose] [--version]
 ```
 
 ```sh
-python entry_points_googlepostmasterapi/gpt_dl_domain_datas.py -h
-> usage: gpt_dl_domain_datas [-h] [--token [TOKEN]] [--domain [DOMAIN]] [--date [DATE]] [--verbose] [--version]
+python entry_points_googlepostmasterapi/gpt_dl_domain_data.py -h
+> usage: gpt_dl_domain_data [-h] [--token [TOKEN]] [--domain [DOMAIN]] [--date [DATE]] [--verbose] [--version]
 ```
 
 # Support version

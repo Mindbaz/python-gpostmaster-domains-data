@@ -1,24 +1,25 @@
 [project]
-name = "gpostmaster-domains-datas"
+name = "gpostmaster-domains-data"
 dynamic = ["version"]
-description = "Downloads and flattends datas from Google Postmaster Tools (GPT)"
+description = "Downloads and flattends data from Google Postmaster Tools (GPT)"
 readme = "README.md"
 license = "GPL-3.0-only"
 license-files = ["LICENSE"]
 authors = [
     { name = "Valentin Henon", email = "vhenon@mindbaz.com" }
 ]
-urls = { repository = "https://github.com/Mindbaz/python-gpostmaster-domains-datas" }
+urls = { repository = "https://github.com/Mindbaz/python-gpostmaster-domains-data" }
 requires-python = ">=3.9"
 dependencies = [
+    "pydantic",
     "google-api-python-client",
     "google-auth-httplib2",
     "google-auth-oauthlib",
 ]
 
 [project.scripts]
-gpt_dl_all_datas = "entry_points_googlepostmasterapi.gpt_dl_all_datas:run"
-gpt_dl_domain_datas = "entry_points_googlepostmasterapi.gpt_dl_domain_datas:run"
+gpt_dl_all_data = "entry_points_googlepostmasterapi.gpt_dl_all_data:run"
+gpt_dl_domain_data = "entry_points_googlepostmasterapi.gpt_dl_domain_data:run"
 
 [project.optional-dependencies]
 dev = [

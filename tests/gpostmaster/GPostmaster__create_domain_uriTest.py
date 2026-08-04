@@ -2,33 +2,28 @@
 # -*- coding: utf-8 -*-
 import os;
 import unittest;
-from shutil import copyfile;
-from unittest.mock import patch, Mock;
-from datetime import datetime;
 
-from pprint import pprint ;
+from pprint import pprint;
+from unittest.mock import patch, Mock;
+
 
 from googlepostmasterapi.gpt import GPostmaster;
 
 
+@patch ( 'googlepostmasterapi.gpt.GPostmaster._init_resources', Mock ( return_value = None ) )
 class GPostmaster__create_domain_uriTest ( unittest.TestCase ):
     def test_calls ( self ):
-        with patch ( 'googlepostmasterapi.gpt.GPostmaster._init_resources' ) as init_ressources:
-            w = GPostmaster (
-                token = 'random-token'
-            );
-            w._uri_tpl = 'random uri with : {domain} / {date}';
-            
-            ret = w._create_domain_uri (
-                domain = 'random-domain',
-                input_date = 'random-input-date'
-            );
-
-            self.assertEqual ( ret, 'random uri with : random-domain / random-input-date' );
-
-                    
-
-                        
+        g = GPostmaster (
+            token = 'random-token'
+        );
+        g._uri_tpl = 'random uri with : {domain} / {date}';
+        
+        ret = g._create_domain_uri (
+            domain = 'random-domain',
+            input_date = 'random-input-date'
+        );
+        
+        self.assertEqual ( ret, 'random uri with : random-domain / random-input-date' );
             
             
 if __name__ == '__main__':
