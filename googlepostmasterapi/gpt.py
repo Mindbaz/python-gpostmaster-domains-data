@@ -23,6 +23,9 @@ from googleapiclient.discovery import build;
 from googleapiclient.errors import HttpError;
 from multiprocessing import Pool;
 from multiprocessing.managers import BaseManager;
+from pprint import pprint;
+from pydantic import validate_call;
+from typing import Any, List, Optional;
 
 
 #: Current module path
@@ -37,22 +40,24 @@ class GPostmaster ( object ):
     """Download data from Google postmaster tools
     
     Attributes:
-        _uri_tpl (string): Template to create an uri to get domain infos
-        _domains (string[]): All domains download from server
-        _service (googleapiclient.discovery.build): Connector to GPT
-        _parser (FlatData): Connector to data cleaner
-        _stats (Stats): Connector to statistiques data
-        _pool_size (int): Pool size to calls
+        _uri_tpl (str): Protected. Template to create an uri to get domain infos
+        _domains (string[]): Protected. All domains download from server
+        _service (googleapiclient.discovery.build): Protected. Connector to GPT
+        _parser (FlatData): Protected. Connector to data cleaner
+        _stats (Stats): Protected. Connector to statistiques data
+        _pool_size (int): Protected. Number of threads
     """
-    def __init__ ( self, token, pool_size = 2, verbose = False ):
+    @validate_call
+    def __init__ ( self, token: str, pool_size: Optional [ int ] = 2, verbose: Optional [ bool ] = False ) -> None:
         """Default constructor
         
         Arguments:
-            token (string): Absolute file path to GPT token
-            verbose (bool): Verbose mode. Default to False
+            token (str): Absolute local file path to GPT token
+            pool_size (int): Optional. Number of threads. Default : 2
+            verbose (bool): Optional. Verbose mode. Default : False
         """
         """Verbose mode"""
-        self.verbose = bool ( verbose );
+        self.verbose = verbose;
         
         """Template to create an uri to get domain infos"""
         self._uri_tpl = 'domains/{domain}/trafficStats/{date}';
@@ -60,19 +65,19 @@ class GPostmaster ( object ):
         """All domains download from server"""
         self._domains = [];
         
-        """Pool size to calls"""
-        self._pool_size = int ( pool_size );
+        """Number of threads"""
+        self._pool_size = pool_size;
         
         self._init_resources (
             token = token
         );
     
     
-    def _init_resources ( self, token ):
+    def _init_resources ( self, token: str ) -> None:
         """Init resources used by system : init service / parser / stats
         
         Arguments:
-            token (string): Absolute file path to GPT token
+            token (str): Absolute local file path to GPT token
         """
         ## Init service
         self._init_service (
@@ -86,31 +91,41 @@ class GPostmaster ( object ):
         self._init_stats_con ();
     
     
-    def _init_stats_con ( self ):
+    def _init_stats_con ( self ) -> None:
         """Init stats con. Should be manager by multiprocessing to work with pool
         """
         BaseManager.register ( 'Stats', Stats );
         manager = BaseManager ();
         manager.start ();
-        
+        """Connector to statistiques data"""
         self._stats = manager.Stats ();
     
     
-    def _load_token ( self, token ):
+    def _load_token ( self, token: str ) -> Any:
         """Load GPT token
         
         Arguments:
-            token (string): Absolute file path to GPT token
+            token (str): Absolute file path to GPT token
+
+        Returns:
+            todo
         """
         with open ( token, 'rb' ) as token:
-            return pickle.load ( token );
+            ret = pickle.load ( token );
+            print ( 'v v v v v v v v v v v v v v v v v v v v v' );
+            print ( 'AMAR : 2' );
+            print ( type ( ret ) );
+            print ( ret );
+            pprint ( ret );
+            print ( '^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^' );
+            return ret;
     
     
-    def _init_service ( self, token ):
+    def _init_service ( self, token: str ) -> None:
         """Init service connector
         
         Arguments:
-            token (string): Absolute file path to GPT token
+            token (str): Absolute local file path to GPT token
         """
         """Connector to Google Postmaster Tools"""
         self._service = build (
@@ -122,11 +137,11 @@ class GPostmaster ( object ):
         );
     
     
-    def _gpt_get_domains ( self, next_page = None ):
+    def _gpt_get_domains ( self, next_page: Optional [ str ] = None ) -> List [ dict ]:
         """Call GPT to get all domains. Recursive call on pagination
         
         Arguments:
-            next_page (str): Token to get next page of domains. Default : None
+            next_page (str): Optional. Token to get next page of domains. Default : None
         
         Returns:
             list: List of dict with all domains, format : [ { 'name': ..., 'createTime': ..., 'permission': ... } ]
@@ -147,7 +162,8 @@ class GPostmaster ( object ):
         return ret;
     
     
-    def get_domains ( self ):
+    @validate_call
+    def get_domains ( self ) -> None:
         """Get all domains with permissions : owner/reader
         """
         """All domains infos from GPT"""
@@ -163,12 +179,12 @@ class GPostmaster ( object ):
         ] );
     
     
-    def _create_domain_uri ( self, domain, input_date ):
+    def _create_domain_uri ( self, domain: str, input_date: str ) -> str:
         """Create URI to a domain to query
         
         Arguments:
-            domain (string): Domain to query
-            input_date (string): Date to query, format : YYYYMMDD
+            domain (str): Domain to query
+            input_date (str): Date to query, format : YYYYMMDD
         """
         return self._uri_tpl.format (
             domain = domain,
@@ -176,12 +192,12 @@ class GPostmaster ( object ):
         );
     
     
-    def _gpt_get_domain_info ( self, domain, input_date ):
+    def _gpt_get_domain_info ( self, domain: str, input_date: str ) -> dict:
         """Call GPT to get all infos to a domain
         
         Arguments:
-            domain (string): Domain to query
-            input_date (string): Date to query, format : YYYYMMDD
+            domain (str): Domain to query
+            input_date (str): Date to query, format : YYYYMMDD
         
         Returns:
             dict: Process state & result
@@ -218,35 +234,45 @@ class GPostmaster ( object ):
         return ret;
     
     
-    def _init_parser_con ( self ):
+    def _init_parser_con ( self ) -> None:
         """Init data parser/cleaner con
         """
         self._parser = FlatData ();
     
     
-    def _clean_domain_infos ( self, key, data ):
+    def _clean_domain_infos ( self, key: str, data: dict ) -> dict:
         """Clean domain infos
         
         Arguments:
-            key (string): Key to identify data on cleaner
+            key (str): Key to identify data on cleaner
             data (dict): Domain infos to clean
         
         Returns:
             dict: Cleaned data
         """
-        return self._parser.parse (
+        ret = self._parser.parse (
             key = key,
             data = data
         );
+
+        print ( 'v v v v v v v v v v v v v v v v v v v v v' );
+        print ( 'AMAR : 3' );
+        print ( type ( ret ) );
+        print ( ret );
+        pprint ( ret );
+        print ( '^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^' );
+        
+        return ret;
     
     
-    def get_domain_infos ( self, domain, input_date, print_stats = True ):
+    @validate_call
+    def get_domain_infos ( self, domain: str, input_date: str, print_stats: Optional [ bool ] = True ) -> dict:
         """Get infos to a domain
         
         Arguments:
-            domain (string): Domain to query
-            input_date (string): Date to query, format : YYYYMMDD
-            print_stats (bool): True to display stats of the call. Defaut : True
+            domain (str): Domain to query
+            input_date (str): Date to query, format : YYYYMMDD
+            print_stats (bool): Optional. True to display stats of the call. Defaut : True
         
         Returns:
             dict: Process state & domain infos
@@ -281,25 +307,28 @@ class GPostmaster ( object ):
         return ret;
     
     
-    def _print_stats ( self ):
+    def _print_stats ( self ) -> None:
         """Display calls statistics
         """
         self._stats.print_stats ();
     
     
-    def _create_pool_data ( self, input_date ):
+    def _create_pool_data ( self, input_date: str ) -> List [ dict ]:
         """Create data to map call on pool with all domains
         
         Arguments:
-            input_date (string): Date to query
+            input_date (str): Date to query
         
         Returns:
             dict[]: List of dict with domain&input_date
         """
-        return [ { 'domain': x, 'input_date': input_date } for x in self._domains ];
+        return [
+            { 'domain': x, 'input_date': input_date }
+            for x in self._domains
+        ];
     
     
-    def _get_domain_infos_pool ( self, data ):
+    def _get_domain_infos_pool ( self, data: dict ) -> dict:
         """Abstract call to get_domain_infos from pool with data as dict
         
         Arguments:
@@ -315,7 +344,7 @@ class GPostmaster ( object ):
         );
     
     
-    def _clean_pool_returns ( self, data ):
+    def _clean_pool_returns ( self, data: List [ dict ] ) -> List [ dict ]:
         """Clean result from pool map returns : remove all state==false
         
         Arguments:
@@ -324,14 +353,18 @@ class GPostmaster ( object ):
         Returns:
             dict[]: List of dict from pool map with only state==true
         """
-        return [ x for x in data if x [ 'state' ] == True ];
+        return [
+            x for x in data
+            if x [ 'state' ] == True
+        ];
     
     
-    def get_all_domains_infos ( self, input_date ):
+    @validate_call
+    def get_all_domains_infos ( self, input_date: str ) -> List [ dict ]:
         """Call GPT on all available domains
         
         Arguments:
-            input_date (string): Date to query, format : YYYYMMDD
+            input_date (str): Date to query, format : YYYYMMDD
         
         Returns:
             list: All domain infos
