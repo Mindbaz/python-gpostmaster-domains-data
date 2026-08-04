@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# Copyright (C) 2021 Mindbaz
+# Copyright (C) 2026 Mindbaz
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -14,19 +14,23 @@
 # 
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
-"""Downloads data for all domains from GPT
 """
-
+Downloads data for all domains from GPT
+"""
 import os;
 import sys;
 import argparse;
+
 from datetime import datetime, timedelta;
 from pprint import pprint;
 
-sys.path.insert ( 0, os.path.dirname ( os.path.dirname ( os.path.abspath ( __file__ ) ) ) );
+
+#: Current module path
+MODULE_PATH = os.path.dirname ( os.path.dirname ( os.path.abspath ( __file__ ) ) );
+sys.path.insert ( 0, MODULE_PATH );
 from googlepostmasterapi.gpt import GPostmaster;
 from googlepostmasterapi import __version__;
+
 
 def run ():
     parser = argparse.ArgumentParser ( prog = 'gpt_dl_all_data' );
@@ -86,6 +90,7 @@ def run ():
     # Init tool
     #
     
+    """Parser"""
     g = GPostmaster (
         token = args.token,
         pool_size = args.pool_size,

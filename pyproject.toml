@@ -20,6 +20,7 @@ dependencies = [
 [project.scripts]
 gpt_dl_all_data = "entry_points_googlepostmasterapi.gpt_dl_all_data:run"
 gpt_dl_domain_data = "entry_points_googlepostmasterapi.gpt_dl_domain_data:run"
+gpt_dl_domains = "entry_points_googlepostmasterapi.gpt_dl_domains:run"
 
 [project.optional-dependencies]
 dev = [

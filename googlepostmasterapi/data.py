@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 # Flattens GPT data
-# Copyright (C) 2021 Mindbaz
+# Copyright (C) 2026 Mindbaz
 # 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -148,7 +148,7 @@ class FlatData ( object ):
         return True;
     
     
-    def _parse_use_auth ( self, key: str, **kargs: Any ) -> bool:
+    def _parse_use_auth ( self, key: str, **kargs: dict ) -> bool:
         """Clean part of keys : dkimSuccessRatio / spfSuccessRatio / dmarcSuccessRatio
         
         Arguments:
@@ -160,13 +160,6 @@ class FlatData ( object ):
         Returns:
             bool: True if at leat one the three key exists. False otherwise
         """
-        print ( 'v v v v v v v v v v v v v v v v v v v v v' );
-        print ( 'AMAR : 1' );
-        print ( type ( kargs ) );
-        print ( kargs );
-        pprint ( kargs );
-        print ( '^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^' );
-        
         """Flag to valid at least one value"""
         ret = False;
         
