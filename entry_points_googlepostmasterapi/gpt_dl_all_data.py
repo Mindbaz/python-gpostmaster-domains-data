@@ -103,10 +103,20 @@ def run ():
     error_msg = '';
     
     try:
-        """Download all GPT data"""
+        """Start query api"""
+        date_start = datetime.now ();
+        
+        """Download all data"""
         ret = g.get_all_domains_infos (
             input_date = args.date
         );
+        
+        print ( 'Get data in {}s'.format (
+            round (
+                ( datetime.now () - date_start ).total_seconds (),
+                2
+            )
+        ) );
         
         print ( 'Data : ' );
         print ( ret );

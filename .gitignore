@@ -11,3 +11,5 @@ reports/
 
 ## Others
 *.pk
+*.json
+*.md

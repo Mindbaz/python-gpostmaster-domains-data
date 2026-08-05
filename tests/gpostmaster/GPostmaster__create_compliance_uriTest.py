@@ -11,19 +11,19 @@ from googlepostmasterapi.gpt import GPostmaster;
 
 
 @patch ( 'googlepostmasterapi.gpt.GPostmaster._init_resources', Mock ( return_value = None ) )
-class GPostmaster__create_domain_uriTest ( unittest.TestCase ):
+class GPostmaster__create_compliance_uriTest ( unittest.TestCase ):
     def test_calls ( self ):
         g = GPostmaster (
             token = 'random-token'
         );
-        g._uri_tpl = 'random uri with : {domain}';
-
-        ret = g._create_domain_uri (
+        g._compliance_uri_tpl = 'random uri with : {domain}';
+        
+        ret = g._create_compliance_uri (
             domain = 'random-domain'
         );
 
         self.assertEqual ( ret, 'random uri with : random-domain' );
-            
-            
+
+
 if __name__ == '__main__':
     unittest.main ();

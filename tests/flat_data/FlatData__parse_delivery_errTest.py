@@ -6,44 +6,55 @@ import unittest;
 from pprint import pprint;
 from unittest.mock import patch, Mock;
 
+
 from googlepostmasterapi.data import FlatData;
+
 
 class FlatData__parse_delivery_errTest ( unittest.TestCase ):
     def test_calls ( self ):
-        p = FlatData ();
-        p.data [ 'random-key' ] = p._data_tpl.copy ();
-                
-        ret = p._parse_delivery_err (
+        f = FlatData ();
+        f.data [ 'random-key' ] = f._data_tpl.copy ();
+
+        ret = f._parse_delivery_err (
             key = 'random-key',
-            value = [
-                { 'errorClass': 'RANDOM-CLASS-1', 'errorType': 'RANDOM-TYPE-1', 'errorRatio': 0.1234 },
-                { 'errorClass': 'RANDOM-CLASS-1', 'errorType': 'RANDOM-TYPE-2', 'errorRatio': 0.4567 },
-                { 'errorClass': 'RANDOM-CLASS-2', 'errorType': 'RANDOM-TYPE-1', 'errorRatio': 0.789 },
-                { 'errorClass': 'RANDOM-CLASS-2', 'errorType': 'RANDOM-TYPE-2' }
-            ]
+            value = {
+                'random-class-1__random-type-1': 0.1234,
+                'random-class-1__random-type-2': 0.4567,
+                'random-class-1__random-type-3': 0,
+                'random-class-2__random-type-1': 0.789,
+                'random-class-2__random-type-2': None
+            }
         );
-        
+
         self.assertEqual ( ret, True );
-        self.assertEqual ( p.data [ 'random-key' ] [ 'delivery_errors' ], [
-            { 'type': 'random-type-1', 'class': 'random-class-1', 'percent': 12.3 },
-            { 'type': 'random-type-2', 'class': 'random-class-1', 'percent': 45.7 },
-            { 'type': 'random-type-1', 'class': 'random-class-2', 'percent': 78.9 }
-        ] );
+        self.assertEqual ( f.data [ 'random-key' ] [ 'delivery_errors' ], [ {
+            'class': 'random-class-1',
+            'type': 'random-type-1',
+            'percent': 12.3
+        }, {
+            'class': 'random-class-1',
+            'type': 'random-type-2',
+            'percent': 45.7
+        }, {
+            'class': 'random-class-2',
+            'type': 'random-type-1',
+            'percent': 78.9
+        } ] );
 
-        
+
     def test_no_value ( self ):
-        p = FlatData ();
-        p.data [ 'random-key' ] = p._data_tpl.copy ();
-        
-        ret = p._parse_delivery_err (
-            key = 'random-key',
-            value = None
-        );
-        
-        self.assertEqual ( ret, False );
-        self.assertEqual ( p.data [ 'random-key' ] [ 'delivery_errors' ], [] );
+        f = FlatData ();
+        f.data [ 'random-key' ] = f._data_tpl.copy ();
 
-        
-        
+        ret = f._parse_delivery_err (
+            key = 'random-key',
+            value = {}
+        );
+
+        self.assertEqual ( ret, False );
+        self.assertEqual ( f.data [ 'random-key' ] [ 'delivery_errors' ], [] );
+
+
+
 if __name__ == '__main__':
     unittest.main ();

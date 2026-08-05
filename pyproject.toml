@@ -12,7 +12,7 @@ urls = { repository = "https://github.com/Mindbaz/python-gpostmaster-domains-dat
 requires-python = ">=3.9"
 dependencies = [
     "pydantic",
-    "google-api-python-client",
+    "google-api-python-client>=2.196.0",
     "google-auth-httplib2",
     "google-auth-oauthlib",
 ]

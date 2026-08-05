@@ -101,12 +101,22 @@ def run ():
     error_msg = '';
     
     try:
-        """Download domain GPT data"""
+        """Start query api"""
+        date_start = datetime.now ();
+        
+        """Download domain data"""
         ret = g.get_domain_infos (
             domain = args.domain,
             input_date = args.date
         );
-
+        
+        print ( 'Get data in {}s'.format (
+            round (
+                ( datetime.now () - date_start ).total_seconds (),
+                2
+            )
+        ) );
+        
         print ( '\nDomain data : ' );
         print ( json.dumps ( ret, indent = 4, sort_keys = True ) );
         print ( '' );

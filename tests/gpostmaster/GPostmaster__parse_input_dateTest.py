@@ -11,19 +11,18 @@ from googlepostmasterapi.gpt import GPostmaster;
 
 
 @patch ( 'googlepostmasterapi.gpt.GPostmaster._init_resources', Mock ( return_value = None ) )
-class GPostmaster__create_domain_uriTest ( unittest.TestCase ):
+class GPostmaster__parse_input_dateTest ( unittest.TestCase ):
     def test_calls ( self ):
         g = GPostmaster (
             token = 'random-token'
         );
-        g._uri_tpl = 'random uri with : {domain}';
 
-        ret = g._create_domain_uri (
-            domain = 'random-domain'
+        ret = g._parse_input_date (
+            input_date = '20261101'
         );
 
-        self.assertEqual ( ret, 'random uri with : random-domain' );
-            
-            
+        self.assertEqual ( ret, { 'year': 2026, 'month': 11, 'day': 1 } );
+
+
 if __name__ == '__main__':
     unittest.main ();

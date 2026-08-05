@@ -12,29 +12,29 @@ from googlepostmasterapi.data import FlatData;
 
 class FlatData__parse_crypted_inboundTest ( unittest.TestCase ):
     def test_calls ( self ):
-        p = FlatData ();
-        p.data [ 'random-key' ] = p._data_tpl.copy ();
+        f = FlatData ();
+        f.data [ 'random-key' ] = f._data_tpl.copy ();
         
-        ret = p._parse_crypted_inbound (
+        ret = f._parse_crypted_inbound (
             key = 'random-key',
             value = '0.4567'
         );
         
         self.assertEqual ( ret, True );
-        self.assertEqual ( p.data [ 'random-key' ] [ 'tls_inbound_percent' ], 45.7 );
+        self.assertEqual ( f.data [ 'random-key' ] [ 'tls_inbound_percent' ], 45.7 );
 
         
     def test_no_value ( self ):
-        p = FlatData ();
-        p.data [ 'random-key' ] = p._data_tpl.copy ();
+        f = FlatData ();
+        f.data [ 'random-key' ] = f._data_tpl.copy ();
         
-        ret = p._parse_crypted_inbound (
+        ret = f._parse_crypted_inbound (
             key = 'random-key',
             value = None
         );
         
         self.assertEqual ( ret, False );
-        self.assertEqual ( p.data [ 'random-key' ] [ 'tls_inbound_percent' ], None );
+        self.assertEqual ( f.data [ 'random-key' ] [ 'tls_inbound_percent' ], None );
         
         
 if __name__ == '__main__':
