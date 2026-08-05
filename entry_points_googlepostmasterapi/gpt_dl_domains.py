@@ -22,6 +22,7 @@ import sys;
 import argparse;
 import shutil;
 
+from datetime import datetime;
 from pprint import pprint;
 from typing import List, Optional;
 
@@ -98,9 +99,19 @@ def run ():
         pool_size = 2,
         verbose = args.verbose,
     );
+
+    """Start query api"""
+    date_start = datetime.now ();
     
     g.get_domains ();
-
+    
+    print ( 'Get data in {}s'.format (
+        round (
+            ( datetime.now () - date_start ).total_seconds (),
+            2
+        )
+    ) );
+    
     display_domains ( g._domains );
     
     exit ( 0 );

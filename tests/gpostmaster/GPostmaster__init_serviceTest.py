@@ -38,7 +38,7 @@ class GPostmaster__init_serviceTest ( unittest.TestCase ):
                 );
                 build_.assert_called_with (
                     'gmailpostmastertools',
-                    'v1beta1',
+                    'v2',
                     credentials = 'random-data'
                 );
             

@@ -19,7 +19,38 @@ import sys;
 
 from pprint import pprint;
 from pydantic import validate_call;
-from typing import Any, Callable, List;
+from typing import Any, Callable, List, Optional;
+
+
+@validate_call
+def extract_stat_value ( value: Optional [ dict ] = None ) -> Any:
+    """Extract the actual scalar/list value from a GPT v2 StatisticValue object
+
+    Arguments:
+        value (dict): Optional. StatisticValue object from GPT v2 (doubleValue/floatValue/intValue/stringValue/stringList). Default : None
+
+    Returns:
+        mixed: Extracted value. None if nothing set
+    """
+    if ( value == None ):
+        return None;
+    
+    if ( 'doubleValue' in value ):
+        return value [ 'doubleValue' ];
+    
+    if ( 'floatValue' in value ):
+        return value [ 'floatValue' ];
+    
+    if ( 'intValue' in value ):
+        return int ( value [ 'intValue' ] );
+    
+    if ( 'stringValue' in value ):
+        return value [ 'stringValue' ];
+    
+    if ( 'stringList' in value ):
+        return value [ 'stringList' ].get ( 'values', [] );
+    
+    return None;
 
 
 @validate_call
