@@ -402,30 +402,32 @@ class GPostmaster ( object ):
         Returns:
             string[]: Unique feedback loop ids, in order of appearance
         """
-        """Feedback loop ids already seen"""
-        seen = set ();
-        """Unique feedback loop ids, in order of appearance"""
+        """Unique fbl, in order of appearance"""
         ret = [];
         
         for domain_stat in domain_stats:
             if ( domain_stat.get ( 'metric' ) != 'feedback_loop_id' ):
                 continue;
 
-            """Feedback loop id value"""
+            """FBL id value : scalar, or a list when GPT reports a stringList"""
             value = extract_stat_value (
                 value = domain_stat.get (
                     'value', {}
                 )
             );
-            
+
             if ( value == None ):
                 continue;
-            
-            value = str ( value );
-            if ( value in ret ):
-                continue;
-            
-            ret.append ( value );
+
+            """FBL ids found on this row"""
+            row_values = value if ( isinstance ( value, list ) == True ) else [ value ];
+
+            for row_value in row_values:
+                row_value = str ( row_value );
+                if ( row_value in ret ):
+                    continue;
+
+                ret.append ( row_value );
 
         return ret;
 

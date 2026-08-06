@@ -129,5 +129,36 @@ class FlatData_parseTest ( unittest.TestCase ):
                                         );
 
 
+    def test_prefers_subdomain_compliance_data ( self ):
+        with patch ( 'googlepostmasterapi.data.copy.deepcopy' ) as deepcopy:
+            with patch ( 'googlepostmasterapi.data.FlatData._index_domain_stats' ) as index_domain_stats:
+                with patch ( 'googlepostmasterapi.data.FlatData._parse_user_report_spam' ) as parse_user_report_spam:
+                    with patch ( 'googlepostmasterapi.data.FlatData._parse_domain_compliance' ) as parse_domain_compliance:
+                        with patch ( 'googlepostmasterapi.data.FlatData._parse_fbl' ) as parse_fbl:
+                            with patch ( 'googlepostmasterapi.data.FlatData._parse_use_auth' ) as parse_use_auth:
+                                with patch ( 'googlepostmasterapi.data.FlatData._parse_crypted_inbound' ) as parse_crypted_inbound:
+                                    with patch ( 'googlepostmasterapi.data.FlatData._parse_delivery_err' ) as parse_delivery_err:
+                                        deepcopy.return_value = 'random-dict';
+                                        index_domain_stats.return_value = {};
+
+                                        f = FlatData ();
+                                        f._data_tpl = { 'random-key': 'random-value' };
+
+                                        f.parse (
+                                            key = 'random-key',
+                                            data = {
+                                                'complianceStatus': {
+                                                    'complianceData': 'random-root-compliance-data',
+                                                    'subdomainComplianceData': 'random-subdomain-compliance-data'
+                                                }
+                                            }
+                                        );
+
+                                        parse_domain_compliance.assert_called_with (
+                                            key = 'random-key',
+                                            value = 'random-subdomain-compliance-data'
+                                        );
+
+
 if __name__ == '__main__':
     unittest.main ();
