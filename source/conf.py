@@ -10,16 +10,18 @@
 # add these directories to sys.path here. If the directory is relative to the
 # documentation root, use os.path.abspath to make it absolute, like shown here.
 #
-# import os
-# import sys
-# sys.path.insert(0, os.path.abspath('.'))
-
+import os;
+import sys;
+#: Current module path
+MODULE_PATH = os.path.dirname ( os.path.dirname ( os.path.abspath ( __file__ ) ) );
+sys.path.insert ( 0, MODULE_PATH );
 
 # -- Project information -----------------------------------------------------
 
-project = 'Google Postmaster Domains Datas'
-copyright = '2021, Mindbaz'
+project = 'Google Postmaster Domains Data'
+copyright = '2026, Mindbaz'
 author = 'vhenon@mindbaz.com'
+
 
 from googlepostmasterapi import __version__;
 
