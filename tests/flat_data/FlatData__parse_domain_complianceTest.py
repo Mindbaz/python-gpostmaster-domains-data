@@ -52,17 +52,23 @@ class FlatData__parse_domain_complianceTest ( unittest.TestCase ):
 
             self.assertEqual ( ret, True );
             self.assertEqual ( f.data [ 'random-key' ] [ 'domain_compliance' ], {
-                'deliverability_status': 'Mocked : random-dsv-state',
-                'deliverability_reason': 'random-dsv-reason',
-                'one_click_unsubscribe_status': 'Mocked : random-ocuv-status',
-                'one_click_unsubscribe_reason': 'random-ocuv-reason',
-                'honor_unsubscribe_status': 'Mocked : random-huv-status',
-                'honor_unsubscribe_reason': 'random-huv-reason',
-                'requirements': [ {
-                    'requirement': 'random-rd-1-requirement',
+                'deliverability': {
+                    'status': 'Mocked : random-dsv-state',
+                    'reason': 'random-dsv-reason'
+                },
+                'one_click_unsubscribe': {
+                    'status': 'Mocked : random-ocuv-status',
+                    'reason': 'random-ocuv-reason'
+                },
+                'honor_unsubscribe': {
+                    'status': 'Mocked : random-huv-status',
+                    'reason': 'random-huv-reason'
+                },
+                'checks': [ {
+                    'check': 'random-rd-1-requirement',
                     'status': 'Mocked : random-rd-1-status'
                 }, {
-                    'requirement': 'random-rd-2-requirement',
+                    'check': 'random-rd-2-requirement',
                     'status': 'Mocked : random-rd-2-status'
                 } ]
             } );
@@ -89,13 +95,19 @@ class FlatData__parse_domain_complianceTest ( unittest.TestCase ):
 
             self.assertEqual ( ret, True );
             self.assertEqual ( f.data [ 'random-key' ] [ 'domain_compliance' ], {
-                'deliverability_status': None,
-                'deliverability_reason': None,
-                'one_click_unsubscribe_status': None,
-                'one_click_unsubscribe_reason': None,
-                'honor_unsubscribe_status': None,
-                'honor_unsubscribe_reason': None,
-                'requirements': []
+                'deliverability': {
+                    'status': None,
+                    'reason': None
+                },
+                'one_click_unsubscribe': {
+                    'status': None,
+                    'reason': None
+                },
+                'honor_unsubscribe': {
+                    'status': None,
+                    'reason': None
+                },
+                'checks': []
             } );
 
             self.assertEqual ( parse_status.call_count, 3 );

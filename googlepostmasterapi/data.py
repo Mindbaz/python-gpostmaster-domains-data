@@ -15,9 +15,9 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
-import copy;
 import os;
 import sys;
+import copy;
 
 from pprint import pprint;
 from pydantic import validate_call;
@@ -134,28 +134,34 @@ class FlatData ( object ):
         if ( value == None ):
             return False;
 
-        """Deliverability status verdict"""
+        """Deliverability status"""
         deliverability = value.get ( 'deliverabilityStatusVerdict', {} );
-        """One-click unsubscribe verdict"""
+        """One-click unsubscribe"""
         one_click_unsubscribe = value.get ( 'oneClickUnsubscribeVerdict', {} );
-        """Honor unsubscribe verdict"""
+        """Honor unsubscribe"""
         honor_unsubscribe = value.get ( 'honorUnsubscribeVerdict', {} );
 
         self.data [ key ] [ 'domain_compliance' ] = {
-            'deliverability_status': self._parse_status (
-                status = deliverability.get ( 'state' )
-            ),
-            'deliverability_reason': deliverability.get ( 'reason' ),
-            'one_click_unsubscribe_status': self._parse_status (
-                status = one_click_unsubscribe.get ( 'status' )
-            ),
-            'one_click_unsubscribe_reason': one_click_unsubscribe.get ( 'reason' ),
-            'honor_unsubscribe_status': self._parse_status (
-                status = honor_unsubscribe.get ( 'status' )
-            ),
-            'honor_unsubscribe_reason': honor_unsubscribe.get ( 'reason' ),
-            'requirements': [ {
-                'requirement': row.get ( 'requirement' ),
+            'deliverability': {
+                'status': self._parse_status (
+                    status = deliverability.get ( 'state' )
+                ),
+                'reason': deliverability.get ( 'reason' )
+            },
+            'one_click_unsubscribe': {
+                'status': self._parse_status (
+                    status = one_click_unsubscribe.get ( 'status' )
+                ),
+                'reason': one_click_unsubscribe.get ( 'reason' )
+            },
+            'honor_unsubscribe': {
+                'status': self._parse_status (
+                    status = honor_unsubscribe.get ( 'status' )
+                ),
+                'reason': honor_unsubscribe.get ( 'reason' )
+            },
+            'checks': [ {
+                'check': row.get ( 'requirement' ),
                 'status': self._parse_status (
                     status = row.get ( 'status' )
                 ) }
@@ -305,10 +311,13 @@ class FlatData ( object ):
             value = stats.get ( 'spam_rate' )
         );
         
-        ## Clean : complianceStatus.complianceData
+        """Compliance status, root object"""
+        compliance_status = data.get ( 'complianceStatus', {} );
+
+        ## Clean : complianceStatus.subdomainComplianceData if the queried name is a subdomain, else complianceStatus.complianceData
         self._parse_domain_compliance (
             key = key,
-            value = data.get ( 'complianceStatus', {} ).get ( 'complianceData' )
+            value = compliance_status.get ( 'subdomainComplianceData' ) or compliance_status.get ( 'complianceData' )
         );
         
         ## Clean : feedback_loop_spam_rate__{id}
