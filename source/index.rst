@@ -8,12 +8,15 @@ Google Postmaster Domains Datas
 
 .. automodule:: googlepostmasterapi.gpt
     :members:
+    :exclude-members: MODULE_PATH
 
-.. automodule:: googlepostmasterapi.datas
+.. automodule:: googlepostmasterapi.data
     :members:
+    :exclude-members: MODULE_PATH
 
 .. automodule:: googlepostmasterapi.stats
     :members:
+    :exclude-members: MODULE_PATH
 
 .. automodule:: googlepostmasterapi.utils
     :members:
