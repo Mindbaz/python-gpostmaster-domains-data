@@ -93,7 +93,6 @@ def run ():
     """Parser"""
     g = GPostmaster (
         token = args.token,
-        pool_size = args.pool_size,
         verbose = args.verbose,
     );
     
@@ -108,7 +107,8 @@ def run ():
         
         """Download all data"""
         ret = g.get_all_domains_infos (
-            input_date = args.date
+            input_date = args.date,
+            pool_size = args.pool_size
         );
         
         print ( 'Get data in {}s'.format (

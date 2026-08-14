@@ -45,20 +45,19 @@ class GPostmaster ( object ):
         _uri_tpl (str): Protected. Template to create a domain parent uri
         _compliance_uri_tpl (str): Protected. Template to create a domain compliance status uri
         _delivery_error_reasons (dict): Protected. Assoc of error_type to the list of error_reason supported by GPT v2
-        _domains (str[]): Protected. All domains download from server
+        _domains (str[]): Protected. All domains fetch from GPT
         _service (googleapiclient.discovery.build): Protected. Connector to GPT
         _parser (FlatData): Protected. Connector to data cleaner
         _stats (Stats): Protected. Connector to statistiques data
-        _pool_size (int): Protected. Number of threads
         scopes (str[]): GPT scopes to read data
+        verbose (bool): Verbose mode
     """
     @validate_call
-    def __init__ ( self, token: str, pool_size: Optional [ int ] = 2, verbose: Optional [ bool ] = False ) -> None:
+    def __init__ ( self, token: str, verbose: Optional [ bool ] = False ) -> None:
         """Default constructor
 
         Arguments:
             token (str): Local file path to GPT json token
-            pool_size (int): Optional. Number of threads. Default : 2
             verbose (bool): Optional. Verbose mode. Default : False
         """
         """Verbose mode"""
@@ -88,14 +87,12 @@ class GPostmaster ( object ):
             ]
         };
 
-        """All domains download from server"""
+        """All domains fetch from GPT"""
         self._domains = [];
-
-        """Number of threads"""
-        self._pool_size = pool_size;
         
         """GPT scopes to read data"""
         self.scopes = [
+            'https://www.googleapis.com/auth/postmaster',
             'https://www.googleapis.com/auth/postmaster.domain',
             'https://www.googleapis.com/auth/postmaster.traffic.readonly'
         ];
@@ -161,7 +158,8 @@ class GPostmaster ( object ):
             'v2',
             credentials = self._load_token (
                 token = token
-            )
+            ),
+            static_discovery = False
         );
 
 
@@ -638,11 +636,12 @@ class GPostmaster ( object ):
 
 
     @validate_call
-    def get_all_domains_infos ( self, input_date: str ) -> List [ dict ]:
+    def get_all_domains_infos ( self, input_date: str, pool_size: Optional [ int ] = 2 ) -> List [ dict ]:
         """Call GPT on all available domains
 
         Arguments:
             input_date (str): Date to query, format : YYYYMMDD
+            pool_size (int): Optional. Number of threads. Default : 2
 
         Returns:
             list: All domain infos
@@ -662,7 +661,7 @@ class GPostmaster ( object ):
             write_std ( [ 'Nothing to download' ] );
             return [];
 
-        with Pool ( processes = self._pool_size ) as pool:
+        with Pool ( processes = pool_size ) as pool:
             ret = pool.map (
                 self._get_domain_infos_pool,
                 data
@@ -676,3 +675,141 @@ class GPostmaster ( object ):
         self._print_stats ();
 
         return ret;
+
+
+    def _gpt_create_domain ( self, domain: str ) -> bool:
+        """Call GPT to create a domain
+
+        Arguments:
+            domain (str): Domain to create
+
+        Returns:
+            bool: False if an error occurs during creation. True otherwise
+        """
+        write_std ( [
+            'Add domain to GPT : {}'.format ( domain )
+        ] );
+        
+        try:
+            self._service.domains ().create (
+                body = {
+                    'domainId': domain
+                }
+            ).execute ();
+        except HttpError as e:
+            write_std ( [
+                'Error while adding domain to GPT : {}'.format (
+                    str ( e )
+                )
+            ] );
+            return False;
+        return True;
+
+
+    def _gpt_get_domain_verify_token ( self, domain: str ) -> str:
+        """Call GPT to get a verification token to a domain. Be careful, GPT give a verification token even if the domain is not created
+
+        Arguments:
+            domain (str): Domain to get verification domain
+        
+        Returns:
+            str: Token to current domain
+        """
+        write_std ( [
+            'Get GPT token for domain : {}'.format ( domain )
+        ] );
+        """GPT response get token"""
+        data = self._service.domains ().getVerificationToken (
+            name = 'domains/{domain}/verificationToken'.format (
+                domain = domain
+            ),
+            verificationMethod = 'TXT'
+        ).execute ();
+        return data [ 'token' ];
+    
+    
+    @validate_call
+    def get_domain_verify_token ( self, domain: str ) -> str:
+        """Get a verification token for a domainBe careful, GPT give a verification token even if the domain is not created
+
+        Arguments:
+            domain (str): Domain to get verification domain
+        
+        Returns:
+            str: Token to current domain
+        """
+        return self._gpt_get_domain_verify_token (
+            domain = domain
+        );
+    
+    
+    @validate_call
+    def create_domain ( self, domain: str ) -> dict:
+        """Create a domain, then get the verification token
+
+        Arguments:
+            domain (str): Domain to create & get verification domain
+        
+        Returns:
+            dict: state & token
+        """
+        """Domain creation state"""
+        created = self._gpt_create_domain (
+            domain = domain
+        );
+        if ( created == False ):
+            return { 'state': False };
+
+        return {
+            'state': True,
+            'token': self.get_domain_verify_token (
+                domain = domain
+            )
+        };
+    
+    
+    def _gpt_verify_domain ( self, domain: str ) -> bool:
+        """Call GPT to verify a domain
+
+        Arguments:
+            domain (str): Domain to check
+        
+        Returns:
+            bool: False if the domain is not verified. True otherwise
+        """
+        write_std ( [
+            'Verify domain : {}'.format ( domain )
+        ] );
+        
+        try :
+            self._service.domains ().verify (
+                name = 'domains/{domain}'.format (
+                    domain = domain
+                ),
+                body = {
+                    'verificationMethod': 'TXT'
+                }
+            ).execute ();
+        except HttpError as e:
+            write_std ( [
+                'Unable to verify domain : {}'.format (
+                    str ( e )
+                )
+            ] );
+            return False;
+        return True;
+    
+    
+    @validate_call
+    def verify_domain ( self, domain: str ) -> bool:
+        """Verify a domain
+
+        Arguments:
+            domain (str): Domain to check
+        
+        Returns:
+            bool: False if the domain is not verified. True otherwise
+        """
+        return self._gpt_verify_domain (
+            domain = domain
+        );

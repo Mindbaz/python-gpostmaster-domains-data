@@ -15,14 +15,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-Downloads domain data from GPT
+Create a domain in GPT
 """
 import os;
 import sys;
 import argparse;
-import json;
 
-from datetime import datetime, timedelta;
 from pprint import pprint;
 
 
@@ -34,12 +32,11 @@ from googlepostmasterapi.gpt import GPostmaster;
 
 
 def run ():
-    parser = argparse.ArgumentParser ( prog = 'gpt_dl_domain_data' );
+    parser = argparse.ArgumentParser ( prog = 'gpt_create_domain' );
     
     ## All arguments
     parser.add_argument ( '--token', type = str, nargs = '?', help = 'GPT token' );
     parser.add_argument ( '--domain', type = str, nargs = '?', help = 'Domain' );
-    parser.add_argument ( '--date', type = str, nargs = '?', help = 'Date to fetch data from GPT. Format : YYYY-MM-DD. Default : D-2' );
     parser.add_argument ( '--verbose', action = 'store_true', help = 'Verbose mode' );
     parser.add_argument ( '--version', action = 'store_true', help = 'Display version' );
     args = parser.parse_args ();
@@ -59,18 +56,6 @@ def run ():
     if ( ( type ( args.domain ) is not str ) or ( args.domain.strip () == '' ) ):
         print ( 'Missing --domain file. -h to show help' );
         exit ( 2 );
-    
-    if ( args.date != None ):
-        try:
-            args.datetime = datetime.strptime ( args.date, '%Y-%m-%d' );
-            args.date = args.datetime.strftime ( '%Y%m%d' );
-        except Exception as e:
-            print ( 'Missing --date. -h to show help' );
-            exit ( 2 );
-    
-    if ( args.date == None ):
-        args.date = ( datetime.now () - timedelta ( 2 ) ).strftime ( '%Y%m%d' );
-        args.datetime = datetime.strptime ( args.date, '%Y%m%d' );
     
     #
     # Print args to console
@@ -97,41 +82,22 @@ def run ():
     
     """Exec exit code"""
     exit_code = 0;
-    """Error message"""
-    error_msg = '';
     
-    try:
-        """Start query api"""
-        date_start = datetime.now ();
-        
-        """Download domain data"""
-        ret = g.get_domain_infos (
-            domain = args.domain,
-            input_date = args.date
-        );
-        
-        print ( 'Get data in {}s'.format (
-            round (
-                ( datetime.now () - date_start ).total_seconds (),
-                2
-            )
+    """Create a domain, then return the token to verify it"""
+    ret = g.create_domain (
+        domain = args.domain
+    );
+    
+    if ( ret [ 'state' ] == True ):
+        print ( '\nDomain is created, here is the verification token : {token}\n'.format (
+            token = ret [ 'token' ]
         ) );
-        
-        print ( '\nDomain data : ' );
-        print ( json.dumps (
-            ret,
-            indent = 4,
-            sort_keys = True
-        ) );
-        print ( '' );
-    except Exception as e:
+    else:
         exit_code = 1;
-        error_msg = str ( e );
     
-    if ( exit_code != 0 ):
-        print ( 'Exit code : {}'.format ( str ( exit_code ) ) );
-        print ( 'Error message : {}'.format ( error_msg ) );
-    
+    print ( 'Exit code : {exit_code}'.format (
+        exit_code = exit_code
+    ) );
     exit ( exit_code );
 
 if __name__ == '__main__':

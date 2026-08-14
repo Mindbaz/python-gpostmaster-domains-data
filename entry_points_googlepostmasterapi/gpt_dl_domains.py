@@ -96,7 +96,6 @@ def run ():
     """Parser"""
     g = GPostmaster (
         token = args.token,
-        pool_size = 2,
         verbose = args.verbose,
     );
 
