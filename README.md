@@ -64,21 +64,59 @@ Google retired the v1/v1beta1 Postmaster Tools API in favor of a metric-query ba
 * `user_report_spam_percent`, `auth_use_*_percent` and `tls_inbound_percent` are sourced from the new `SPAM_RATE`, `AUTH_SUCCESS_RATE` and `TLS_ENCRYPTION_RATE` metrics ; they are assumed to be 0-1 ratios like their v1 counterparts, but this has not been validated against real GPT data
 * Requires `google-api-python-client` >= 2.196.0 (bundles the v2 discovery document).
 
+## Domain registration & verification
+
+On top of the read-only stats/compliance calls, `GPostmaster` also exposes domain registration :
+
+* `create_domain ( domain: str ) -> dict` : registers the domain on the GPT account, then fetches its DNS verification token. Returns `{ 'state': True, 'token': str }` on success, `{ 'state': False }` if GPT rejects the creation (e.g. already registered)
+* `get_domain_verify_token ( domain: str ) -> str` : (re)fetches the DNS TXT token to post for a domain. Note : GPT returns a token even if the domain hasn't been created yet
+* `verify_domain ( domain: str ) -> bool` : triggers DNS-level verification (TXT record) for a domain, once the token has been posted and propagated. Returns `True`/`False`, not detailed state — GPT's `verify` response is always empty ; call `create_domain`/GPT's `domains().get()` afterwards if you need the up to date `verificationState`
+
+These require the `https://www.googleapis.com/auth/postmaster` scope on top of `postmaster.domain`, both included in `GPostmaster.scopes`.
+
+```python
+from googlepostmasterapi.gpt import GPostmaster
+
+g = GPostmaster ( token = 'path/to/token.json' )
+
+created = g.create_domain ( domain = 'mkt.mydomain.com' )
+# { 'state': True, 'token': 'google-site-verification=...' }
+# -> post created['token'] as a DNS TXT record on mkt.mydomain.com, wait for propagation
+
+verified = g.verify_domain ( domain = 'mkt.mydomain.com' )
+# True/False
+```
+
 # How to use it
 
 ```bash
+python entry_points_googlepostmasterapi/gpt_create_domain.py -h
+usage: gpt_create_domain [-h] [--token [TOKEN]] [--domain [DOMAIN]] [--verbose] [--version]
+```
+
+```bash
 python entry_points_googlepostmasterapi/gpt_dl_all_data.py -h
-> usage: gpt_dl_all_data [-h] [--token [TOKEN]] [--pool-size [POOL_SIZE]] [--date [DATE]] [--verbose] [--version]
+usage: gpt_dl_all_data [-h] [--token [TOKEN]] [--pool-size [POOL_SIZE]] [--date [DATE]] [--verbose] [--version]
 ```
 
 ```bash
 python entry_points_googlepostmasterapi/gpt_dl_domain_data.py -h
-> usage: gpt_dl_domain_data [-h] [--token [TOKEN]] [--domain [DOMAIN]] [--date [DATE]] [--verbose] [--version]
+usage: gpt_dl_domain_data [-h] [--token [TOKEN]] [--domain [DOMAIN]] [--date [DATE]] [--verbose] [--version]
 ```
 
 ```bash
-python entry_points_googlepostmasterapi/gpt_dl_domains.py
-> usage: gpt_dl_domains [-h] [--token [TOKEN]] [--verbose] [--version]
+python entry_points_googlepostmasterapi/gpt_dl_domains.py -h
+usage: gpt_dl_domains [-h] [--token [TOKEN]] [--verbose] [--version]
+```
+
+```bash
+python entry_points_googlepostmasterapi/gpt_get_domain_verify_token.py -h
+usage: gpt_get_domain_verify_token [-h] [--token [TOKEN]] [--domain [DOMAIN]] [--verbose] [--version]
+```
+
+```bash
+python entry_points_googlepostmasterapi/gpt_verify_domain.py -h
+usage: gpt_verify_domain [-h] [--token [TOKEN]] [--domain [DOMAIN]] [--verbose] [--version]
 ```
 
 # Support version

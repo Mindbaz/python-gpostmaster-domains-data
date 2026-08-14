@@ -8,11 +8,11 @@ Google Postmaster Domains Datas
 
 .. automodule:: googlepostmasterapi.gpt
     :members:
-    :exclude-members: MODULE_PATH
+    :exclude-members: MODULE_PATH, verbose
 
 .. automodule:: googlepostmasterapi.data
     :members:
-    :exclude-members: MODULE_PATH
+    :exclude-members: MODULE_PATH, data
 
 .. automodule:: googlepostmasterapi.stats
     :members:

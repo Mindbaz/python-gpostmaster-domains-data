@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Google Postmaster Domains Datas &mdash; Google Postmaster Domains Data 0.1.0 documentation</title>
+  <title>Google Postmaster Domains Datas &mdash; Google Postmaster Domains Data 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/documentation_options.js?v=938c9ccc"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -51,8 +51,8 @@
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._service"><code class="docutils literal notranslate"><span class="pre">GPostmaster._service</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._parser"><code class="docutils literal notranslate"><span class="pre">GPostmaster._parser</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._stats"><code class="docutils literal notranslate"><span class="pre">GPostmaster._stats</span></code></a></li>
-<li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._pool_size"><code class="docutils literal notranslate"><span class="pre">GPostmaster._pool_size</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster.scopes"><code class="docutils literal notranslate"><span class="pre">GPostmaster.scopes</span></code></a></li>
+<li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster.verbose"><code class="docutils literal notranslate"><span class="pre">GPostmaster.verbose</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster.__init__"><code class="docutils literal notranslate"><span class="pre">GPostmaster.__init__()</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._clean_domain_infos"><code class="docutils literal notranslate"><span class="pre">GPostmaster._clean_domain_infos()</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._clean_pool_returns"><code class="docutils literal notranslate"><span class="pre">GPostmaster._clean_pool_returns()</span></code></a></li>
@@ -64,9 +64,12 @@
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._create_query_request"><code class="docutils literal notranslate"><span class="pre">GPostmaster._create_query_request()</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._extract_fbl_ids"><code class="docutils literal notranslate"><span class="pre">GPostmaster._extract_fbl_ids()</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._get_domain_infos_pool"><code class="docutils literal notranslate"><span class="pre">GPostmaster._get_domain_infos_pool()</span></code></a></li>
+<li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._gpt_create_domain"><code class="docutils literal notranslate"><span class="pre">GPostmaster._gpt_create_domain()</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._gpt_get_compliance_status"><code class="docutils literal notranslate"><span class="pre">GPostmaster._gpt_get_compliance_status()</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._gpt_get_domain_info"><code class="docutils literal notranslate"><span class="pre">GPostmaster._gpt_get_domain_info()</span></code></a></li>
+<li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._gpt_get_domain_verify_token"><code class="docutils literal notranslate"><span class="pre">GPostmaster._gpt_get_domain_verify_token()</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._gpt_get_domains"><code class="docutils literal notranslate"><span class="pre">GPostmaster._gpt_get_domains()</span></code></a></li>
+<li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._gpt_verify_domain"><code class="docutils literal notranslate"><span class="pre">GPostmaster._gpt_verify_domain()</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._init_parser_con"><code class="docutils literal notranslate"><span class="pre">GPostmaster._init_parser_con()</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._init_resources"><code class="docutils literal notranslate"><span class="pre">GPostmaster._init_resources()</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._init_service"><code class="docutils literal notranslate"><span class="pre">GPostmaster._init_service()</span></code></a></li>
@@ -75,10 +78,12 @@
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._parse_input_date"><code class="docutils literal notranslate"><span class="pre">GPostmaster._parse_input_date()</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._print_stats"><code class="docutils literal notranslate"><span class="pre">GPostmaster._print_stats()</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._query_domain_stats"><code class="docutils literal notranslate"><span class="pre">GPostmaster._query_domain_stats()</span></code></a></li>
+<li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster.create_domain"><code class="docutils literal notranslate"><span class="pre">GPostmaster.create_domain()</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster.get_all_domains_infos"><code class="docutils literal notranslate"><span class="pre">GPostmaster.get_all_domains_infos()</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster.get_domain_infos"><code class="docutils literal notranslate"><span class="pre">GPostmaster.get_domain_infos()</span></code></a></li>
+<li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster.get_domain_verify_token"><code class="docutils literal notranslate"><span class="pre">GPostmaster.get_domain_verify_token()</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster.get_domains"><code class="docutils literal notranslate"><span class="pre">GPostmaster.get_domains()</span></code></a></li>
-<li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster.verbose"><code class="docutils literal notranslate"><span class="pre">GPostmaster.verbose</span></code></a></li>
+<li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster.verify_domain"><code class="docutils literal notranslate"><span class="pre">GPostmaster.verify_domain()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#googlepostmasterapi.data.FlatData"><code class="docutils literal notranslate"><span class="pre">FlatData</span></code></a><ul>
@@ -143,7 +148,7 @@
 <span id="google-postmaster-domains-datas"></span><h1>Google Postmaster Domains Datas<a class="headerlink" href="#module-googlepostmasterapi.gpt" title="Link to this heading"></a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="googlepostmasterapi.gpt.GPostmaster">
-<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">googlepostmasterapi.gpt.</span></span><span class="sig-name descname"><span class="pre">GPostmaster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#googlepostmasterapi.gpt.GPostmaster" title="Link to this definition"></a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">googlepostmasterapi.gpt.</span></span><span class="sig-name descname"><span class="pre">GPostmaster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#googlepostmasterapi.gpt.GPostmaster" title="Link to this definition"></a></dt>
 <dd><p>Download data from Google postmaster tools</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="googlepostmasterapi.gpt.GPostmaster._uri_tpl">
@@ -181,7 +186,7 @@
 <dl class="py attribute">
 <dt class="sig sig-object py" id="googlepostmasterapi.gpt.GPostmaster._domains">
 <span class="sig-name descname"><span class="pre">_domains</span></span><a class="headerlink" href="#googlepostmasterapi.gpt.GPostmaster._domains" title="Link to this definition"></a></dt>
-<dd><p>Protected. All domains download from server</p>
+<dd><p>Protected. All domains fetch from GPT</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str[]</p>
@@ -223,17 +228,6 @@
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="googlepostmasterapi.gpt.GPostmaster._pool_size">
-<span class="sig-name descname"><span class="pre">_pool_size</span></span><a class="headerlink" href="#googlepostmasterapi.gpt.GPostmaster._pool_size" title="Link to this definition"></a></dt>
-<dd><p>Protected. Number of threads</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="googlepostmasterapi.gpt.GPostmaster.scopes">
 <span class="sig-name descname"><span class="pre">scopes</span></span><a class="headerlink" href="#googlepostmasterapi.gpt.GPostmaster.scopes" title="Link to this definition"></a></dt>
 <dd><p>GPT scopes to read data</p>
@@ -244,15 +238,25 @@
 </dl>
 </dd></dl>
 
+<dl class="py attribute">
+<dt class="sig sig-object py" id="googlepostmasterapi.gpt.GPostmaster.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><a class="headerlink" href="#googlepostmasterapi.gpt.GPostmaster.verbose" title="Link to this definition"></a></dt>
+<dd><p>Verbose mode</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
 <dl class="py method">
 <dt class="sig sig-object py" id="googlepostmasterapi.gpt.GPostmaster.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#googlepostmasterapi.gpt.GPostmaster.__init__" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#googlepostmasterapi.gpt.GPostmaster.__init__" title="Link to this definition"></a></dt>
 <dd><p>Default constructor</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>token</strong> (<em>str</em>) – Local file path to GPT json token</p></li>
-<li><p><strong>pool_size</strong> (<em>int</em>) – Optional. Number of threads. Default : 2</p></li>
 <li><p><strong>verbose</strong> (<em>bool</em>) – Optional. Verbose mode. Default : False</p></li>
 </ul>
 </dd>
@@ -433,6 +437,23 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="googlepostmasterapi.gpt.GPostmaster._gpt_create_domain">
+<span class="sig-name descname"><span class="pre">_gpt_create_domain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#googlepostmasterapi.gpt.GPostmaster._gpt_create_domain" title="Link to this definition"></a></dt>
+<dd><p>Call GPT to create a domain</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>domain</strong> (<em>str</em>) – Domain to create</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>False if an error occurs during creation. True otherwise</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="googlepostmasterapi.gpt.GPostmaster._gpt_get_compliance_status">
 <span class="sig-name descname"><span class="pre">_gpt_get_compliance_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#googlepostmasterapi.gpt.GPostmaster._gpt_get_compliance_status" title="Link to this definition"></a></dt>
 <dd><p>Call GPT to get the compliance status of a domain</p>
@@ -470,6 +491,23 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="googlepostmasterapi.gpt.GPostmaster._gpt_get_domain_verify_token">
+<span class="sig-name descname"><span class="pre">_gpt_get_domain_verify_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#googlepostmasterapi.gpt.GPostmaster._gpt_get_domain_verify_token" title="Link to this definition"></a></dt>
+<dd><p>Call GPT to get a verification token to a domain. Be careful, GPT give a verification token even if the domain is not created</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>domain</strong> (<em>str</em>) – Domain to get verification domain</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Token to current domain</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="googlepostmasterapi.gpt.GPostmaster._gpt_get_domains">
 <span class="sig-name descname"><span class="pre">_gpt_get_domains</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">next_page</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#googlepostmasterapi.gpt.GPostmaster._gpt_get_domains" title="Link to this definition"></a></dt>
 <dd><p>Call GPT to get all domains. Recursive call on pagination</p>
@@ -482,6 +520,23 @@
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>list</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="googlepostmasterapi.gpt.GPostmaster._gpt_verify_domain">
+<span class="sig-name descname"><span class="pre">_gpt_verify_domain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#googlepostmasterapi.gpt.GPostmaster._gpt_verify_domain" title="Link to this definition"></a></dt>
+<dd><p>Call GPT to verify a domain</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>domain</strong> (<em>str</em>) – Domain to check</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>False if the domain is not verified. True otherwise</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -582,12 +637,32 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="googlepostmasterapi.gpt.GPostmaster.create_domain">
+<span class="sig-name descname"><span class="pre">create_domain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#googlepostmasterapi.gpt.GPostmaster.create_domain" title="Link to this definition"></a></dt>
+<dd><p>Create a domain, then get the verification token</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>domain</strong> (<em>str</em>) – Domain to create &amp; get verification domain</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>state &amp; token</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="googlepostmasterapi.gpt.GPostmaster.get_all_domains_infos">
-<span class="sig-name descname"><span class="pre">get_all_domains_infos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#googlepostmasterapi.gpt.GPostmaster.get_all_domains_infos" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_all_domains_infos</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_date</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pool_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#googlepostmasterapi.gpt.GPostmaster.get_all_domains_infos" title="Link to this definition"></a></dt>
 <dd><p>Call GPT on all available domains</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>input_date</strong> (<em>str</em>) – Date to query, format : YYYYMMDD</p>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_date</strong> (<em>str</em>) – Date to query, format : YYYYMMDD</p></li>
+<li><p><strong>pool_size</strong> (<em>int</em>) – Optional. Number of threads. Default : 2</p></li>
+</ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p>All domain infos</p>
@@ -620,15 +695,43 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="googlepostmasterapi.gpt.GPostmaster.get_domain_verify_token">
+<span class="sig-name descname"><span class="pre">get_domain_verify_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#googlepostmasterapi.gpt.GPostmaster.get_domain_verify_token" title="Link to this definition"></a></dt>
+<dd><p>Get a verification token for a domainBe careful, GPT give a verification token even if the domain is not created</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>domain</strong> (<em>str</em>) – Domain to get verification domain</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Token to current domain</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="googlepostmasterapi.gpt.GPostmaster.get_domains">
 <span class="sig-name descname"><span class="pre">get_domains</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#googlepostmasterapi.gpt.GPostmaster.get_domains" title="Link to this definition"></a></dt>
 <dd><p>Get all domains with permissions : owner/reader</p>
 </dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="googlepostmasterapi.gpt.GPostmaster.verbose">
-<span class="sig-name descname"><span class="pre">verbose</span></span><a class="headerlink" href="#googlepostmasterapi.gpt.GPostmaster.verbose" title="Link to this definition"></a></dt>
-<dd><p>Template to create a domain parent uri</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="googlepostmasterapi.gpt.GPostmaster.verify_domain">
+<span class="sig-name descname"><span class="pre">verify_domain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#googlepostmasterapi.gpt.GPostmaster.verify_domain" title="Link to this definition"></a></dt>
+<dd><p>Verify a domain</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>domain</strong> (<em>str</em>) – Domain to check</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>False if the domain is not verified. True otherwise</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>

@@ -27,18 +27,8 @@ class GPostmaster_constructorTest ( unittest.TestCase ):
             self.assertEqual ( type ( g._delivery_error_reasons ), dict );
             self.assertEqual ( g._domains, [] );
             self.assertEqual ( type ( g.scopes ), list );
-            self.assertEqual ( g._pool_size, 2 );
 
-                
-    def test_arg_pool_size ( self ):
-        with patch ( 'googlepostmasterapi.gpt.GPostmaster._init_resources' ) as init_ressources:
-            g = GPostmaster (
-                token = 'random-token',
-                pool_size = '951'
-            );
-            self.assertEqual ( g._pool_size, 951 );
-              
-                
+
     def test_arg_verbose ( self ):
         with patch ( 'googlepostmasterapi.gpt.GPostmaster._init_resources' ) as init_ressources:
             g = GPostmaster (

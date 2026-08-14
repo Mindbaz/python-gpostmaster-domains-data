@@ -13,3 +13,5 @@ reports/
 *.pk
 *.json
 *.md
+.claude
+example/

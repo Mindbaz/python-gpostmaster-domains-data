@@ -5,14 +5,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Index &mdash; Google Postmaster Domains Data 0.1.0 documentation</title>
+  <title>Index &mdash; Google Postmaster Domains Data 0.2.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/documentation_options.js?v=938c9ccc"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -70,6 +70,7 @@
 <div class="genindex-jumpbox">
  <a href="#_"><strong>_</strong></a>
  | <a href="#A"><strong>A</strong></a>
+ | <a href="#C"><strong>C</strong></a>
  | <a href="#D"><strong>D</strong></a>
  | <a href="#E"><strong>E</strong></a>
  | <a href="#F"><strong>F</strong></a>
@@ -123,14 +124,20 @@
 </li>
       <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster._get_domain_infos_pool">_get_domain_infos_pool() (googlepostmasterapi.gpt.GPostmaster method)</a>
 </li>
+      <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster._gpt_create_domain">_gpt_create_domain() (googlepostmasterapi.gpt.GPostmaster method)</a>
+</li>
       <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster._gpt_get_compliance_status">_gpt_get_compliance_status() (googlepostmasterapi.gpt.GPostmaster method)</a>
 </li>
       <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster._gpt_get_domain_info">_gpt_get_domain_info() (googlepostmasterapi.gpt.GPostmaster method)</a>
 </li>
-      <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster._gpt_get_domains">_gpt_get_domains() (googlepostmasterapi.gpt.GPostmaster method)</a>
+      <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster._gpt_get_domain_verify_token">_gpt_get_domain_verify_token() (googlepostmasterapi.gpt.GPostmaster method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster._gpt_get_domains">_gpt_get_domains() (googlepostmasterapi.gpt.GPostmaster method)</a>
+</li>
+      <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster._gpt_verify_domain">_gpt_verify_domain() (googlepostmasterapi.gpt.GPostmaster method)</a>
+</li>
       <li><a href="index.html#googlepostmasterapi.data.FlatData._index_domain_stats">_index_domain_stats() (googlepostmasterapi.data.FlatData method)</a>
 </li>
       <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster._init_parser_con">_init_parser_con() (googlepostmasterapi.gpt.GPostmaster method)</a>
@@ -161,8 +168,6 @@
 </li>
       <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster._parser">_parser (googlepostmasterapi.gpt.GPostmaster attribute)</a>
 </li>
-      <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster._pool_size">_pool_size (googlepostmasterapi.gpt.GPostmaster attribute)</a>
-</li>
       <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster._print_stats">_print_stats() (googlepostmasterapi.gpt.GPostmaster method)</a>
 </li>
       <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster._query_domain_stats">_query_domain_stats() (googlepostmasterapi.gpt.GPostmaster method)</a>
@@ -188,6 +193,14 @@
       <li><a href="index.html#googlepostmasterapi.stats.Stats.add_ok">add_ok() (googlepostmasterapi.stats.Stats method)</a>
 </li>
       <li><a href="index.html#googlepostmasterapi.stats.Stats.add_total">add_total() (googlepostmasterapi.stats.Stats method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster.create_domain">create_domain() (googlepostmasterapi.gpt.GPostmaster method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -227,6 +240,8 @@
 </li>
       <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster.get_domain_infos">get_domain_infos() (googlepostmasterapi.gpt.GPostmaster method)</a>
 </li>
+      <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster.get_domain_verify_token">get_domain_verify_token() (googlepostmasterapi.gpt.GPostmaster method)</a>
+</li>
       <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster.get_domains">get_domains() (googlepostmasterapi.gpt.GPostmaster method)</a>
 </li>
       <li>
@@ -236,6 +251,8 @@
         <li><a href="index.html#module-googlepostmasterapi.data">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     googlepostmasterapi.gpt
 
@@ -243,8 +260,6 @@
         <li><a href="index.html#module-googlepostmasterapi.gpt">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     googlepostmasterapi.stats
 
@@ -319,6 +334,10 @@
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster.verbose">verbose (googlepostmasterapi.gpt.GPostmaster attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster.verify_domain">verify_domain() (googlepostmasterapi.gpt.GPostmaster method)</a>
 </li>
   </ul></td>
 </tr></table>

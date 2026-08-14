@@ -18,9 +18,12 @@ dependencies = [
 ]
 
 [project.scripts]
+gpt_create_domain = "entry_points_googlepostmasterapi.gpt_create_domain:run"
 gpt_dl_all_data = "entry_points_googlepostmasterapi.gpt_dl_all_data:run"
 gpt_dl_domain_data = "entry_points_googlepostmasterapi.gpt_dl_domain_data:run"
 gpt_dl_domains = "entry_points_googlepostmasterapi.gpt_dl_domains:run"
+gpt_get_domain_verify_token = "entry_points_googlepostmasterapi.gpt_get_domain_verify_token:run"
+gpt_verify_domain = "entry_points_googlepostmasterapi.gpt_verify_domain:run"
 
 [project.optional-dependencies]
 dev = [

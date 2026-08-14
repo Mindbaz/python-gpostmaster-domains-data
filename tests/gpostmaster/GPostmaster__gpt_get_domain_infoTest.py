@@ -172,7 +172,8 @@ class GPostmaster__gpt_get_domain_infoTest ( unittest.TestCase ):
                                 with patch ( 'tests.gpostmaster.GPostmaster__gpt_get_domain_infoTest.StatsMock.add_err_http' ) as add_err_http:
                                     create_domain_uri.return_value = 'random-parent';
                                     query_domain_stats.side_effect = HttpError (
-                                        HttpErrorMock (), b'random-exception'
+                                        HttpErrorMock (),
+                                        b'random-exception'
                                     );
 
                                     g = GPostmaster (

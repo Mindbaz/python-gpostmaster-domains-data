@@ -10,6 +10,8 @@ BUILDDIR=build
 PYTHON=python
 TWINE=twine
 
+.PHONY: docs tests
+
 all: run
 
 run:
@@ -35,7 +37,6 @@ compile:
 	python -m build --sdist
 	twine upload -r $(target) dist/*
 
-.PHONY: docs
 docs:
 	@$(SPHINXBUILD) -M html "$(SOURCEDIR)" "$(BUILDDIR)" $(SPHINXOPTS)
 	@cp -rv $(ROOT_DIR)/$(BUILDDIR)/html/* $(ROOT_DIR)/docs/
