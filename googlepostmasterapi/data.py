@@ -96,7 +96,7 @@ class FlatData ( object ):
         """
         if ( value == None ):
             return False;
-        self.data [ key ] [ 'user_report_spam_percent' ] = round ( float ( value ) * 100.0, 1 );
+        self.data [ key ] [ 'user_report_spam_percent' ] = round ( float ( value ) * 100.0, 2 );
         return True;
 
 
@@ -193,7 +193,7 @@ class FlatData ( object ):
             self.data [ key ] [ 'feedback_loop' ] [ 'nb_row' ] += 1;
             self.data [ key ] [ 'feedback_loop' ] [ 'percent_per_uid' ].append ( {
                 'uid': int ( feedback_loop_id ) if feedback_loop_id.isdigit () else feedback_loop_id,
-                'spam_percent': round ( float ( value [ feedback_loop_id ] ) * 100.0, 1 )
+                'spam_percent': round ( float ( value [ feedback_loop_id ] ) * 100.0, 2 )
             } );
 
         return True;
