@@ -18,8 +18,8 @@ class FlatData__parse_fblTest ( unittest.TestCase ):
         ret = f._parse_fbl (
             key = 'random-key',
             value = {
-                '123': 0.1234,
-                '456': 0.4567
+                '123': 0.12345,
+                '456': 0.45678
             }
         );
 
@@ -27,9 +27,10 @@ class FlatData__parse_fblTest ( unittest.TestCase ):
         self.assertEqual ( f.data [ 'random-key' ] [ 'feedback_loop' ] [ 'nb_row' ], 2 );
         self.assertEqual ( f.data [ 'random-key' ] [ 'feedback_loop' ] [ 'percent_per_uid' ], [ {
             'uid': 123,
-            'spam_percent': 12.3
+            'spam_percent': 12.35
         }, {
-            'uid': 456, 'spam_percent': 45.7
+            'uid': 456,
+            'spam_percent': 45.68
         } ] );
 
 
@@ -55,7 +56,7 @@ class FlatData__parse_fblTest ( unittest.TestCase ):
             key = 'random-key',
             value = {
                 '123': None,
-                '456': 0.4567
+                '456': 0.45678
             }
         );
 
@@ -63,7 +64,7 @@ class FlatData__parse_fblTest ( unittest.TestCase ):
         self.assertEqual ( f.data [ 'random-key' ] [ 'feedback_loop' ] [ 'nb_row' ], 1 );
         self.assertEqual ( f.data [ 'random-key' ] [ 'feedback_loop' ] [ 'percent_per_uid' ], [ {
             'uid': 456,
-            'spam_percent': 45.7
+            'spam_percent': 45.68
         } ] );
 
 
@@ -74,7 +75,7 @@ class FlatData__parse_fblTest ( unittest.TestCase ):
         ret = f._parse_fbl (
             key = 'random-key',
             value = {
-                'random-non-numeric-id': 0.1234
+                'random-non-numeric-id': 0.12345
             }
         );
 
@@ -82,7 +83,7 @@ class FlatData__parse_fblTest ( unittest.TestCase ):
         self.assertEqual ( f.data [ 'random-key' ] [ 'feedback_loop' ] [ 'nb_row' ], 1 );
         self.assertEqual ( f.data [ 'random-key' ] [ 'feedback_loop' ] [ 'percent_per_uid' ], [ {
             'uid': 'random-non-numeric-id',
-            'spam_percent': 12.3
+            'spam_percent': 12.35
         } ] );
 
 
