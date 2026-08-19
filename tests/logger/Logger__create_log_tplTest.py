@@ -12,8 +12,8 @@ from googlepostmasterapi.logger import Logger;
 
 def clear_environ ():
     for k in [ 'TS' ]:
-        if ( 'TS' in os.environ ):
-            del ( os.environ [ 'TS' ] );
+        if ( k in os.environ ):
+            del ( os.environ [ k ] );
 
 
 @patch ( 'googlepostmasterapi.logger.Logger._init_resources_logger', Mock ( return_value = None ) )
