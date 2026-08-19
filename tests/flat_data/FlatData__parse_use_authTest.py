@@ -17,14 +17,14 @@ class FlatData__parse_use_authTest ( unittest.TestCase ):
         
         ret = f._parse_use_auth (
             key = 'random-key',
-            dkim = '0.1234',
-            spf = '0.4567',
-            dmarc = '0.789'
+            dkim = '0.12345',
+            spf = '0.45678',
+            dmarc = '0.7890'
         );
             
         self.assertEqual ( ret, True );
-        self.assertEqual ( f.data [ 'random-key' ] [ 'auth_use_dkim_percent' ], 12.3 );
-        self.assertEqual ( f.data [ 'random-key' ] [ 'auth_use_spf_percent' ], 45.7 );
+        self.assertEqual ( f.data [ 'random-key' ] [ 'auth_use_dkim_percent' ], 12.35 );
+        self.assertEqual ( f.data [ 'random-key' ] [ 'auth_use_spf_percent' ], 45.68 );
         self.assertEqual ( f.data [ 'random-key' ] [ 'auth_use_dmarc_percent' ], 78.9 );
 
         
@@ -34,13 +34,13 @@ class FlatData__parse_use_authTest ( unittest.TestCase ):
         
         ret = f._parse_use_auth (
             key = 'random-key',
-            spf = '0.4567',
-            dmarc = '0.789'
+            spf = '0.45678',
+            dmarc = '0.7890'
         );
             
         self.assertEqual ( ret, True );
         self.assertEqual ( f.data [ 'random-key' ] [ 'auth_use_dkim_percent' ], None );
-        self.assertEqual ( f.data [ 'random-key' ] [ 'auth_use_spf_percent' ], 45.7 );
+        self.assertEqual ( f.data [ 'random-key' ] [ 'auth_use_spf_percent' ], 45.68 );
         self.assertEqual ( f.data [ 'random-key' ] [ 'auth_use_dmarc_percent' ], 78.9 );
 
         
@@ -50,12 +50,12 @@ class FlatData__parse_use_authTest ( unittest.TestCase ):
         
         ret = f._parse_use_auth (
             key = 'random-key',
-            dkim = '0.1234',
-            dmarc = '0.789'
+            dkim = '0.12345',
+            dmarc = '0.7890'
         );
             
         self.assertEqual ( ret, True );
-        self.assertEqual ( f.data [ 'random-key' ] [ 'auth_use_dkim_percent' ], 12.3 );
+        self.assertEqual ( f.data [ 'random-key' ] [ 'auth_use_dkim_percent' ], 12.35 );
         self.assertEqual ( f.data [ 'random-key' ] [ 'auth_use_spf_percent' ], None );
         self.assertEqual ( f.data [ 'random-key' ] [ 'auth_use_dmarc_percent' ], 78.9 );
 
@@ -66,13 +66,13 @@ class FlatData__parse_use_authTest ( unittest.TestCase ):
         
         ret = f._parse_use_auth (
             key = 'random-key',
-            dkim = '0.1234',
-            spf = '0.4567'
+            dkim = '0.12345',
+            spf = '0.45678'
         );
             
         self.assertEqual ( ret, True );
-        self.assertEqual ( f.data [ 'random-key' ] [ 'auth_use_dkim_percent' ], 12.3 );
-        self.assertEqual ( f.data [ 'random-key' ] [ 'auth_use_spf_percent' ], 45.7 );
+        self.assertEqual ( f.data [ 'random-key' ] [ 'auth_use_dkim_percent' ], 12.35 );
+        self.assertEqual ( f.data [ 'random-key' ] [ 'auth_use_spf_percent' ], 45.68 );
         self.assertEqual ( f.data [ 'random-key' ] [ 'auth_use_dmarc_percent' ], None );
 
         
