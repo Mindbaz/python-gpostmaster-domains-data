@@ -34,10 +34,11 @@ class RMock ( object ):
         pass;
 
         
+@patch ( 'googlepostmasterapi.base.Base.__init__', Mock ( return_value = None ) )
 @patch ( 'googlepostmasterapi.gpt.GPostmaster._init_resources', Mock ( return_value = None ) )
 class GPostmaster_get_all_domains_infosTest ( unittest.TestCase ):
     def test_calls ( self ):
-        with patch ( 'googlepostmasterapi.gpt.write_std' ) as write_std:
+        with patch ( 'googlepostmasterapi.gpt.GPostmaster.write_log' ) as write_log:
             with patch ( 'googlepostmasterapi.gpt.GPostmaster.get_domains' ) as get_domains:
                 with patch ( 'googlepostmasterapi.gpt.GPostmaster._create_pool_data' ) as create_pool_data:
                     with patch ( 'googlepostmasterapi.gpt.Pool' ) as r_init:
@@ -75,11 +76,11 @@ class GPostmaster_get_all_domains_infosTest ( unittest.TestCase ):
                                         data = 'random-map-returns'
                                     );
                                     print_stats.assert_called_once_with ();
-                                    write_std.assert_not_called ();
+                                    write_log.assert_not_called ();
 
                                         
     def test_nothing_to_fecth ( self ):
-        with patch ( 'googlepostmasterapi.gpt.write_std' ) as write_std:
+        with patch ( 'googlepostmasterapi.gpt.GPostmaster.write_log' ) as write_log:
             with patch ( 'googlepostmasterapi.gpt.GPostmaster.get_domains' ) as get_domains:
                 with patch ( 'googlepostmasterapi.gpt.GPostmaster._create_pool_data' ) as create_pool_data:
                     with patch ( 'googlepostmasterapi.gpt.Pool' ) as r_init:
@@ -108,11 +109,13 @@ class GPostmaster_get_all_domains_infosTest ( unittest.TestCase ):
                                     map_.assert_not_called ();
                                     clean_pool_returns.assert_not_called ();
                                     print_stats.assert_not_called ();
-                                    write_std.assert_called_with ( [ 'Nothing to download' ] );
+                                    write_log.assert_called_with ( [
+                                        'Nothing to download'
+                                    ], force_verbose = True );
 
                                     
     def test_arg_pool_size ( self ):
-        with patch ( 'googlepostmasterapi.gpt.write_std' ) as write_std:
+        with patch ( 'googlepostmasterapi.gpt.GPostmaster.write_log' ) as write_log:
             with patch ( 'googlepostmasterapi.gpt.GPostmaster.get_domains' ) as get_domains:
                 with patch ( 'googlepostmasterapi.gpt.GPostmaster._create_pool_data' ) as create_pool_data:
                     with patch ( 'googlepostmasterapi.gpt.Pool' ) as r_init:
@@ -151,7 +154,7 @@ class GPostmaster_get_all_domains_infosTest ( unittest.TestCase ):
                                         data = 'random-map-returns'
                                     );
                                     print_stats.assert_called_once_with ();
-                                    write_std.assert_not_called ();
+                                    write_log.assert_not_called ();
             
             
 if __name__ == '__main__':

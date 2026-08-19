@@ -10,10 +10,11 @@ from unittest.mock import patch, Mock;
 from googlepostmasterapi.gpt import GPostmaster;
 
 
+@patch ( 'googlepostmasterapi.base.Base.__init__', Mock ( return_value = None ) )
 @patch ( 'googlepostmasterapi.gpt.GPostmaster._init_resources', Mock ( return_value = None ) )
 class GPostmaster_get_domainsTest ( unittest.TestCase ):
     def test_calls ( self ):
-        with patch ( 'googlepostmasterapi.gpt.write_std' ) as write_std:
+        with patch ( 'googlepostmasterapi.gpt.GPostmaster.write_log' ) as write_log:
             with patch ( 'googlepostmasterapi.gpt.GPostmaster._gpt_get_domains' ) as gpt_get_domains:
                 gpt_get_domains.return_value = { 'domains': [
                     { 'name': '/random-domain-1', 'permission': 'random-perm-1' },
@@ -29,13 +30,13 @@ class GPostmaster_get_domainsTest ( unittest.TestCase ):
                 
                 self.assertEqual ( g._domains, [ 'random-domain-1', 'random-domain-3' ] );
                 gpt_get_domains.assert_called_once_with ();
-                write_std.assert_called_with ( [
+                write_log.assert_called_with ( [
                     'Downloaded 2 domain(s) from GPT'
-                ] );
+                ], force_verbose = True );
 
                     
     def test_no_domains ( self ):
-        with patch ( 'googlepostmasterapi.gpt.write_std' ) as write_std:
+        with patch ( 'googlepostmasterapi.gpt.GPostmaster.write_log' ) as write_log:
             with patch ( 'googlepostmasterapi.gpt.GPostmaster._gpt_get_domains' ) as gpt_get_domains:
                 gpt_get_domains.return_value = {
                     'domains': []
@@ -49,9 +50,9 @@ class GPostmaster_get_domainsTest ( unittest.TestCase ):
                 
                 self.assertEqual ( g._domains, [] );
                 gpt_get_domains.assert_called_once_with ();
-                write_std.assert_called_with ( [
+                write_log.assert_called_with ( [
                     'Downloaded 0 domain(s) from GPT'
-                ] );
+                ], force_verbose = True );
                 
             
 if __name__ == '__main__':

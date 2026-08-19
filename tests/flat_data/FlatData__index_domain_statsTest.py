@@ -16,9 +16,10 @@ def r_mock ( value ):
     return 'Mocked : {}'.format ( value );
 
 
+@patch ( 'googlepostmasterapi.base.Base.__init__', Mock ( return_value = None ) )
 class FlatData__index_domain_statsTest ( unittest.TestCase ):
     def test_calls ( self ):
-        with patch ( 'googlepostmasterapi.data.extract_stat_value' ) as extract_stat_value:
+        with patch ( 'googlepostmasterapi.data.FlatData.extract_stat_value' ) as extract_stat_value:
             extract_stat_value.side_effect = r_mock;
             
             f = FlatData ();

@@ -10,6 +10,7 @@ from unittest.mock import patch, Mock;
 from googlepostmasterapi.data import FlatData;
 
 
+@patch ( 'googlepostmasterapi.base.Base.__init__', Mock ( return_value = None ) )
 class FlatData__parse_crypted_inboundTest ( unittest.TestCase ):
     def test_calls ( self ):
         f = FlatData ();

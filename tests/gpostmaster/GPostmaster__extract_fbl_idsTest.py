@@ -25,10 +25,11 @@ def r_mock ( value ):
     return 'Mocked : {}'.format ( value );
 
 
+@patch ( 'googlepostmasterapi.base.Base.__init__', Mock ( return_value = None ) )
 @patch ( 'googlepostmasterapi.gpt.GPostmaster._init_resources', Mock ( return_value = None ) )
 class GPostmaster__extract_fbl_idsTest ( unittest.TestCase ):
     def test_calls ( self ):
-        with patch ( 'googlepostmasterapi.gpt.extract_stat_value' ) as extract_stat_value:
+        with patch ( 'googlepostmasterapi.gpt.GPostmaster.extract_stat_value' ) as extract_stat_value:
             extract_stat_value.side_effect = r_mock;
 
             g = GPostmaster (
@@ -58,7 +59,7 @@ class GPostmaster__extract_fbl_idsTest ( unittest.TestCase ):
 
 
     def test_calls_with_list ( self ):
-        with patch ( 'googlepostmasterapi.gpt.extract_stat_value' ) as extract_stat_value:
+        with patch ( 'googlepostmasterapi.gpt.GPostmaster.extract_stat_value' ) as extract_stat_value:
             extract_stat_value.side_effect = r_mock;
 
             g = GPostmaster (

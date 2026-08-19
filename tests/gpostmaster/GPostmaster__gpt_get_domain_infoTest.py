@@ -33,10 +33,11 @@ class StatsMock ( object ):
         pass;
 
 
+@patch ( 'googlepostmasterapi.base.Base.__init__', Mock ( return_value = None ) )
 @patch ( 'googlepostmasterapi.gpt.GPostmaster._init_resources', Mock ( return_value = None ) )
 class GPostmaster__gpt_get_domain_infoTest ( unittest.TestCase ):
     def test_calls_without_fbl ( self ):
-        with patch ( 'googlepostmasterapi.gpt.write_std' ) as write_std:
+        with patch ( 'googlepostmasterapi.gpt.GPostmaster.write_log' ) as write_log:
             with patch ( 'googlepostmasterapi.gpt.GPostmaster._create_domain_uri' ) as create_domain_uri:
                 with patch ( 'googlepostmasterapi.gpt.GPostmaster._create_metric_definitions' ) as create_metric_definitions:
                     with patch ( 'googlepostmasterapi.gpt.GPostmaster._create_fbl_metric_definitions' ) as create_fbl_metric_definitions:
@@ -94,13 +95,15 @@ class GPostmaster__gpt_get_domain_infoTest ( unittest.TestCase ):
                                                 gpt_get_compliance_status.assert_called_once_with (
                                                     domain = 'random-domain'
                                                 );
-                                                write_std.assert_not_called ();
+                                                write_log.assert_called_once_with ( [
+                                                    'Get domain info : random-domain'
+                                                ] );
                                                 add_ok.assert_called_once_with ();
                                                 add_err_http.assert_not_called ();
 
 
     def test_calls_with_fbl ( self ):
-        with patch ( 'googlepostmasterapi.gpt.write_std' ) as write_std:
+        with patch ( 'googlepostmasterapi.gpt.GPostmaster.write_log' ) as write_log:
             with patch ( 'googlepostmasterapi.gpt.GPostmaster._create_domain_uri' ) as create_domain_uri:
                 with patch ( 'googlepostmasterapi.gpt.GPostmaster._create_metric_definitions' ) as create_metric_definitions:
                     with patch ( 'googlepostmasterapi.gpt.GPostmaster._create_fbl_metric_definitions' ) as create_fbl_metric_definitions:
@@ -163,7 +166,7 @@ class GPostmaster__gpt_get_domain_infoTest ( unittest.TestCase ):
 
 
     def test_call_raise_exception ( self ):
-        with patch ( 'googlepostmasterapi.gpt.write_std' ) as write_std:
+        with patch ( 'googlepostmasterapi.gpt.GPostmaster.write_log' ) as write_log:
             with patch ( 'googlepostmasterapi.gpt.GPostmaster._create_domain_uri' ) as create_domain_uri:
                 with patch ( 'googlepostmasterapi.gpt.GPostmaster._create_metric_definitions' ) as create_metric_definitions:
                     with patch ( 'googlepostmasterapi.gpt.GPostmaster._create_query_request' ) as create_query_request:
@@ -189,47 +192,15 @@ class GPostmaster__gpt_get_domain_infoTest ( unittest.TestCase ):
                                     self.assertEqual ( ret [ 'state' ], False );
                                     self.assertEqual ( ret [ 'result' ], None );
 
-                                    write_std.assert_not_called ();
+                                    write_log.assert_called_once_with ( [
+                                        'Get domain info : random-domain'
+                                    ] );
                                     add_ok.assert_not_called ();
                                     add_err_http.assert_called_with (
                                         code = 123,
                                         err = 'random-reason',
                                         domain = 'random-domain'
                                     );
-
-
-    def test_verbose_mode ( self ):
-        with patch ( 'googlepostmasterapi.gpt.write_std' ) as write_std:
-            with patch ( 'googlepostmasterapi.gpt.GPostmaster._create_domain_uri' ) as create_domain_uri:
-                with patch ( 'googlepostmasterapi.gpt.GPostmaster._create_metric_definitions' ) as create_metric_definitions:
-                    with patch ( 'googlepostmasterapi.gpt.GPostmaster._create_query_request' ) as create_query_request:
-                        with patch ( 'googlepostmasterapi.gpt.GPostmaster._query_domain_stats' ) as query_domain_stats:
-                            with patch ( 'googlepostmasterapi.gpt.GPostmaster._extract_fbl_ids' ) as extract_fbl_ids:
-                                with patch ( 'googlepostmasterapi.gpt.GPostmaster._gpt_get_compliance_status' ) as gpt_get_compliance_status:
-                                    with patch ( 'tests.gpostmaster.GPostmaster__gpt_get_domain_infoTest.StatsMock.add_ok' ) as add_ok:
-                                        with patch ( 'tests.gpostmaster.GPostmaster__gpt_get_domain_infoTest.StatsMock.add_err_http' ) as add_err_http:
-                                            create_domain_uri.return_value = 'random-parent';
-                                            query_domain_stats.return_value = [
-                                                'random-domain-stat-1'
-                                            ];
-                                            extract_fbl_ids.return_value = [];
-                                            gpt_get_compliance_status.return_value = 'random-compliance-status';
-
-                                            g = GPostmaster (
-                                                token = 'random-token',
-                                                verbose = True
-                                            );
-                                            g._stats = StatsMock ();
-
-                                            ret = g._gpt_get_domain_info (
-                                                domain = 'random-domain',
-                                                input_date = 'random-input-date'
-                                            );
-
-                                            self.assertEqual ( ret [ 'state' ], True );
-                                            write_std.assert_called_with ( [ 'Get domain info : random-domain' ] );
-                                            add_ok.assert_called_once_with ();
-                                            add_err_http.assert_not_called ();
 
 
 if __name__ == '__main__':

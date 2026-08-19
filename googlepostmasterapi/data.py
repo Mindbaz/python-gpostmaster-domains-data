@@ -21,16 +21,16 @@ import copy;
 
 from pprint import pprint;
 from pydantic import validate_call;
-from typing import List, Optional, Any;
+from typing import List, Optional;
 
 
 #: Current module path
 MODULE_PATH = os.path.dirname ( os.path.dirname ( os.path.abspath ( __file__ ) ) );
 sys.path.insert ( 0, MODULE_PATH );
-from googlepostmasterapi.utils import extract_stat_value;
+from googlepostmasterapi.base import Base;
 
 
-class FlatData ( object ):
+class FlatData ( Base ):
     """Clean data traffic stats from Google Postmaster Tools
 
     Attributes:
@@ -42,6 +42,10 @@ class FlatData ( object ):
     def __init__ ( self ) -> None:
         """Default constructor
         """
+        super ().__init__ (
+            verbose = True
+        );
+        
         """Template to clean data"""
         self._data_tpl = {
             'user_report_spam_percent': None,
@@ -78,7 +82,7 @@ class FlatData ( object ):
             dict: Assoc metric name => extracted value
         """
         return {
-            domain_stat [ 'metric' ]: extract_stat_value ( value = domain_stat.get ( 'value', {} ) )
+            domain_stat [ 'metric' ]: self.extract_stat_value ( value = domain_stat.get ( 'value', {} ) )
             for domain_stat in domain_stats
             if ( 'metric' in domain_stat )
         };

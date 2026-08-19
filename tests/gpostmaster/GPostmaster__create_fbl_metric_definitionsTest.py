@@ -10,6 +10,7 @@ from unittest.mock import patch, Mock;
 from googlepostmasterapi.gpt import GPostmaster;
 
 
+@patch ( 'googlepostmasterapi.base.Base.__init__', Mock ( return_value = None ) )
 @patch ( 'googlepostmasterapi.gpt.GPostmaster._init_resources', Mock ( return_value = None ) )
 class GPostmaster__create_fbl_metric_definitionsTest ( unittest.TestCase ):
     def test_calls ( self ):

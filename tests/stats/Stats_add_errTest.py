@@ -10,6 +10,7 @@ from unittest.mock import patch, Mock;
 from googlepostmasterapi.stats import Stats;
 
 
+@patch ( 'googlepostmasterapi.base.Base.__init__', Mock ( return_value = None ) )
 class Stats_add_errTest ( unittest.TestCase ):
     def test_calls ( self ):
         with patch ( 'googlepostmasterapi.stats.Stats.add_total' ) as add_total:

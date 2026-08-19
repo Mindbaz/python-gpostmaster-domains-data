@@ -25,10 +25,10 @@ from pydantic import validate_call;
 #: Current module path
 MODULE_PATH = os.path.dirname ( os.path.dirname ( os.path.abspath ( __file__ ) ) );
 sys.path.insert ( 0, MODULE_PATH )
-from googlepostmasterapi.utils import write_std;
+from googlepostmasterapi.base import Base;
 
 
-class Stats ( object ):
+class Stats ( Base ):
     """Process stats of GPostmaster
     
     Attributes:
@@ -38,6 +38,10 @@ class Stats ( object ):
     def __init__ ( self ) -> None:
         """Default constructor
         """
+        super ().__init__ (
+            verbose = True
+        );
+        
         """Statistics from domains infos download"""
         self.data = {
             'total': 0,
@@ -96,7 +100,7 @@ class Stats ( object ):
         if ( self.data [ 'total' ] == 0 ):
             return False;
         
-        write_std ( [
+        self.write_log ( [
             'Total calls : {total}'.format ( total = self.data [ 'total' ] ),
             'Total calls success : {ok} ({ok_percent}%)'.format (
                 ok = self.data [ 'ok' ],
@@ -105,7 +109,8 @@ class Stats ( object ):
             'Total calls error : {err} ({err_percent}%)'.format (
                 err = self.data [ 'err' ],
                 err_percent = round ( float ( self.data [ 'err' ] ) * 100.0 / float ( self.data [ 'total' ] ), 1 )
-            ) ] );
+            )
+        ] );
         
         for http_code in self.data [ 'err_http' ]:
             """Number of call errors to current http code"""
@@ -113,7 +118,7 @@ class Stats ( object ):
             """Percent of call errors to current http code"""
             nb_err_percent = round ( float ( nb_err ) * 100.0 / float ( self.data [ 'total' ] ), 1 )
             
-            write_std ( [
+            self.write_log ( [
                 'Total calls error http {http_code} : {err} ({err_percent}%)'.format (
                     http_code = http_code,
                     err = nb_err,
@@ -121,6 +126,7 @@ class Stats ( object ):
                 ),
                 'Domains : {domains}'.format (
                     domains = ' / '.join ( self.data [ 'err_http' ] [ http_code ] [ 'domains' ] )
-                ) ] );
+                )
+            ], );
         
         return True;

@@ -18,7 +18,6 @@
 import os;
 import sys;
 import copy;
-import json;
 
 from google.oauth2.credentials import Credentials;
 from googleapiclient.discovery import build;
@@ -33,12 +32,12 @@ from typing import Any, List, Optional;
 #: Current module path
 MODULE_PATH = os.path.dirname ( os.path.dirname ( os.path.abspath ( __file__ ) ) );
 sys.path.insert ( 0, MODULE_PATH );
+from googlepostmasterapi.base import Base;
 from googlepostmasterapi.data import FlatData;
 from googlepostmasterapi.stats import Stats;
-from googlepostmasterapi.utils import extract_stat_value, recursive_call, write_std;
 
 
-class GPostmaster ( object ):
+class GPostmaster ( Base ):
     """Download data from Google postmaster tools
 
     Attributes:
@@ -50,7 +49,6 @@ class GPostmaster ( object ):
         _parser (FlatData): Protected. Connector to data cleaner
         _stats (Stats): Protected. Connector to statistiques data
         scopes (str[]): GPT scopes to read data
-        verbose (bool): Verbose mode
     """
     @validate_call
     def __init__ ( self, token: str, verbose: Optional [ bool ] = False ) -> None:
@@ -60,9 +58,10 @@ class GPostmaster ( object ):
             token (str): Local file path to GPT json token
             verbose (bool): Optional. Verbose mode. Default : False
         """
-        """Verbose mode"""
-        self.verbose = verbose;
-
+        super ().__init__ (
+            verbose = verbose
+        );
+        
         """Template to create a domain parent uri"""
         self._uri_tpl = 'domains/{domain}';
 
@@ -179,8 +178,8 @@ class GPostmaster ( object ):
 
         if ( 'nextPageToken' in ret ):
             """Domains from next page. Recursive call"""
-            tmp = recursive_call (
-                self._gpt_get_domains,
+            tmp = self._recursive_call (
+                '_gpt_get_domains',
                 next_page = ret [ 'nextPageToken' ]
             );
             ret [ 'domains' ] += tmp [ 'domains' ];
@@ -200,9 +199,9 @@ class GPostmaster ( object ):
                 continue;
             self._domains.append ( domain_data [ 'name' ].split ( '/' ).pop () );
 
-        write_std ( [
+        self.write_log ( [
             'Downloaded {} domain(s) from GPT'.format ( len ( self._domains ) )
-        ] );
+        ], force_verbose = True );
 
 
     def _create_domain_uri ( self, domain: str ) -> str:
@@ -380,8 +379,8 @@ class GPostmaster ( object ):
 
         if ( ret.get ( 'nextPageToken', '' ) != '' ):
             """Domain stats from next page. Recursive call"""
-            tmp = recursive_call (
-                self._query_domain_stats,
+            tmp = self._recursive_call (
+                '_query_domain_stats',
                 parent = parent,
                 body = body,
                 page_token = ret [ 'nextPageToken' ]
@@ -408,7 +407,7 @@ class GPostmaster ( object ):
                 continue;
 
             """FBL id value : scalar, or a list when GPT reports a stringList"""
-            value = extract_stat_value (
+            value = self.extract_stat_value (
                 value = domain_stat.get (
                     'value', {}
                 )
@@ -468,8 +467,9 @@ class GPostmaster ( object ):
         );
 
         try:
-            if ( self.verbose == True ):
-                write_std ( [ 'Get domain info : {}'.format ( domain ) ] );
+            self.write_log ( [
+                'Get domain info : {}'.format ( domain )
+            ] );
 
             """Domain stats : spam rate / auth / tls inbound / delivery errors / fbl"""
             domain_stats = self._query_domain_stats (
@@ -658,7 +658,9 @@ class GPostmaster ( object ):
         );
 
         if ( len ( data ) == 0 ):
-            write_std ( [ 'Nothing to download' ] );
+            self.write_log ( [
+                'Nothing to download'
+            ], force_verbose = True );
             return [];
 
         with Pool ( processes = pool_size ) as pool:
@@ -686,9 +688,9 @@ class GPostmaster ( object ):
         Returns:
             bool: False if an error occurs during creation. True otherwise
         """
-        write_std ( [
+        self.write_log ( [
             'Add domain to GPT : {}'.format ( domain )
-        ] );
+        ], force_verbose = True );
         
         try:
             self._service.domains ().create (
@@ -697,7 +699,7 @@ class GPostmaster ( object ):
                 }
             ).execute ();
         except HttpError as e:
-            write_std ( [
+            self.write_error ( [
                 'Error while adding domain to GPT : {}'.format (
                     str ( e )
                 )
@@ -715,9 +717,9 @@ class GPostmaster ( object ):
         Returns:
             str: Token to current domain
         """
-        write_std ( [
+        self.write_log ( [
             'Get GPT token for domain : {}'.format ( domain )
-        ] );
+        ], force_verbose = True );
         """GPT response get token"""
         data = self._service.domains ().getVerificationToken (
             name = 'domains/{domain}/verificationToken'.format (
@@ -777,9 +779,9 @@ class GPostmaster ( object ):
         Returns:
             bool: False if the domain is not verified. True otherwise
         """
-        write_std ( [
+        self.write_log ( [
             'Verify domain : {}'.format ( domain )
-        ] );
+        ], force_verbose = True );
         
         try :
             self._service.domains ().verify (
@@ -791,7 +793,7 @@ class GPostmaster ( object ):
                 }
             ).execute ();
         except HttpError as e:
-            write_std ( [
+            self.write_error ( [
                 'Unable to verify domain : {}'.format (
                     str ( e )
                 )
@@ -812,4 +814,21 @@ class GPostmaster ( object ):
         """
         return self._gpt_verify_domain (
             domain = domain
+        );
+    
+    
+    def _recursive_call ( self, method: str, *args: Any, **kargs: Any ) -> Any:
+        """Method to abstract recursive call
+        
+        Arguments:
+            method (string): Mehtod name to call on current instance
+            args (mixed()): Arguments to send to method
+            kargs (dict): Keyword arguments to send to method
+
+        Returns:
+            mixed: Method returns
+        """
+        return getattr ( self, method ) (
+            *args,
+            **kargs
         );
