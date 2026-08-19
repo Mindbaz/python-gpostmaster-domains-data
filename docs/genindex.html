@@ -5,14 +5,14 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Index &mdash; Google Postmaster Domains Data 0.2.0 documentation</title>
+  <title>Index &mdash; Google Postmaster Domains Data 0.2.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=938c9ccc"></script>
+      <script src="_static/documentation_options.js?v=000c92bf"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -70,14 +70,15 @@
 <div class="genindex-jumpbox">
  <a href="#_"><strong>_</strong></a>
  | <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
  | <a href="#C"><strong>C</strong></a>
  | <a href="#D"><strong>D</strong></a>
  | <a href="#E"><strong>E</strong></a>
  | <a href="#F"><strong>F</strong></a>
  | <a href="#G"><strong>G</strong></a>
+ | <a href="#L"><strong>L</strong></a>
  | <a href="#M"><strong>M</strong></a>
  | <a href="#P"><strong>P</strong></a>
- | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
  | <a href="#V"><strong>V</strong></a>
  | <a href="#W"><strong>W</strong></a>
@@ -86,10 +87,16 @@
 <h2 id="_">_</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="index.html#googlepostmasterapi.data.FlatData.__init__">__init__() (googlepostmasterapi.data.FlatData method)</a>
+      <li><a href="index.html#googlepostmasterapi.base.Base.__init__">__init__() (googlepostmasterapi.base.Base method)</a>
 
       <ul>
+        <li><a href="index.html#googlepostmasterapi.data.FlatData.__init__">(googlepostmasterapi.data.FlatData method)</a>
+</li>
         <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster.__init__">(googlepostmasterapi.gpt.GPostmaster method)</a>
+</li>
+        <li><a href="index.html#googlepostmasterapi.logger.Logger.__init__">(googlepostmasterapi.logger.Logger method)</a>
+</li>
+        <li><a href="index.html#googlepostmasterapi.logger.LoggingFilter.__init__">(googlepostmasterapi.logger.LoggingFilter method)</a>
 </li>
         <li><a href="index.html#googlepostmasterapi.stats.Stats.__init__">(googlepostmasterapi.stats.Stats method)</a>
 </li>
@@ -108,6 +115,8 @@
 </li>
       <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster._create_fbl_metric_definitions">_create_fbl_metric_definitions() (googlepostmasterapi.gpt.GPostmaster method)</a>
 </li>
+      <li><a href="index.html#googlepostmasterapi.logger.Logger._create_log_tpl">_create_log_tpl() (googlepostmasterapi.logger.Logger method)</a>
+</li>
       <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster._create_metric_definitions">_create_metric_definitions() (googlepostmasterapi.gpt.GPostmaster method)</a>
 </li>
       <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster._create_pool_data">_create_pool_data() (googlepostmasterapi.gpt.GPostmaster method)</a>
@@ -122,6 +131,8 @@
 </li>
       <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster._extract_fbl_ids">_extract_fbl_ids() (googlepostmasterapi.gpt.GPostmaster method)</a>
 </li>
+      <li><a href="index.html#googlepostmasterapi.logger.Logger._get_current_class_name">_get_current_class_name() (googlepostmasterapi.logger.Logger method)</a>
+</li>
       <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster._get_domain_infos_pool">_get_domain_infos_pool() (googlepostmasterapi.gpt.GPostmaster method)</a>
 </li>
       <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster._gpt_create_domain">_gpt_create_domain() (googlepostmasterapi.gpt.GPostmaster method)</a>
@@ -132,23 +143,47 @@
 </li>
       <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster._gpt_get_domain_verify_token">_gpt_get_domain_verify_token() (googlepostmasterapi.gpt.GPostmaster method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster._gpt_get_domains">_gpt_get_domains() (googlepostmasterapi.gpt.GPostmaster method)</a>
 </li>
       <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster._gpt_verify_domain">_gpt_verify_domain() (googlepostmasterapi.gpt.GPostmaster method)</a>
 </li>
       <li><a href="index.html#googlepostmasterapi.data.FlatData._index_domain_stats">_index_domain_stats() (googlepostmasterapi.data.FlatData method)</a>
 </li>
+      <li><a href="index.html#googlepostmasterapi.logger.Logger._init_logger">_init_logger() (googlepostmasterapi.logger.Logger method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="index.html#googlepostmasterapi.logger.Logger._init_logger_format">_init_logger_format() (googlepostmasterapi.logger.Logger method)</a>
+</li>
+      <li><a href="index.html#googlepostmasterapi.logger.Logger._init_logger_stderr">_init_logger_stderr() (googlepostmasterapi.logger.Logger method)</a>
+</li>
+      <li><a href="index.html#googlepostmasterapi.logger.Logger._init_logger_stdout">_init_logger_stdout() (googlepostmasterapi.logger.Logger method)</a>
+</li>
       <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster._init_parser_con">_init_parser_con() (googlepostmasterapi.gpt.GPostmaster method)</a>
 </li>
       <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster._init_resources">_init_resources() (googlepostmasterapi.gpt.GPostmaster method)</a>
+</li>
+      <li><a href="index.html#googlepostmasterapi.logger.Logger._init_resources_logger">_init_resources_logger() (googlepostmasterapi.logger.Logger method)</a>
 </li>
       <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster._init_service">_init_service() (googlepostmasterapi.gpt.GPostmaster method)</a>
 </li>
       <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster._init_stats_con">_init_stats_con() (googlepostmasterapi.gpt.GPostmaster method)</a>
 </li>
       <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster._load_token">_load_token() (googlepostmasterapi.gpt.GPostmaster method)</a>
+</li>
+      <li><a href="index.html#googlepostmasterapi.logger.Logger._log_add_filter">_log_add_filter() (googlepostmasterapi.logger.Logger method)</a>
+</li>
+      <li><a href="index.html#googlepostmasterapi.logger.Logger._log_add_handler">_log_add_handler() (googlepostmasterapi.logger.Logger method)</a>
+</li>
+      <li><a href="index.html#googlepostmasterapi.logger.Logger._log_get_logger">_log_get_logger() (googlepostmasterapi.logger.Logger method)</a>
+</li>
+      <li><a href="index.html#googlepostmasterapi.logger.Logger._log_set_format">_log_set_format() (googlepostmasterapi.logger.Logger method)</a>
+</li>
+      <li><a href="index.html#googlepostmasterapi.logger.Logger._log_set_level">_log_set_level() (googlepostmasterapi.logger.Logger method)</a>
+</li>
+      <li><a href="index.html#googlepostmasterapi.logger.Logger._log_tpl">_log_tpl (googlepostmasterapi.logger.Logger attribute)</a>
+</li>
+      <li><a href="index.html#googlepostmasterapi.logger.Logger._logger">_logger (googlepostmasterapi.logger.Logger attribute)</a>
 </li>
       <li><a href="index.html#googlepostmasterapi.data.FlatData._parse_crypted_inbound">_parse_crypted_inbound() (googlepostmasterapi.data.FlatData method)</a>
 </li>
@@ -172,6 +207,8 @@
 </li>
       <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster._query_domain_stats">_query_domain_stats() (googlepostmasterapi.gpt.GPostmaster method)</a>
 </li>
+      <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster._recursive_call">_recursive_call() (googlepostmasterapi.gpt.GPostmaster method)</a>
+</li>
       <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster._service">_service (googlepostmasterapi.gpt.GPostmaster attribute)</a>
 </li>
       <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster._stats">_stats (googlepostmasterapi.gpt.GPostmaster attribute)</a>
@@ -193,6 +230,14 @@
       <li><a href="index.html#googlepostmasterapi.stats.Stats.add_ok">add_ok() (googlepostmasterapi.stats.Stats method)</a>
 </li>
       <li><a href="index.html#googlepostmasterapi.stats.Stats.add_total">add_total() (googlepostmasterapi.stats.Stats method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="index.html#googlepostmasterapi.base.Base">Base (class in googlepostmasterapi.base)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -220,13 +265,17 @@
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="index.html#googlepostmasterapi.utils.extract_stat_value">extract_stat_value() (in module googlepostmasterapi.utils)</a>
+      <li><a href="index.html#googlepostmasterapi.base.Base.extract_stat_value">extract_stat_value() (googlepostmasterapi.base.Base method)</a>
 </li>
   </ul></td>
 </tr></table>
 
 <h2 id="F">F</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="index.html#googlepostmasterapi.logger.LoggingFilter.filter">filter() (googlepostmasterapi.logger.LoggingFilter method)</a>
+</li>
+  </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="index.html#googlepostmasterapi.data.FlatData">FlatData (class in googlepostmasterapi.data)</a>
 </li>
@@ -245,6 +294,13 @@
       <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster.get_domains">get_domains() (googlepostmasterapi.gpt.GPostmaster method)</a>
 </li>
       <li>
+    googlepostmasterapi.base
+
+      <ul>
+        <li><a href="index.html#module-googlepostmasterapi.base">module</a>
+</li>
+      </ul></li>
+      <li>
     googlepostmasterapi.data
 
       <ul>
@@ -261,17 +317,17 @@
 </li>
       </ul></li>
       <li>
+    googlepostmasterapi.logger
+
+      <ul>
+        <li><a href="index.html#module-googlepostmasterapi.logger">module</a>
+</li>
+      </ul></li>
+      <li>
     googlepostmasterapi.stats
 
       <ul>
         <li><a href="index.html#module-googlepostmasterapi.stats">module</a>
-</li>
-      </ul></li>
-      <li>
-    googlepostmasterapi.utils
-
-      <ul>
-        <li><a href="index.html#module-googlepostmasterapi.utils">module</a>
 </li>
       </ul></li>
       <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster">GPostmaster (class in googlepostmasterapi.gpt)</a>
@@ -279,22 +335,42 @@
   </ul></td>
 </tr></table>
 
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="index.html#googlepostmasterapi.logger.Logger">Logger (class in googlepostmasterapi.logger)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="index.html#googlepostmasterapi.logger.LoggingFilter">LoggingFilter (class in googlepostmasterapi.logger)</a>
+</li>
+  </ul></td>
+</tr></table>
+
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="index.html#googlepostmasterapi.logger.LoggingFilter.max_level">max_level (googlepostmasterapi.logger.LoggingFilter attribute)</a>
+</li>
       <li>
     module
 
       <ul>
+        <li><a href="index.html#module-googlepostmasterapi.base">googlepostmasterapi.base</a>
+</li>
         <li><a href="index.html#module-googlepostmasterapi.data">googlepostmasterapi.data</a>
 </li>
         <li><a href="index.html#module-googlepostmasterapi.gpt">googlepostmasterapi.gpt</a>
 </li>
+        <li><a href="index.html#module-googlepostmasterapi.logger">googlepostmasterapi.logger</a>
+</li>
         <li><a href="index.html#module-googlepostmasterapi.stats">googlepostmasterapi.stats</a>
 </li>
-        <li><a href="index.html#module-googlepostmasterapi.utils">googlepostmasterapi.utils</a>
-</li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="index.html#googlepostmasterapi.base.MODULE_PATH">MODULE_PATH (in module googlepostmasterapi.base)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -306,14 +382,6 @@
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="index.html#googlepostmasterapi.stats.Stats.print_stats">print_stats() (googlepostmasterapi.stats.Stats method)</a>
-</li>
-  </ul></td>
-</tr></table>
-
-<h2 id="R">R</h2>
-<table style="width: 100%" class="indextable genindextable"><tr>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="index.html#googlepostmasterapi.utils.recursive_call">recursive_call() (in module googlepostmasterapi.utils)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -333,7 +401,7 @@
 <h2 id="V">V</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="index.html#googlepostmasterapi.gpt.GPostmaster.verbose">verbose (googlepostmasterapi.gpt.GPostmaster attribute)</a>
+      <li><a href="index.html#googlepostmasterapi.logger.Logger.verbose">verbose (googlepostmasterapi.logger.Logger attribute)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -345,7 +413,11 @@
 <h2 id="W">W</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="index.html#googlepostmasterapi.utils.write_std">write_std() (in module googlepostmasterapi.utils)</a>
+      <li><a href="index.html#googlepostmasterapi.logger.Logger.write_error">write_error() (googlepostmasterapi.logger.Logger method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="index.html#googlepostmasterapi.logger.Logger.write_log">write_log() (googlepostmasterapi.logger.Logger method)</a>
 </li>
   </ul></td>
 </tr></table>
