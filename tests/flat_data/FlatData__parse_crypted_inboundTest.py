@@ -17,11 +17,11 @@ class FlatData__parse_crypted_inboundTest ( unittest.TestCase ):
         
         ret = f._parse_crypted_inbound (
             key = 'random-key',
-            value = '0.4567'
+            value = '0.45678'
         );
         
         self.assertEqual ( ret, True );
-        self.assertEqual ( f.data [ 'random-key' ] [ 'tls_inbound_percent' ], 45.7 );
+        self.assertEqual ( f.data [ 'random-key' ] [ 'tls_inbound_percent' ], 45.68 );
 
         
     def test_no_value ( self ):

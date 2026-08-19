@@ -18,10 +18,10 @@ class FlatData__parse_delivery_errTest ( unittest.TestCase ):
         ret = f._parse_delivery_err (
             key = 'random-key',
             value = {
-                'random-class-1__random-type-1': 0.1234,
-                'random-class-1__random-type-2': 0.4567,
+                'random-class-1__random-type-1': 0.12345,
+                'random-class-1__random-type-2': 0.45678,
                 'random-class-1__random-type-3': 0,
-                'random-class-2__random-type-1': 0.789,
+                'random-class-2__random-type-1': 0.7890,
                 'random-class-2__random-type-2': None
             }
         );
@@ -30,11 +30,11 @@ class FlatData__parse_delivery_errTest ( unittest.TestCase ):
         self.assertEqual ( f.data [ 'random-key' ] [ 'delivery_errors' ], [ {
             'class': 'random-class-1',
             'type': 'random-type-1',
-            'percent': 12.3
+            'percent': 12.35
         }, {
             'class': 'random-class-1',
             'type': 'random-type-2',
-            'percent': 45.7
+            'percent': 45.68
         }, {
             'class': 'random-class-2',
             'type': 'random-type-1',
