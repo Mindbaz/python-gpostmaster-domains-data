@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Google Postmaster Domains Datas &mdash; Google Postmaster Domains Data 0.2.0 documentation</title>
+  <title>Google Postmaster Domains Datas &mdash; Google Postmaster Domains Data 0.2.2 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=938c9ccc"></script>
+      <script src="_static/documentation_options.js?v=000c92bf"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -43,6 +43,39 @@
               <!-- Local TOC -->
               <div class="local-toc"><ul>
 <li><a class="reference internal" href="#">Google Postmaster Domains Datas</a><ul>
+<li><a class="reference internal" href="#googlepostmasterapi.logger.Logger"><code class="docutils literal notranslate"><span class="pre">Logger</span></code></a><ul>
+<li><a class="reference internal" href="#googlepostmasterapi.logger.Logger._logger"><code class="docutils literal notranslate"><span class="pre">Logger._logger</span></code></a></li>
+<li><a class="reference internal" href="#googlepostmasterapi.logger.Logger._log_tpl"><code class="docutils literal notranslate"><span class="pre">Logger._log_tpl</span></code></a></li>
+<li><a class="reference internal" href="#googlepostmasterapi.logger.Logger.verbose"><code class="docutils literal notranslate"><span class="pre">Logger.verbose</span></code></a></li>
+<li><a class="reference internal" href="#googlepostmasterapi.logger.Logger.__init__"><code class="docutils literal notranslate"><span class="pre">Logger.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#googlepostmasterapi.logger.Logger._create_log_tpl"><code class="docutils literal notranslate"><span class="pre">Logger._create_log_tpl()</span></code></a></li>
+<li><a class="reference internal" href="#googlepostmasterapi.logger.Logger._get_current_class_name"><code class="docutils literal notranslate"><span class="pre">Logger._get_current_class_name()</span></code></a></li>
+<li><a class="reference internal" href="#googlepostmasterapi.logger.Logger._init_logger"><code class="docutils literal notranslate"><span class="pre">Logger._init_logger()</span></code></a></li>
+<li><a class="reference internal" href="#googlepostmasterapi.logger.Logger._init_logger_format"><code class="docutils literal notranslate"><span class="pre">Logger._init_logger_format()</span></code></a></li>
+<li><a class="reference internal" href="#googlepostmasterapi.logger.Logger._init_logger_stderr"><code class="docutils literal notranslate"><span class="pre">Logger._init_logger_stderr()</span></code></a></li>
+<li><a class="reference internal" href="#googlepostmasterapi.logger.Logger._init_logger_stdout"><code class="docutils literal notranslate"><span class="pre">Logger._init_logger_stdout()</span></code></a></li>
+<li><a class="reference internal" href="#googlepostmasterapi.logger.Logger._init_resources_logger"><code class="docutils literal notranslate"><span class="pre">Logger._init_resources_logger()</span></code></a></li>
+<li><a class="reference internal" href="#googlepostmasterapi.logger.Logger._log_add_filter"><code class="docutils literal notranslate"><span class="pre">Logger._log_add_filter()</span></code></a></li>
+<li><a class="reference internal" href="#googlepostmasterapi.logger.Logger._log_add_handler"><code class="docutils literal notranslate"><span class="pre">Logger._log_add_handler()</span></code></a></li>
+<li><a class="reference internal" href="#googlepostmasterapi.logger.Logger._log_get_logger"><code class="docutils literal notranslate"><span class="pre">Logger._log_get_logger()</span></code></a></li>
+<li><a class="reference internal" href="#googlepostmasterapi.logger.Logger._log_set_format"><code class="docutils literal notranslate"><span class="pre">Logger._log_set_format()</span></code></a></li>
+<li><a class="reference internal" href="#googlepostmasterapi.logger.Logger._log_set_level"><code class="docutils literal notranslate"><span class="pre">Logger._log_set_level()</span></code></a></li>
+<li><a class="reference internal" href="#googlepostmasterapi.logger.Logger.write_error"><code class="docutils literal notranslate"><span class="pre">Logger.write_error()</span></code></a></li>
+<li><a class="reference internal" href="#googlepostmasterapi.logger.Logger.write_log"><code class="docutils literal notranslate"><span class="pre">Logger.write_log()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#googlepostmasterapi.logger.LoggingFilter"><code class="docutils literal notranslate"><span class="pre">LoggingFilter</span></code></a><ul>
+<li><a class="reference internal" href="#googlepostmasterapi.logger.LoggingFilter.max_level"><code class="docutils literal notranslate"><span class="pre">LoggingFilter.max_level</span></code></a></li>
+<li><a class="reference internal" href="#googlepostmasterapi.logger.LoggingFilter.__init__"><code class="docutils literal notranslate"><span class="pre">LoggingFilter.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#googlepostmasterapi.logger.LoggingFilter.filter"><code class="docutils literal notranslate"><span class="pre">LoggingFilter.filter()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#googlepostmasterapi.base.Base"><code class="docutils literal notranslate"><span class="pre">Base</span></code></a><ul>
+<li><a class="reference internal" href="#googlepostmasterapi.base.Base.__init__"><code class="docutils literal notranslate"><span class="pre">Base.__init__()</span></code></a></li>
+<li><a class="reference internal" href="#googlepostmasterapi.base.Base.extract_stat_value"><code class="docutils literal notranslate"><span class="pre">Base.extract_stat_value()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#googlepostmasterapi.base.MODULE_PATH"><code class="docutils literal notranslate"><span class="pre">MODULE_PATH</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster"><code class="docutils literal notranslate"><span class="pre">GPostmaster</span></code></a><ul>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._uri_tpl"><code class="docutils literal notranslate"><span class="pre">GPostmaster._uri_tpl</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._compliance_uri_tpl"><code class="docutils literal notranslate"><span class="pre">GPostmaster._compliance_uri_tpl</span></code></a></li>
@@ -52,7 +85,6 @@
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._parser"><code class="docutils literal notranslate"><span class="pre">GPostmaster._parser</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._stats"><code class="docutils literal notranslate"><span class="pre">GPostmaster._stats</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster.scopes"><code class="docutils literal notranslate"><span class="pre">GPostmaster.scopes</span></code></a></li>
-<li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster.verbose"><code class="docutils literal notranslate"><span class="pre">GPostmaster.verbose</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster.__init__"><code class="docutils literal notranslate"><span class="pre">GPostmaster.__init__()</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._clean_domain_infos"><code class="docutils literal notranslate"><span class="pre">GPostmaster._clean_domain_infos()</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._clean_pool_returns"><code class="docutils literal notranslate"><span class="pre">GPostmaster._clean_pool_returns()</span></code></a></li>
@@ -78,6 +110,7 @@
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._parse_input_date"><code class="docutils literal notranslate"><span class="pre">GPostmaster._parse_input_date()</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._print_stats"><code class="docutils literal notranslate"><span class="pre">GPostmaster._print_stats()</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._query_domain_stats"><code class="docutils literal notranslate"><span class="pre">GPostmaster._query_domain_stats()</span></code></a></li>
+<li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._recursive_call"><code class="docutils literal notranslate"><span class="pre">GPostmaster._recursive_call()</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster.create_domain"><code class="docutils literal notranslate"><span class="pre">GPostmaster.create_domain()</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster.get_all_domains_infos"><code class="docutils literal notranslate"><span class="pre">GPostmaster.get_all_domains_infos()</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster.get_domain_infos"><code class="docutils literal notranslate"><span class="pre">GPostmaster.get_domain_infos()</span></code></a></li>
@@ -112,9 +145,6 @@
 <li><a class="reference internal" href="#googlepostmasterapi.stats.Stats.print_stats"><code class="docutils literal notranslate"><span class="pre">Stats.print_stats()</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#googlepostmasterapi.utils.extract_stat_value"><code class="docutils literal notranslate"><span class="pre">extract_stat_value()</span></code></a></li>
-<li><a class="reference internal" href="#googlepostmasterapi.utils.recursive_call"><code class="docutils literal notranslate"><span class="pre">recursive_call()</span></code></a></li>
-<li><a class="reference internal" href="#googlepostmasterapi.utils.write_std"><code class="docutils literal notranslate"><span class="pre">write_std()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
@@ -144,9 +174,336 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="module-googlepostmasterapi.gpt">
-<span id="google-postmaster-domains-datas"></span><h1>Google Postmaster Domains Datas<a class="headerlink" href="#module-googlepostmasterapi.gpt" title="Link to this heading"></a></h1>
+  <section id="module-googlepostmasterapi.logger">
+<span id="google-postmaster-domains-datas"></span><h1>Google Postmaster Domains Datas<a class="headerlink" href="#module-googlepostmasterapi.logger" title="Link to this heading"></a></h1>
 <dl class="py class">
+<dt class="sig sig-object py" id="googlepostmasterapi.logger.Logger">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">googlepostmasterapi.logger.</span></span><span class="sig-name descname"><span class="pre">Logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#googlepostmasterapi.logger.Logger" title="Link to this definition"></a></dt>
+<dd><p>Base class to manage logger &amp; conf</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="googlepostmasterapi.logger.Logger._logger">
+<span class="sig-name descname"><span class="pre">_logger</span></span><a class="headerlink" href="#googlepostmasterapi.logger.Logger._logger" title="Link to this definition"></a></dt>
+<dd><p>Protected. Logger</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>logging.Logger</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="googlepostmasterapi.logger.Logger._log_tpl">
+<span class="sig-name descname"><span class="pre">_log_tpl</span></span><a class="headerlink" href="#googlepostmasterapi.logger.Logger._log_tpl" title="Link to this definition"></a></dt>
+<dd><p>Protected. All part to create log template</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="googlepostmasterapi.logger.Logger.verbose">
+<span class="sig-name descname"><span class="pre">verbose</span></span><a class="headerlink" href="#googlepostmasterapi.logger.Logger.verbose" title="Link to this definition"></a></dt>
+<dd><p>Verbose mode</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="googlepostmasterapi.logger.Logger.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#googlepostmasterapi.logger.Logger.__init__" title="Link to this definition"></a></dt>
+<dd><p>Default constructor</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>verbose</strong> (<em>bool</em>) – Optional. Verbose mode. Default : false</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="googlepostmasterapi.logger.Logger._create_log_tpl">
+<span class="sig-name descname"><span class="pre">_create_log_tpl</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#googlepostmasterapi.logger.Logger._create_log_tpl" title="Link to this definition"></a></dt>
+<dd><p>Create log template</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Log template</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="googlepostmasterapi.logger.Logger._get_current_class_name">
+<span class="sig-name descname"><span class="pre">_get_current_class_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#googlepostmasterapi.logger.Logger._get_current_class_name" title="Link to this definition"></a></dt>
+<dd><p>Return current instanciated class name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Class name</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="googlepostmasterapi.logger.Logger._init_logger">
+<span class="sig-name descname"><span class="pre">_init_logger</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#googlepostmasterapi.logger.Logger._init_logger" title="Link to this definition"></a></dt>
+<dd><p>Init logger with all handlers</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="googlepostmasterapi.logger.Logger._init_logger_format">
+<span class="sig-name descname"><span class="pre">_init_logger_format</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Formatter</span></span></span><a class="headerlink" href="#googlepostmasterapi.logger.Logger._init_logger_format" title="Link to this definition"></a></dt>
+<dd><p>Init format template for log output</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Log template format</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>logging.Formatter</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="googlepostmasterapi.logger.Logger._init_logger_stderr">
+<span class="sig-name descname"><span class="pre">_init_logger_stderr</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Formatter</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">StreamHandler</span></span></span><a class="headerlink" href="#googlepostmasterapi.logger.Logger._init_logger_stderr" title="Link to this definition"></a></dt>
+<dd><p>Create logger handler to : stderr</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>log_format</strong> (<em>logging.Formatter</em>) – Log template</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Logger handler on stderr</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>logging.StreamHandler</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="googlepostmasterapi.logger.Logger._init_logger_stdout">
+<span class="sig-name descname"><span class="pre">_init_logger_stdout</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log_format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Formatter</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">StreamHandler</span></span></span><a class="headerlink" href="#googlepostmasterapi.logger.Logger._init_logger_stdout" title="Link to this definition"></a></dt>
+<dd><p>Create logger handler to : stdout</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>log_format</strong> (<em>logging.Formatter</em>) – Log template</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Logger handler on stdout</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>logging.StreamHandler</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="googlepostmasterapi.logger.Logger._init_resources_logger">
+<span class="sig-name descname"><span class="pre">_init_resources_logger</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#googlepostmasterapi.logger.Logger._init_resources_logger" title="Link to this definition"></a></dt>
+<dd><p>Init resources used by system : init logger</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="googlepostmasterapi.logger.Logger._log_add_filter">
+<span class="sig-name descname"><span class="pre">_log_add_filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">StreamHandler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#googlepostmasterapi.logger.Logger._log_add_filter" title="Link to this definition"></a></dt>
+<dd><p>Add logger filter</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>logger</strong> (<em>logging.StreamHandler</em>) – Instance to add filter</p></li>
+<li><p><strong>level</strong> (<em>int</em>) – Max level for filter</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="googlepostmasterapi.logger.Logger._log_add_handler">
+<span class="sig-name descname"><span class="pre">_log_add_handler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">RootLogger</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Logger</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">handler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">StreamHandler</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#googlepostmasterapi.logger.Logger._log_add_handler" title="Link to this definition"></a></dt>
+<dd><p>Add logger handler</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>logger</strong> (<em>logging.RootLogger</em><em>|</em><em>logging.Logger</em>) – Instance to add handler</p></li>
+<li><p><strong>handler</strong> (<em>logging.StreamHandler</em>) – Handler</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="googlepostmasterapi.logger.Logger._log_get_logger">
+<span class="sig-name descname"><span class="pre">_log_get_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">RootLogger</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Logger</span></span></span><a class="headerlink" href="#googlepostmasterapi.logger.Logger._log_get_logger" title="Link to this definition"></a></dt>
+<dd><p>Crete logger based on name</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – Optional. Name to create logger. Default : None</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>RootLogger if name is undefined. Logger otherwise</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>logging.RootLogger|logging.Logger</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="googlepostmasterapi.logger.Logger._log_set_format">
+<span class="sig-name descname"><span class="pre">_log_set_format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">StreamHandler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">log_format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Formatter</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#googlepostmasterapi.logger.Logger._log_set_format" title="Link to this definition"></a></dt>
+<dd><p>Set logger format</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>logger</strong> (<em>logging.StreamHandler</em>) – Instance to set format</p></li>
+<li><p><strong>log_format</strong> (<em>logging.Formatter</em>) – Log template</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="googlepostmasterapi.logger.Logger._log_set_level">
+<span class="sig-name descname"><span class="pre">_log_set_level</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">RootLogger</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Logger</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">StreamHandler</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#googlepostmasterapi.logger.Logger._log_set_level" title="Link to this definition"></a></dt>
+<dd><p>Set logger level</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>logger</strong> (<em>logging.StreamHandler</em><em>|</em><em>logging.Logger</em><em>|</em><em>logging.RootLogger</em>) – Instance to set level</p></li>
+<li><p><strong>level</strong> (<em>int</em>) – Level</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="googlepostmasterapi.logger.Logger.write_error">
+<span class="sig-name descname"><span class="pre">write_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#googlepostmasterapi.logger.Logger.write_error" title="Link to this definition"></a></dt>
+<dd><p>Write error information</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>logs</strong> (<em>str&lt;&gt;</em>) – List of logs to write</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="googlepostmasterapi.logger.Logger.write_log">
+<span class="sig-name descname"><span class="pre">write_log</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">force_verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#googlepostmasterapi.logger.Logger.write_log" title="Link to this definition"></a></dt>
+<dd><p>Write log information</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>logs</strong> (<em>str&lt;&gt;</em>) – List of logs to write</p></li>
+<li><p><strong>force_verbose</strong> (<em>bool</em>) – Optional. Force verbose mode. Overload verbose class properties. Default to False</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>False if no verbose mode. True otherwise</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="googlepostmasterapi.logger.LoggingFilter">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">googlepostmasterapi.logger.</span></span><span class="sig-name descname"><span class="pre">LoggingFilter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#googlepostmasterapi.logger.LoggingFilter" title="Link to this definition"></a></dt>
+<dd><p>Filters all messages with level &lt; self.max_level</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="googlepostmasterapi.logger.LoggingFilter.max_level">
+<span class="sig-name descname"><span class="pre">max_level</span></span><a class="headerlink" href="#googlepostmasterapi.logger.LoggingFilter.max_level" title="Link to this definition"></a></dt>
+<dd><p>Max log level value</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="googlepostmasterapi.logger.LoggingFilter.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#googlepostmasterapi.logger.LoggingFilter.__init__" title="Link to this definition"></a></dt>
+<dd><p>Default constructor</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>level</strong> (<em>int</em>) – Max log level value</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="googlepostmasterapi.logger.LoggingFilter.filter">
+<span class="sig-name descname"><span class="pre">filter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">log</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">LogRecord</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#googlepostmasterapi.logger.LoggingFilter.filter" title="Link to this definition"></a></dt>
+<dd><p>Filter a log by its level</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>log</strong> (<em>logging.LogRecord</em>) – Log to filter</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if log level is lower than max level</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class" id="module-googlepostmasterapi.base">
+<dt class="sig sig-object py" id="googlepostmasterapi.base.Base">
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">googlepostmasterapi.base.</span></span><span class="sig-name descname"><span class="pre">Base</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#googlepostmasterapi.base.Base" title="Link to this definition"></a></dt>
+<dd><p>Base class with common methods</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="googlepostmasterapi.base.Base.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#googlepostmasterapi.base.Base.__init__" title="Link to this definition"></a></dt>
+<dd><p>Default constructor</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>verbose</strong> (<em>bool</em>) – Optional. Verbose mode. Default : False</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="googlepostmasterapi.base.Base.extract_stat_value">
+<span class="sig-name descname"><span class="pre">extract_stat_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#googlepostmasterapi.base.Base.extract_stat_value" title="Link to this definition"></a></dt>
+<dd><p>Extract the actual scalar/list value from a GPT v2 StatisticValue object</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>value</strong> (<em>dict</em>) – Optional. StatisticValue object from GPT v2 (doubleValue/floatValue/intValue/stringValue/stringList). Default : None</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Extracted value. None if nothing set</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>mixed</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="googlepostmasterapi.base.MODULE_PATH">
+<span class="sig-prename descclassname"><span class="pre">googlepostmasterapi.base.</span></span><span class="sig-name descname"><span class="pre">MODULE_PATH</span></span><span class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'/home/debian/modules/python-pub-gpostmaster-domains-data'</span></span><a class="headerlink" href="#googlepostmasterapi.base.MODULE_PATH" title="Link to this definition"></a></dt>
+<dd><p>Current module path</p>
+</dd></dl>
+
+<dl class="py class" id="module-googlepostmasterapi.gpt">
 <dt class="sig sig-object py" id="googlepostmasterapi.gpt.GPostmaster">
 <span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">googlepostmasterapi.gpt.</span></span><span class="sig-name descname"><span class="pre">GPostmaster</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#googlepostmasterapi.gpt.GPostmaster" title="Link to this definition"></a></dt>
 <dd><p>Download data from Google postmaster tools</p>
@@ -234,17 +591,6 @@
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str[]</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="googlepostmasterapi.gpt.GPostmaster.verbose">
-<span class="sig-name descname"><span class="pre">verbose</span></span><a class="headerlink" href="#googlepostmasterapi.gpt.GPostmaster.verbose" title="Link to this definition"></a></dt>
-<dd><p>Verbose mode</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>
@@ -632,6 +978,27 @@
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dict[]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="googlepostmasterapi.gpt.GPostmaster._recursive_call">
+<span class="sig-name descname"><span class="pre">_recursive_call</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#googlepostmasterapi.gpt.GPostmaster._recursive_call" title="Link to this definition"></a></dt>
+<dd><p>Method to abstract recursive call</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>method</strong> (<em>string</em>) – Mehtod name to call on current instance</p></li>
+<li><p><strong>args</strong> (<em>mixed</em><em>(</em><em>)</em>) – Arguments to send to method</p></li>
+<li><p><strong>kargs</strong> (<em>dict</em>) – Keyword arguments to send to method</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Method returns</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>mixed</p>
 </dd>
 </dl>
 </dd></dl>
@@ -1025,55 +1392,6 @@
 </dl>
 </dd></dl>
 
-</dd></dl>
-
-<dl class="py function" id="module-googlepostmasterapi.utils">
-<dt class="sig sig-object py" id="googlepostmasterapi.utils.extract_stat_value">
-<span class="sig-prename descclassname"><span class="pre">googlepostmasterapi.utils.</span></span><span class="sig-name descname"><span class="pre">extract_stat_value</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">value</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#googlepostmasterapi.utils.extract_stat_value" title="Link to this definition"></a></dt>
-<dd><p>Extract the actual scalar/list value from a GPT v2 StatisticValue object</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>value</strong> (<em>dict</em>) – Optional. StatisticValue object from GPT v2 (doubleValue/floatValue/intValue/stringValue/stringList). Default : None</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Extracted value. None if nothing set</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>mixed</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="googlepostmasterapi.utils.recursive_call">
-<span class="sig-prename descclassname"><span class="pre">googlepostmasterapi.utils.</span></span><span class="sig-name descname"><span class="pre">recursive_call</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kargs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#googlepostmasterapi.utils.recursive_call" title="Link to this definition"></a></dt>
-<dd><p>Method to abstract recursive call</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>method</strong> (<em>string</em>) – Mehtod name to call on current instance</p></li>
-<li><p><strong>args</strong> (<em>mixed</em><em>(</em><em>)</em>) – Arguments to send to method</p></li>
-<li><p><strong>kargs</strong> (<em>dict</em>) – Keyword arguments to send to method</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Method returns</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>mixed</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="googlepostmasterapi.utils.write_std">
-<span class="sig-prename descclassname"><span class="pre">googlepostmasterapi.utils.</span></span><span class="sig-name descname"><span class="pre">write_std</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#googlepostmasterapi.utils.write_std" title="Link to this definition"></a></dt>
-<dd><p>Quick write on stdout</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>logs</strong> (<em>string</em><em>[</em><em>]</em>) – List of log to print on stdout</p>
-</dd>
-</dl>
 </dd></dl>
 
 <div class="toctree-wrapper compound">

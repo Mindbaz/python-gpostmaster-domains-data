@@ -6,9 +6,16 @@
 Google Postmaster Domains Datas
 ===================================================
 
+.. automodule:: googlepostmasterapi.logger
+    :members:
+    :exclude-members: verbose
+
+.. automodule:: googlepostmasterapi.base
+    :members:
+
 .. automodule:: googlepostmasterapi.gpt
     :members:
-    :exclude-members: MODULE_PATH, verbose
+    :exclude-members: MODULE_PATH
 
 .. automodule:: googlepostmasterapi.data
     :members:
@@ -17,9 +24,6 @@ Google Postmaster Domains Datas
 .. automodule:: googlepostmasterapi.stats
     :members:
     :exclude-members: MODULE_PATH
-
-.. automodule:: googlepostmasterapi.utils
-    :members:
 
 .. toctree::
    :maxdepth: 2
