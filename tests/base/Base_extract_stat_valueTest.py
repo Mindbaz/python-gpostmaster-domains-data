@@ -7,17 +7,21 @@ from pprint import pprint;
 from unittest.mock import patch, Mock;
 
 
-from googlepostmasterapi.utils import extract_stat_value;
+from googlepostmasterapi.base import Base;
 
 
-class extract_stat_valueTest ( unittest.TestCase ):
+class Base_extract_stat_valueTest ( unittest.TestCase ):
     def test_no_value ( self ):
-        ret = extract_stat_value ( value = None );
+        b = Base ();
+        
+        ret = b.extract_stat_value ( value = None );
         self.assertEqual ( ret, None );
 
 
     def test_double_value ( self ):
-        ret = extract_stat_value (
+        b = Base ();
+        
+        ret = b.extract_stat_value (
             value = {
                 'doubleValue': 0.1234
             }
@@ -26,7 +30,9 @@ class extract_stat_valueTest ( unittest.TestCase ):
 
 
     def test_float_value ( self ):
-        ret = extract_stat_value (
+        b = Base ();
+        
+        ret = b.extract_stat_value (
             value = {
                 'floatValue': 0.4567
             }
@@ -35,7 +41,9 @@ class extract_stat_valueTest ( unittest.TestCase ):
 
 
     def test_int_value ( self ):
-        ret = extract_stat_value (
+        b = Base ();
+        
+        ret = b.extract_stat_value (
             value = {
                 'intValue': '789'
             }
@@ -44,7 +52,9 @@ class extract_stat_valueTest ( unittest.TestCase ):
 
 
     def test_string_value ( self ):
-        ret = extract_stat_value (
+        b = Base ();
+        
+        ret = b.extract_stat_value (
             value = {
                 'stringValue': 'random-value'
             }
@@ -53,7 +63,9 @@ class extract_stat_valueTest ( unittest.TestCase ):
 
 
     def test_string_list ( self ):
-        ret = extract_stat_value (
+        b = Base ();
+        
+        ret = b.extract_stat_value (
             value = {
                 'stringList': {
                     'values': [
@@ -70,9 +82,11 @@ class extract_stat_valueTest ( unittest.TestCase ):
 
 
     def test_empty_value ( self ):
-        ret = extract_stat_value ( value = {} );
+        b = Base ();
+        
+        ret = b.extract_stat_value ( value = {} );
         self.assertEqual ( ret, None );
-
-
+                        
+            
 if __name__ == '__main__':
     unittest.main ();

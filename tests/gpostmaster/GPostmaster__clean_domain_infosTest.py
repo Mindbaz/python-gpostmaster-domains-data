@@ -20,6 +20,7 @@ class RMock ( object ):
         pass;
 
 
+@patch ( 'googlepostmasterapi.base.Base.__init__', Mock ( return_value = None ) )
 @patch ( 'googlepostmasterapi.gpt.GPostmaster._init_resources', Mock ( return_value = None ) )
 class GPostmaster__clean_domain_infosTest ( unittest.TestCase ):
     def test_calls ( self ):

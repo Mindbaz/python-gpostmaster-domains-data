@@ -28,10 +28,11 @@ class RMock ( object ):
         pass;
 
 
+@patch ( 'googlepostmasterapi.base.Base.__init__', Mock ( return_value = None ) )
 @patch ( 'googlepostmasterapi.gpt.GPostmaster._init_resources', Mock ( return_value = None ) )
 class GPostmaster__gpt_get_domain_verify_tokenTest ( unittest.TestCase ):
     def test_calls ( self ):
-        with patch ( 'googlepostmasterapi.gpt.write_std' ) as write_std:
+        with patch ( 'googlepostmasterapi.gpt.GPostmaster.write_log' ) as write_log:
             with patch ( 'tests.gpostmaster.GPostmaster__gpt_get_domain_verify_tokenTest.RMock.domains' ) as domains:
                 with patch ( 'tests.gpostmaster.GPostmaster__gpt_get_domain_verify_tokenTest.RMock.getVerificationToken' ) as getVerificationToken:
                     with patch ( 'tests.gpostmaster.GPostmaster__gpt_get_domain_verify_tokenTest.RMock.execute' ) as execute:
@@ -58,9 +59,9 @@ class GPostmaster__gpt_get_domain_verify_tokenTest ( unittest.TestCase ):
                             verificationMethod = 'TXT'
                         );
                         execute.assert_called_once_with ();
-                        write_std.assert_called_with ( [
+                        write_log.assert_called_once_with ( [
                             'Get GPT token for domain : random-domain'
-                        ] );
+                        ], force_verbose = True );
 
 
 if __name__ == '__main__':

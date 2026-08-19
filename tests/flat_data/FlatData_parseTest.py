@@ -10,6 +10,7 @@ from unittest.mock import patch, Mock;
 from googlepostmasterapi.data import FlatData;
 
 
+@patch ( 'googlepostmasterapi.base.Base.__init__', Mock ( return_value = None ) )
 class FlatData_parseTest ( unittest.TestCase ):
     def test_calls ( self ):
         with patch ( 'googlepostmasterapi.data.copy.deepcopy' ) as deepcopy:

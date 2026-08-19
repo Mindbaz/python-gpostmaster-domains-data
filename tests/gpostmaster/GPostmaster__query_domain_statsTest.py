@@ -32,6 +32,7 @@ class RMock ( object ):
         pass;
 
 
+@patch ( 'googlepostmasterapi.base.Base.__init__', Mock ( return_value = None ) )
 @patch ( 'googlepostmasterapi.gpt.GPostmaster._init_resources', Mock ( return_value = None ) )
 class GPostmaster__query_domain_statsTest ( unittest.TestCase ):
     def test_calls ( self ):
@@ -39,7 +40,7 @@ class GPostmaster__query_domain_statsTest ( unittest.TestCase ):
             with patch ( 'tests.gpostmaster.GPostmaster__query_domain_statsTest.RMock.domainStats' ) as domain_stats:
                 with patch ( 'tests.gpostmaster.GPostmaster__query_domain_statsTest.RMock.query' ) as query:
                     with patch ( 'tests.gpostmaster.GPostmaster__query_domain_statsTest.RMock.execute' ) as execute:
-                        with patch ( 'googlepostmasterapi.gpt.recursive_call' ) as recursive_call:
+                        with patch ( 'googlepostmasterapi.gpt.GPostmaster._recursive_call' ) as recursive_call:
                             domains.return_value = RMock ();
                             domain_stats.return_value = RMock ();
                             query.return_value = RMock ();
@@ -71,7 +72,7 @@ class GPostmaster__query_domain_statsTest ( unittest.TestCase ):
             with patch ( 'tests.gpostmaster.GPostmaster__query_domain_statsTest.RMock.domainStats' ) as domain_stats:
                 with patch ( 'tests.gpostmaster.GPostmaster__query_domain_statsTest.RMock.query' ) as query:
                     with patch ( 'tests.gpostmaster.GPostmaster__query_domain_statsTest.RMock.execute' ) as execute:
-                        with patch ( 'googlepostmasterapi.gpt.recursive_call' ) as recursive_call:
+                        with patch ( 'googlepostmasterapi.gpt.GPostmaster._recursive_call' ) as recursive_call:
                             domains.return_value = RMock ();
                             domain_stats.return_value = RMock ();
                             query.return_value = RMock ();
@@ -101,7 +102,7 @@ class GPostmaster__query_domain_statsTest ( unittest.TestCase ):
             with patch ( 'tests.gpostmaster.GPostmaster__query_domain_statsTest.RMock.domainStats' ) as domain_stats:
                 with patch ( 'tests.gpostmaster.GPostmaster__query_domain_statsTest.RMock.query' ) as query:
                     with patch ( 'tests.gpostmaster.GPostmaster__query_domain_statsTest.RMock.execute' ) as execute:
-                        with patch ( 'googlepostmasterapi.gpt.recursive_call' ) as recursive_call:
+                        with patch ( 'googlepostmasterapi.gpt.GPostmaster._recursive_call' ) as recursive_call:
                             domains.return_value = RMock ();
                             domain_stats.return_value = RMock ();
                             query.return_value = RMock ();
@@ -127,7 +128,7 @@ class GPostmaster__query_domain_statsTest ( unittest.TestCase ):
                                 body = { 'random-key': 'random-value' }
                             );
                             recursive_call.assert_called_once_with (
-                                g._query_domain_stats,
+                                '_query_domain_stats',
                                 parent = 'random-parent',
                                 body = { 'random-key': 'random-value' },
                                 page_token = 'random-next-page-token'

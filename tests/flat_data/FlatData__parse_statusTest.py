@@ -19,6 +19,7 @@ def get_status ( i ):
     );
     
 
+@patch ( 'googlepostmasterapi.base.Base.__init__', Mock ( return_value = None ) )
 class FlatData__parse_statusTest ( unittest.TestCase ):
     def test_compliant ( self ):
         f = FlatData ();

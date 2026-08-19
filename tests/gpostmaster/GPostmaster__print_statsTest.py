@@ -21,6 +21,7 @@ class StatsMock ( object ):
         pass;
     
 
+@patch ( 'googlepostmasterapi.base.Base.__init__', Mock ( return_value = None ) )
 @patch ( 'googlepostmasterapi.gpt.GPostmaster._init_resources', Mock ( return_value = None ) )
 class GPostmaster__print_statsTest ( unittest.TestCase ):
     def test_calls ( self ):

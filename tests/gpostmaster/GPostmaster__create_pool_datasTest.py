@@ -11,6 +11,7 @@ from googlepostmasterapi.gpt import GPostmaster;
 from googleapiclient.errors import HttpError;
 
 
+@patch ( 'googlepostmasterapi.base.Base.__init__', Mock ( return_value = None ) )
 @patch ( 'googlepostmasterapi.gpt.GPostmaster._init_resources', Mock ( return_value = None ) )
 class GPostmaster__create_pool_dataTest ( unittest.TestCase ):
     def test_calls ( self ):

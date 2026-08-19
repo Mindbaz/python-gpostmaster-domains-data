@@ -28,13 +28,14 @@ class RMock ( object ):
         pass;
 
 
+@patch ( 'googlepostmasterapi.base.Base.__init__', Mock ( return_value = None ) )
 @patch ( 'googlepostmasterapi.gpt.GPostmaster._init_resources', Mock ( return_value = None ) )
 class GPostmaster__gpt_get_domainsTest ( unittest.TestCase ):
     def test_calls ( self ):
         with patch ( 'tests.gpostmaster.GPostmaster__gpt_get_domainsTest.RMock.domains' ) as domains:
             with patch ( 'tests.gpostmaster.GPostmaster__gpt_get_domainsTest.RMock.list' ) as list_:
                 with patch ( 'tests.gpostmaster.GPostmaster__gpt_get_domainsTest.RMock.execute' ) as execute:
-                    with patch ( 'googlepostmasterapi.gpt.recursive_call' ) as recursive_call:
+                    with patch ( 'googlepostmasterapi.gpt.GPostmaster._recursive_call' ) as recursive_call:
                         domains.return_value = RMock ()
                         list_.return_value = RMock ()
                         execute.return_value = 'random-returns';
@@ -59,7 +60,7 @@ class GPostmaster__gpt_get_domainsTest ( unittest.TestCase ):
         with patch ( 'tests.gpostmaster.GPostmaster__gpt_get_domainsTest.RMock.domains' ) as domains:
             with patch ( 'tests.gpostmaster.GPostmaster__gpt_get_domainsTest.RMock.list' ) as list_:
                 with patch ( 'tests.gpostmaster.GPostmaster__gpt_get_domainsTest.RMock.execute' ) as execute:
-                    with patch ( 'googlepostmasterapi.gpt.recursive_call' ) as recursive_call:
+                    with patch ( 'googlepostmasterapi.gpt.GPostmaster._recursive_call' ) as recursive_call:
                         domains.return_value = RMock ()
                         list_.return_value = RMock ()
                         execute.return_value = 'random-returns'
@@ -86,7 +87,7 @@ class GPostmaster__gpt_get_domainsTest ( unittest.TestCase ):
         with patch ( 'tests.gpostmaster.GPostmaster__gpt_get_domainsTest.RMock.domains' ) as domains:
             with patch ( 'tests.gpostmaster.GPostmaster__gpt_get_domainsTest.RMock.list' ) as list_:
                 with patch ( 'tests.gpostmaster.GPostmaster__gpt_get_domainsTest.RMock.execute' ) as execute:
-                    with patch ( 'googlepostmasterapi.gpt.recursive_call' ) as recursive_call:
+                    with patch ( 'googlepostmasterapi.gpt.GPostmaster._recursive_call' ) as recursive_call:
                         domains.return_value = RMock ();
                         list_.return_value = RMock ();
                         execute.return_value = {
@@ -118,7 +119,7 @@ class GPostmaster__gpt_get_domainsTest ( unittest.TestCase ):
                         );
                         execute.assert_called_once_with ();
                         recursive_call.assert_called_once_with (
-                            g._gpt_get_domains,
+                            '_gpt_get_domains',
                             next_page = 'random-next-page-token'
                         );
             

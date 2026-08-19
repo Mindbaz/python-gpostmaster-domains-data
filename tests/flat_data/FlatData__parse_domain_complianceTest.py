@@ -16,6 +16,7 @@ def r_mock ( status ):
     return 'Mocked : {}'.format ( status );
 
 
+@patch ( 'googlepostmasterapi.base.Base.__init__', Mock ( return_value = None ) )
 class FlatData__parse_domain_complianceTest ( unittest.TestCase ):
     def test_calls ( self ):
         with patch ( 'googlepostmasterapi.data.FlatData._parse_status' ) as parse_status:
