@@ -95,6 +95,11 @@ usage: gpt_create_domain [-h] [--token [TOKEN]] [--domain [DOMAIN]] [--verbose] 
 ```
 
 ```bash
+$ python entry_points_googlepostmasterapi/gpt_delete_domain.py -h
+usage: gpt_delete_domain [-h] [--token [TOKEN]] [--domain [DOMAIN]] [--yes] [--verbose] [--version]
+```
+
+```bash
 python entry_points_googlepostmasterapi/gpt_dl_all_data.py -h
 usage: gpt_dl_all_data [-h] [--token [TOKEN]] [--pool-size [POOL_SIZE]] [--date [DATE]] [--verbose] [--version]
 ```

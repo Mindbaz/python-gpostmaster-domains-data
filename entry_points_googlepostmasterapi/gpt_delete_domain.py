@@ -1,0 +1,113 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# Copyright (C) 2026 Mindbaz
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+"""
+Delete a domain in GPT
+"""
+import os;
+import sys;
+import argparse;
+
+from pprint import pprint;
+
+
+#: Current module path
+MODULE_PATH = os.path.dirname ( os.path.dirname ( os.path.abspath ( __file__ ) ) );
+sys.path.insert ( 0, MODULE_PATH );
+from googlepostmasterapi import __version__;
+from googlepostmasterapi.gpt import GPostmaster;
+
+
+def run ():
+    parser = argparse.ArgumentParser ( prog = 'gpt_delete_domain' );
+
+    ## All arguments
+    parser.add_argument ( '--token', type = str, nargs = '?', help = 'GPT token' );
+    parser.add_argument ( '--domain', type = str, nargs = '?', help = 'Domain to delete' );
+    parser.add_argument ( '--yes', action = 'store_true', help = 'Confirm the deletion. Without it, nothing is deleted' );
+    parser.add_argument ( '--verbose', action = 'store_true', help = 'Verbose mode' );
+    parser.add_argument ( '--version', action = 'store_true', help = 'Display version' );
+    args = parser.parse_args ();
+
+    ## Display version
+
+    if ( args.version == True ):
+        print ( __version__ );
+        exit ( 0 );
+
+    ## Valid required argument
+
+    if ( args.token == None or os.path.isfile ( args.token ) == False ):
+        print ( 'Missing --token file. -h to show help' );
+        exit ( 2 );
+
+    if ( ( type ( args.domain ) is not str ) or ( args.domain.strip () == '' ) ):
+        print ( 'Missing --domain file. -h to show help' );
+        exit ( 2 );
+
+    #
+    # Print args to console
+    #
+
+    if ( args.verbose == True ):
+        print ( 'v v v v v v v v v v v v v v v v v v v v v' );
+        print ( 'Arguments list : ' );
+        for arg in sorted ( vars ( args ) ):
+            print ( '{} : {}'.format ( arg.rjust ( 30 ), getattr ( args, arg ) ) );
+        print ( '^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^ ^' );
+
+    ## Safety : require an explicit confirmation before deleting anything
+
+    if ( args.yes is not True ):
+        print ( 'This will PERMANENTLY delete domain "{domain}" from GPT.'.format (
+            domain = args.domain
+        ) );
+        print ( 'Re-run with --yes to confirm. Nothing was deleted.' );
+        exit ( 2 );
+
+    ## Begin
+
+    #
+    # Init tool
+    #
+
+    """Parser"""
+    g = GPostmaster (
+        token = args.token,
+        verbose = args.verbose,
+    );
+
+    """Exec exit code"""
+    exit_code = 0;
+
+    """Delete the domain"""
+    ret = g.delete_domain (
+        domain = args.domain
+    );
+
+    if ( ret == True ):
+        print ( '\nDomain is deleted !\n' );
+    else:
+        exit_code = 1;
+
+    print ( 'Exit code : {exit_code}'.format (
+        exit_code = exit_code
+    ) );
+
+    exit ( exit_code );
+
+if __name__ == '__main__':
+    run ();

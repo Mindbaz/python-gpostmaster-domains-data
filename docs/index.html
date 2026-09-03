@@ -6,14 +6,14 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Google Postmaster Domains Datas &mdash; Google Postmaster Domains Data 0.2.2 documentation</title>
+  <title>Google Postmaster Domains Datas &mdash; Google Postmaster Domains Data 0.2.3 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
 
   
       <script src="_static/jquery.js?v=5d32c60e"></script>
       <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-      <script src="_static/documentation_options.js?v=000c92bf"></script>
+      <script src="_static/documentation_options.js?v=a47416a6"></script>
       <script src="_static/doctools.js?v=fd6eb6e6"></script>
       <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
     <script src="_static/js/theme.js"></script>
@@ -97,6 +97,7 @@
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._extract_fbl_ids"><code class="docutils literal notranslate"><span class="pre">GPostmaster._extract_fbl_ids()</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._get_domain_infos_pool"><code class="docutils literal notranslate"><span class="pre">GPostmaster._get_domain_infos_pool()</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._gpt_create_domain"><code class="docutils literal notranslate"><span class="pre">GPostmaster._gpt_create_domain()</span></code></a></li>
+<li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._gpt_delete_domain"><code class="docutils literal notranslate"><span class="pre">GPostmaster._gpt_delete_domain()</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._gpt_get_compliance_status"><code class="docutils literal notranslate"><span class="pre">GPostmaster._gpt_get_compliance_status()</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._gpt_get_domain_info"><code class="docutils literal notranslate"><span class="pre">GPostmaster._gpt_get_domain_info()</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._gpt_get_domain_verify_token"><code class="docutils literal notranslate"><span class="pre">GPostmaster._gpt_get_domain_verify_token()</span></code></a></li>
@@ -112,6 +113,7 @@
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._query_domain_stats"><code class="docutils literal notranslate"><span class="pre">GPostmaster._query_domain_stats()</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster._recursive_call"><code class="docutils literal notranslate"><span class="pre">GPostmaster._recursive_call()</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster.create_domain"><code class="docutils literal notranslate"><span class="pre">GPostmaster.create_domain()</span></code></a></li>
+<li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster.delete_domain"><code class="docutils literal notranslate"><span class="pre">GPostmaster.delete_domain()</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster.get_all_domains_infos"><code class="docutils literal notranslate"><span class="pre">GPostmaster.get_all_domains_infos()</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster.get_domain_infos"><code class="docutils literal notranslate"><span class="pre">GPostmaster.get_domain_infos()</span></code></a></li>
 <li><a class="reference internal" href="#googlepostmasterapi.gpt.GPostmaster.get_domain_verify_token"><code class="docutils literal notranslate"><span class="pre">GPostmaster.get_domain_verify_token()</span></code></a></li>
@@ -800,6 +802,23 @@
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="googlepostmasterapi.gpt.GPostmaster._gpt_delete_domain">
+<span class="sig-name descname"><span class="pre">_gpt_delete_domain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#googlepostmasterapi.gpt.GPostmaster._gpt_delete_domain" title="Link to this definition"></a></dt>
+<dd><p>Call GPT to delete a domain</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>domain</strong> (<em>str</em>) – Domain to delete</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>False if an error occurs during deletion. True otherwise</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="googlepostmasterapi.gpt.GPostmaster._gpt_get_compliance_status">
 <span class="sig-name descname"><span class="pre">_gpt_get_compliance_status</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#googlepostmasterapi.gpt.GPostmaster._gpt_get_compliance_status" title="Link to this definition"></a></dt>
 <dd><p>Call GPT to get the compliance status of a domain</p>
@@ -1016,6 +1035,23 @@
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="googlepostmasterapi.gpt.GPostmaster.delete_domain">
+<span class="sig-name descname"><span class="pre">delete_domain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#googlepostmasterapi.gpt.GPostmaster.delete_domain" title="Link to this definition"></a></dt>
+<dd><p>Delete a domain</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>domain</strong> (<em>str</em>) – Domain to delete</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>False if an error occurs during deletion. True otherwise</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
 </dd>
 </dl>
 </dd></dl>

@@ -815,8 +815,52 @@ class GPostmaster ( Base ):
         return self._gpt_verify_domain (
             domain = domain
         );
-    
-    
+
+
+    def _gpt_delete_domain ( self, domain: str ) -> bool:
+        """Call GPT to delete a domain
+
+        Arguments:
+            domain (str): Domain to delete
+
+        Returns:
+            bool: False if an error occurs during deletion. True otherwise
+        """
+        self.write_log ( [
+            'Delete domain from GPT : {}'.format ( domain )
+        ], force_verbose = True );
+
+        try :
+            self._service.domains ().delete (
+                name = self._create_domain_uri (
+                    domain = domain
+                )
+            ).execute ();
+        except HttpError as e:
+            self.write_error ( [
+                'Unable to delete domain : {}'.format (
+                    str ( e )
+                )
+            ] );
+            return False;
+        return True;
+
+
+    @validate_call
+    def delete_domain ( self, domain: str ) -> bool:
+        """Delete a domain
+
+        Arguments:
+            domain (str): Domain to delete
+
+        Returns:
+            bool: False if an error occurs during deletion. True otherwise
+        """
+        return self._gpt_delete_domain (
+            domain = domain
+        );
+
+
     def _recursive_call ( self, method: str, *args: Any, **kargs: Any ) -> Any:
         """Method to abstract recursive call
         
